@@ -19,20 +19,21 @@ use App\Models\YearLevel;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Schema;
 
 class TestDataSeeder extends Seeder
 {
     public function run(): void
     {
-        // Clean test data outside transaction to avoid MySQL DDL implicit commit
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        // Clean test data outside transaction
+        Schema::disableForeignKeyConstraints();
         Grade::truncate();
         DB::table('parent_student')->truncate();
         ParentModel::truncate();
         StudentEnrollment::truncate();
         Student::truncate();
         User::whereIn('role', ['parent', 'student'])->delete();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        Schema::enableForeignKeyConstraints();
 
         DB::transaction(function () {
             $now = now();
