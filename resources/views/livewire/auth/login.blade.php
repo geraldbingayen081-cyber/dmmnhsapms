@@ -62,11 +62,24 @@
             <!-- Session Status Alert -->
             <x-auth-session-status class="text-center" :status="session('status')" />
 
+            <!-- Error Banner -->
+            @if ($errors->any())
+                <div class="p-3.5 rounded-xl bg-red-50 dark:bg-red-950/60 border border-red-200 dark:border-red-800/80 text-xs text-red-700 dark:text-red-300 space-y-1 animate-fade-in">
+                    <div class="flex items-center gap-2 font-bold">
+                        <i class="fas fa-circle-exclamation text-red-500"></i>
+                        <span>Sign In Failed</span>
+                    </div>
+                    <p class="text-[11px] text-red-600 dark:text-red-400">
+                        {{ $errors->first('email') ?? $errors->first('login') ?? $errors->first('password') ?? 'These credentials do not match our records.' }}
+                    </p>
+                </div>
+            @endif
+
             <!-- Login Form -->
             <form method="POST" action="{{ route('login.store') }}" class="space-y-5">
                 @csrf
 
-                <!-- Account ID Input Field (Empty Placeholder) -->
+                <!-- Account ID Input Field -->
                 <div>
                     <label class="block text-[11px] font-bold text-zinc-700 dark:text-zinc-300 mb-1.5 uppercase tracking-wider">Account ID / User Number *</label>
                     <div class="relative">
@@ -80,12 +93,18 @@
                             required 
                             autofocus 
                             placeholder="0000-0000" 
-                            class="w-full pl-10 pr-4 py-3 text-xs font-semibold font-mono rounded-xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800/50 text-zinc-900 dark:text-zinc-100 focus:bg-white focus:dark:bg-zinc-800 focus:ring-2 focus:ring-[#166534] focus:border-transparent transition shadow-xs"
+                            class="w-full pl-10 pr-4 py-3 text-xs font-semibold font-mono rounded-xl border @error('email') border-red-500 @else border-zinc-300 dark:border-zinc-700 @enderror bg-zinc-50/50 dark:bg-zinc-800/50 text-zinc-900 dark:text-zinc-100 focus:bg-white focus:dark:bg-zinc-800 focus:ring-2 focus:ring-[#166534] focus:border-transparent transition shadow-xs"
                         >
                     </div>
+                    @error('email')
+                        <p class="text-[11px] text-red-600 dark:text-red-400 font-medium mt-1 flex items-center gap-1">
+                            <i class="fas fa-exclamation-circle text-[10px]"></i>
+                            <span>{{ $message }}</span>
+                        </p>
+                    @enderror
                 </div>
 
-                <!-- Password Input Field (Empty Placeholder) with Interactive Eye Toggle -->
+                <!-- Password Input Field with Interactive Eye Toggle -->
                 <div>
                     <div class="flex items-center justify-between mb-1.5">
                         <label class="block text-[11px] font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider">Password *</label>
@@ -99,7 +118,7 @@
                             name="password" 
                             required 
                             placeholder="Password" 
-                            class="w-full pl-10 pr-10 py-3 text-xs font-semibold rounded-xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-800/50 text-zinc-900 dark:text-zinc-100 focus:bg-white focus:dark:bg-zinc-800 focus:ring-2 focus:ring-[#166534] focus:border-transparent transition shadow-xs"
+                            class="w-full pl-10 pr-10 py-3 text-xs font-semibold rounded-xl border @error('password') border-red-500 @else border-zinc-300 dark:border-zinc-700 @enderror bg-zinc-50/50 dark:bg-zinc-800/50 text-zinc-900 dark:text-zinc-100 focus:bg-white focus:dark:bg-zinc-800 focus:ring-2 focus:ring-[#166534] focus:border-transparent transition shadow-xs"
                         >
                         <button 
                             type="button" 
@@ -110,6 +129,12 @@
                             <i class="fas" :class="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
                         </button>
                     </div>
+                    @error('password')
+                        <p class="text-[11px] text-red-600 dark:text-red-400 font-medium mt-1 flex items-center gap-1">
+                            <i class="fas fa-exclamation-circle text-[10px]"></i>
+                            <span>{{ $message }}</span>
+                        </p>
+                    @enderror
                 </div>
 
                 <!-- Keep Me Signed In -->
