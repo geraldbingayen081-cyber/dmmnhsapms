@@ -29,6 +29,8 @@ class TeacherManagement extends Component
     public $last_name = '';
     public $suffix = '';
     public $contact_number = '';
+    public $new_password = '';
+    public $new_password_confirmation = '';
 
     public $selectedTeacher = null;
 
@@ -107,18 +109,28 @@ class TeacherManagement extends Component
         $this->last_name = $teacher->last_name;
         $this->suffix = $teacher->suffix;
         $this->contact_number = $teacher->contact_number ? preg_replace('/^\+63/', '', $teacher->contact_number) : '';
+        $this->new_password = '';
+        $this->new_password_confirmation = '';
 
         $this->showEditModal = true;
     }
 
     public function updateTeacher()
     {
-        $this->validate([
+        $rules = [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'contact_number' => ['nullable', 'regex:/^[0-9]{10}$/'],
-        ], [
+        ];
+
+        if (!empty($this->new_password)) {
+            $rules['new_password'] = 'min:6|same:new_password_confirmation';
+        }
+
+        $this->validate($rules, [
             'contact_number.regex' => 'The contact number must consist of exactly 10 numeric digits (e.g. 9123456789 after +63).',
+            'new_password.min' => 'The new password must be at least 6 characters.',
+            'new_password.same' => 'The password confirmation does not match.',
         ]);
 
         $teacher = Teacher::findOrFail($this->teacherId);
@@ -135,15 +147,19 @@ class TeacherManagement extends Component
             ]);
 
             if ($teacher->user) {
-                $teacher->user->update(['name' => $fullName]);
+                $userPayload = ['name' => $fullName];
+                if (!empty($this->new_password)) {
+                    $userPayload['password'] = Hash::make($this->new_password);
+                }
+                $teacher->user->update($userPayload);
             }
 
             ActivityLog::create([
                 'user_id' => auth()->id(),
-                'action' => 'Updated Teacher',
+                'action' => 'Updated Teacher Profile',
                 'subject_type' => Teacher::class,
                 'subject_id' => $teacher->id,
-                'description' => "Updated faculty profile for {$fullName} ({$teacher->employee_number}).",
+                'description' => "Updated faculty profile" . (!empty($this->new_password) ? " & password" : "") . " for {$fullName} ({$teacher->employee_number}).",
             ]);
         });
 

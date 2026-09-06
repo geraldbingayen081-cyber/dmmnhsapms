@@ -43,6 +43,8 @@ class StudentManagement extends Component
     public $birthdate = '';
     public $contact_number = '';
     public $school_year_section_id = '';
+    public $new_password = '';
+    public $new_password_confirmation = '';
 
     // Selected Student Profile for Detail View
     public $selectedStudent = null;
@@ -140,18 +142,28 @@ class StudentManagement extends Component
         $this->gender = $student->gender;
         $this->birthdate = $student->birthdate;
         $this->contact_number = $student->contact_number ? preg_replace('/^\+63/', '', $student->contact_number) : '';
+        $this->new_password = '';
+        $this->new_password_confirmation = '';
 
         $this->showEditModal = true;
     }
 
     public function updateStudent()
     {
-        $this->validate([
+        $rules = [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'contact_number' => ['nullable', 'regex:/^[0-9]{10}$/'],
-        ], [
+        ];
+
+        if (!empty($this->new_password)) {
+            $rules['new_password'] = 'min:6|same:new_password_confirmation';
+        }
+
+        $this->validate($rules, [
             'contact_number.regex' => 'The contact number must consist of exactly 10 numeric digits (e.g. 9123456789 after +63).',
+            'new_password.min' => 'The new password must be at least 6 characters.',
+            'new_password.same' => 'The password confirmation does not match.',
         ]);
 
         $student = Student::findOrFail($this->studentId);
@@ -170,15 +182,19 @@ class StudentManagement extends Component
             ]);
 
             if ($student->user) {
-                $student->user->update(['name' => $fullName]);
+                $userPayload = ['name' => $fullName];
+                if (!empty($this->new_password)) {
+                    $userPayload['password'] = Hash::make($this->new_password);
+                }
+                $student->user->update($userPayload);
             }
 
             ActivityLog::create([
                 'user_id' => auth()->id(),
-                'action' => 'Updated Student',
+                'action' => 'Updated Student Profile',
                 'subject_type' => Student::class,
                 'subject_id' => $student->id,
-                'description' => "Updated student details for {$fullName} ({$student->student_number}).",
+                'description' => "Updated student details" . (!empty($this->new_password) ? " & password" : "") . " for {$fullName} ({$student->student_number}).",
             ]);
         });
 

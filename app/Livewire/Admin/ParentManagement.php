@@ -31,6 +31,8 @@ class ParentManagement extends Component
     public $last_name = '';
     public $suffix = '';
     public $contact_number = '';
+    public $new_password = '';
+    public $new_password_confirmation = '';
 
     // Linking Modal Fields
     public $linkParentId = null;
@@ -109,18 +111,28 @@ class ParentManagement extends Component
         $this->last_name = $parent->last_name;
         $this->suffix = $parent->suffix;
         $this->contact_number = $parent->contact_number ? preg_replace('/^\+63/', '', $parent->contact_number) : '';
+        $this->new_password = '';
+        $this->new_password_confirmation = '';
 
         $this->showEditModal = true;
     }
 
     public function updateParent()
     {
-        $this->validate([
+        $rules = [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'contact_number' => ['nullable', 'regex:/^[0-9]{10}$/'],
-        ], [
+        ];
+
+        if (!empty($this->new_password)) {
+            $rules['new_password'] = 'min:6|same:new_password_confirmation';
+        }
+
+        $this->validate($rules, [
             'contact_number.regex' => 'The contact number must consist of exactly 10 numeric digits (e.g. 9123456789 after +63).',
+            'new_password.min' => 'The new password must be at least 6 characters.',
+            'new_password.same' => 'The password confirmation does not match.',
         ]);
 
         $parent = ParentModel::findOrFail($this->parentId);
@@ -137,7 +149,11 @@ class ParentManagement extends Component
             ]);
 
             if ($parent->user) {
-                $parent->user->update(['name' => $fullName]);
+                $userPayload = ['name' => $fullName];
+                if (!empty($this->new_password)) {
+                    $userPayload['password'] = Hash::make($this->new_password);
+                }
+                $parent->user->update($userPayload);
             }
 
             ActivityLog::create([
@@ -145,7 +161,7 @@ class ParentManagement extends Component
                 'action' => 'Updated Parent Profile',
                 'subject_type' => ParentModel::class,
                 'subject_id' => $parent->id,
-                'description' => "Updated parent profile for {$fullName}.",
+                'description' => "Updated parent profile" . (!empty($this->new_password) ? " & password" : "") . " for {$fullName}.",
             ]);
         });
 
