@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             SubjectSeeder::class,
             SectionSeeder::class,
             SchoolYearSeeder::class,
+            DMMNHSSeeder::class,
         ]);
     }
 }
