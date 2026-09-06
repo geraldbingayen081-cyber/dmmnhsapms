@@ -25,14 +25,14 @@ class TestDataSeeder extends Seeder
 {
     public function run(): void
     {
-        // Clean test data using DELETE (compatible with InnoDB foreign key constraints)
+        // Clean test data using DELETE safely
         Schema::disableForeignKeyConstraints();
-        Grade::query()->delete();
-        DB::table('parent_student')->delete();
-        ParentModel::query()->delete();
-        StudentEnrollment::query()->delete();
-        Student::query()->delete();
-        User::whereIn('role', ['parent', 'student'])->delete();
+        if (Schema::hasTable('grades')) Grade::query()->delete();
+        if (Schema::hasTable('parent_student')) DB::table('parent_student')->delete();
+        if (Schema::hasTable('parents')) ParentModel::query()->delete();
+        if (Schema::hasTable('student_enrollments')) StudentEnrollment::query()->delete();
+        if (Schema::hasTable('students')) Student::query()->delete();
+        if (Schema::hasTable('users')) User::whereIn('role', ['parent', 'student'])->delete();
         Schema::enableForeignKeyConstraints();
 
         DB::transaction(function () {
