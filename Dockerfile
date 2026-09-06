@@ -22,6 +22,10 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader
 RUN npm install && npm run build
 
+# Ensure storage and bootstrap cache directories exist with full permissions
+RUN mkdir -p storage/framework/sessions storage/framework/views storage/framework/cache storage/logs bootstrap/cache \
+    && chmod -R 777 storage bootstrap/cache
+
 EXPOSE 10000
 
 CMD ["sh", "-c", "php artisan config:clear && php artisan migrate --force && php artisan db:seed --force && php artisan serve --host 0.0.0.0 --port ${PORT:-10000}"]
