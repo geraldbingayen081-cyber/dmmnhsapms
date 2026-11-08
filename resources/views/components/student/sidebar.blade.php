@@ -3,13 +3,13 @@
         $schoolLogoUrl = \App\Models\SystemSetting::logoUrl();
     @endphp
     <!-- Header / Branding Area -->
-    <div class="p-4 border-b border-emerald-800/60 flex items-center gap-3">
+    <div onclick="toggleSecretDarkMode()" class="p-4 border-b border-emerald-800/60 flex items-center gap-3 cursor-pointer select-none" title="DMMNHS APMS">
         @if ($schoolLogoUrl)
-            <div class="w-10 h-10 rounded-xl bg-white p-1 flex items-center justify-center border border-white/20 shadow-sm shrink-0 overflow-hidden" style="width: 40px; height: 40px; min-width: 40px; max-width: 40px; max-height: 40px;">
-                <img src="{{ $schoolLogoUrl }}" alt="Logo" class="max-w-full max-h-full w-auto h-auto object-contain block" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+            <div class="w-10 h-10 rounded-full bg-white p-1 flex items-center justify-center border border-white/20 shadow-sm shrink-0 overflow-hidden" style="width: 40px; height: 40px; min-width: 40px; max-width: 40px; max-height: 40px;">
+                <img src="{{ $schoolLogoUrl }}" alt="Logo" class="max-w-full max-h-full w-auto h-auto object-contain block rounded-full" style="max-width: 100%; max-height: 100%; object-fit: contain;">
             </div>
         @else
-            <div class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center text-amber-400 font-black text-lg border border-white/20 shadow-inner shrink-0" style="width: 40px; height: 40px; min-width: 40px; max-width: 40px; max-height: 40px;">
+            <div class="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-amber-400 font-black text-lg border border-white/20 shadow-inner shrink-0" style="width: 40px; height: 40px; min-width: 40px; max-width: 40px; max-height: 40px;">
                 <i class="fas fa-graduation-cap"></i>
             </div>
         @endif
@@ -40,9 +40,24 @@
                 <span>Report Card (Q1–Q3)</span>
             </a>
 
+            <a href="{{ route('student.history') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg transition {{ request()->routeIs('student.history*') ? 'bg-white/15 text-white font-bold border-l-4 border-amber-400' : 'text-emerald-100 hover:bg-white/10' }}">
+                <i class="fas fa-clock-rotate-left w-4 text-center text-amber-300"></i>
+                <span>Academic History</span>
+            </a>
+
             <a href="{{ route('student.achievements') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg transition {{ request()->routeIs('student.achievements*') ? 'bg-white/15 text-white font-bold border-l-4 border-amber-400' : 'text-emerald-100 hover:bg-white/10' }}">
                 <i class="fas fa-award w-4 text-center text-amber-300"></i>
                 <span>Awards and Achievements</span>
+            </a>
+        </div>
+
+        <!-- Account & Security Section -->
+        <div class="space-y-1">
+            <span class="px-3 text-[10px] font-bold text-emerald-300 uppercase tracking-widest block mb-1">Account</span>
+            
+            <a href="{{ route('student.profile') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg transition {{ request()->routeIs('student.profile*') ? 'bg-white/15 text-white font-bold border-l-4 border-amber-400' : 'text-emerald-100 hover:bg-white/10' }}">
+                <i class="fas fa-user-gear w-4 text-center text-amber-300"></i>
+                <span>My Profile & Security</span>
             </a>
         </div>
 
@@ -72,17 +87,21 @@
 
     <!-- Student Footer Account Summary -->
     <div class="p-3 border-t border-emerald-800/60 bg-emerald-950/40 flex items-center justify-between text-xs">
-        <div class="flex items-center gap-2.5 truncate">
-            <div class="w-8 h-8 rounded-full bg-amber-400 text-emerald-950 font-bold flex items-center justify-center text-xs shadow-sm">
-                {{ substr(auth()->user()->name ?? 'S', 0, 1) }}
-            </div>
+        <a href="{{ route('student.profile') }}" class="flex items-center gap-2.5 truncate hover:opacity-80 transition">
+            @if (auth()->user()->profile_photo_path)
+                <img src="{{ auth()->user()->profilePhotoUrl() }}" alt="Avatar" class="w-8 h-8 rounded-full object-cover border border-amber-400 shadow-sm shrink-0">
+            @else
+                <div class="w-8 h-8 rounded-full bg-amber-400 text-emerald-950 font-bold flex items-center justify-center text-xs shadow-sm shrink-0">
+                    {{ substr(auth()->user()->name ?? 'S', 0, 1) }}
+                </div>
+            @endif
             <div class="truncate">
                 <span class="font-bold text-white block truncate leading-tight">{{ auth()->user()->name ?? 'Student' }}</span>
                 <span class="text-[10px] text-emerald-300 font-mono block">{{ auth()->user()->login_id ?? '2026-0000' }}</span>
             </div>
-        </div>
+        </a>
 
-        <form method="POST" action="{{ route('logout') }}">
+        <form method="POST" action="{{ route('logout') }}" onsubmit="return confirmLogout(event, this)">
             @csrf
             <button type="submit" title="Logout" class="p-1.5 text-emerald-200 hover:text-white hover:bg-white/10 rounded-lg transition cursor-pointer">
                 <i class="fas fa-right-from-bracket text-xs"></i>

@@ -12,7 +12,7 @@
                 Teacher Academic Dashboard & Performance Analytics
             </h1>
             <p class="text-xs text-zinc-500 mt-0.5 font-medium">
-                Monitor student grade progression across quarters, identify learning gaps, and track teaching workload metrics.
+                Monitor student grade progression across terms, identify learning gaps, and track teaching workload metrics.
             </p>
         </div>
 
@@ -29,10 +29,10 @@
                 </select>
             </div>
 
-            <!-- Filter by Quarter -->
+            <!-- Filter by Term -->
             <div>
                 <select wire:model.live="filterQuarterId" class="px-3 py-2 text-xs font-bold rounded-xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-[#166534]">
-                    <option value="all">All Quarters (Cumulative)</option>
+                    <option value="all">All Terms (Cumulative)</option>
                     @foreach ($quarters as $q)
                         <option value="{{ $q->id }}">{{ $q->name }} {{ $q->status === 'active' ? '(Current)' : '' }}</option>
                     @endforeach
@@ -114,16 +114,16 @@
 
     <!-- MAIN ANALYTICS SECTION: 2 Focused Line Graphs -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- Chart 1: Quarterly Grade Progression Trend (Line Graph) -->
+        <!-- Chart 1: Term Grade Progression Trend (Line Graph) -->
         <div class="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm space-y-4 flex flex-col justify-between">
             <div class="border-b border-zinc-100 dark:border-zinc-800 pb-3 flex items-center justify-between">
                 <div>
                     <h3 class="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider flex items-center gap-2">
                         <i class="fas fa-chart-line text-[#166534]"></i>
-                        <span>Quarterly Academic Performance Trend</span>
+                        <span>Term Academic Performance Trend</span>
                     </h3>
                     <p class="text-[11px] text-zinc-500">
-                        Progression of class averages across academic quarters
+                        Progression of class averages across academic terms
                     </p>
                 </div>
                 <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-50 text-[#166534] border border-emerald-200">
@@ -191,7 +191,7 @@
             @else
                 <div class="h-72 min-h-[270px] flex flex-col items-center justify-center text-center p-6 text-zinc-400 bg-zinc-50 dark:bg-zinc-800/40 rounded-xl border border-dashed border-zinc-200 dark:border-zinc-700">
                     <i class="fas fa-chart-line text-2xl mb-2 text-zinc-300"></i>
-                    <span class="text-xs font-medium">No recorded grades available for quarterly progression.</span>
+                    <span class="text-xs font-medium">No recorded grades available for term progression.</span>
                 </div>
             @endif
         </div>
@@ -371,7 +371,7 @@
                     </div>
 
                     <div class="pt-2 border-t border-zinc-200/60 dark:border-zinc-700/60 flex items-center justify-between">
-                        <span class="text-[11px] text-zinc-400">Quarter Grading</span>
+                        <span class="text-[11px] text-zinc-400">Term Grading</span>
                         <a href="{{ route('teacher.grades', ['classId' => $load->id]) }}" class="px-3 py-1.5 bg-[#166534] hover:bg-emerald-800 text-white rounded-lg font-bold text-[11px] shadow-sm transition flex items-center gap-1.5">
                             <i class="fas fa-file-pen text-[10px]"></i>
                             <span>Encode Grades</span>

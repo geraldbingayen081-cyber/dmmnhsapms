@@ -6,10 +6,10 @@
                 <span>📝 Subject Grade Encoding</span>
             </div>
             <h1 class="text-2xl font-black tracking-tight text-zinc-900 dark:text-zinc-100">
-                Quarterly Subject Grade Entry Grid
+                Term Subject Grade Entry Grid
             </h1>
             <p class="text-xs text-zinc-500 dark:text-zinc-400 font-medium mt-1">
-                Input quarterly subject grades for Junior High School students.
+                Input term subject grades for Junior High School students.
             </p>
         </div>
 
@@ -46,7 +46,7 @@
         </div>
     @endif
 
-    <!-- Active Quarter Status Banner -->
+    <!-- Active Term Status Banner -->
     <div class="p-4 rounded-2xl bg-zinc-900 text-white flex items-center justify-between text-xs shadow-md">
         <div class="flex items-center gap-3">
             <span class="font-bold text-zinc-300">Active SY: {{ $currentSy?->school_year }}</span>

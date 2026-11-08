@@ -54,14 +54,14 @@ class SystemSetting extends Model
         if (!empty($path)) {
             // Check if file exists on the public disk
             if (Storage::disk('public')->exists($path)) {
-                return asset('storage/' . $path);
+                return '/storage/' . ltrim($path, '/');
             }
             // If path is an absolute URL or starts with storage/
             if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
                 return $path;
             }
             if (file_exists(public_path($path))) {
-                return asset($path);
+                return '/' . ltrim($path, '/');
             }
         }
         return null;

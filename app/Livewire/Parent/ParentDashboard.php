@@ -307,7 +307,7 @@ class ParentDashboard extends Component
                         // Official registered achievements
                         $dbAchievements = $selectedStudent->achievements;
                         foreach ($dbAchievements as $dba) {
-                            $dbaQuarter = !empty($dba->quarter) ? $dba->quarter : '1st Quarter';
+                            $dbaQuarter = !empty($dba->quarter) ? $dba->quarter : '1st Term';
                             $matchingQ = $quarters->first(fn($q) => stripos($q->name, $dbaQuarter) !== false || stripos($q->short_name, $dbaQuarter) !== false);
 
                             $exists = collect($earnedAwards)->contains(function ($item) use ($dba, $dbaQuarter) {
@@ -336,7 +336,9 @@ class ParentDashboard extends Component
             'selectedStudent' => $selectedStudent,
             'activeSy' => $activeSy,
             'currentQuarter' => $currentQuarter,
+            'currentTerm' => $currentQuarter,
             'quarters' => $quarters,
+            'terms' => $quarters,
             'activeEnrollment' => $activeEnrollment,
             'kpi' => $kpi,
             'subjectRows' => $subjectRows,
@@ -346,7 +348,7 @@ class ParentDashboard extends Component
             'teachersDirectory' => $teachersDirectory,
         ])->layout('layouts.parent', [
             'title' => 'Parent & Guardian Portal',
-            'subtitle' => 'Monitor your children’s quarterly performance, attendance, and achievements',
+            'subtitle' => 'Monitor your children’s term performance, attendance, and achievements',
         ]);
     }
 }

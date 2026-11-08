@@ -27,14 +27,14 @@
                         Official Progress Report Card (SF9)
                     </h2>
                     <p class="text-xs text-zinc-500 mt-0.5">
-                        Consolidated Quarterly Grades for {{ $selectedStudent->full_name }} (1st Quarter to 3rd Quarter).
+                        Consolidated Term Grades for {{ $selectedStudent->full_name }} (1st Term to 3rd Term).
                     </p>
                 </div>
 
-                <!--<button onclick="window.print()" class="px-4 py-2 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold text-xs rounded-xl border border-zinc-200 dark:border-zinc-700 flex items-center gap-2 transition cursor-pointer">
+                <button onclick="window.print()" class="no-print px-4 py-2 bg-[#166534] hover:bg-emerald-800 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center gap-2 cursor-pointer">
                     <i class="fas fa-print"></i>
                     <span>Print Report Card</span>
-                </button>-->
+                </button>
             </div>
 
             <!-- Student Meta Strip -->
@@ -107,7 +107,7 @@
                                             {{ number_format($row['final_avg'], 2) }}
                                         </span>
                                     @else
-                                        <span class="text-zinc-400 dark:text-zinc-500 font-bold" title="Pending complete grades from 1st to 3rd quarter">—</span>
+                                        <span class="text-zinc-400 dark:text-zinc-500 font-bold" title="Pending complete grades from 1st to 3rd term">—</span>
                                     @endif
                                 </td>
                                 <td class="py-3 px-3 text-center whitespace-nowrap">
@@ -120,7 +120,7 @@
                                             FAILED
                                         </span>
                                     @else
-                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-zinc-100 dark:bg-zinc-800 text-zinc-400" title="Complete grades from 1st to 3rd quarter required">
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-zinc-100 dark:bg-zinc-800 text-zinc-400" title="Complete grades from 1st to 3rd term required">
                                             PENDING
                                         </span>
                                     @endif
@@ -141,7 +141,7 @@
                                 General Weighted Average (GWA):
                             </td>
                             <td colspan="{{ count($quarters) }}" class="text-center font-normal text-zinc-400 text-[10px]">
-                                {{ $gwa !== null ? 'Cumulative Average (Q1–Q3)' : 'Requires Complete Q1 to Q3' }}
+                                {{ $gwa !== null ? 'Cumulative Average (T1–T3)' : 'Requires Complete T1 to T3' }}
                             </td>
                             <td class="py-3.5 px-3 text-center bg-emerald-100/60 dark:bg-emerald-950/60 font-mono font-black text-base text-[#166534] dark:text-emerald-300">
                                 {{ $gwa !== null ? number_format($gwa, 2) : '—' }}
@@ -168,3 +168,21 @@
         </div>
     @endif
 </div>
+
+<style>
+    @media print {
+        header, nav, aside, #parent-mobile-drawer, .no-print, button {
+            display: none !important;
+        }
+        body, main {
+            background: #ffffff !important;
+            color: #000000 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .shadow-sm, .rounded-2xl, .rounded-3xl {
+            box-shadow: none !important;
+            border-radius: 0 !important;
+        }
+    }
+</style>

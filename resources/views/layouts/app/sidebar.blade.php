@@ -95,7 +95,7 @@
                         <div class="font-bold text-zinc-900 dark:text-zinc-100">{{ auth()->user()->name }}</div>
                         <div class="text-[10px] text-[#166534] font-mono font-bold">{{ auth()->user()->login_id }}</div>
                     </div>
-                    <form method="POST" action="{{ route('logout') }}" class="w-full">
+                    <form method="POST" action="{{ route('logout') }}" class="w-full" onsubmit="return confirmLogout(event, this)">
                         @csrf
                         <flux:menu.item as="button" type="submit" icon="arrow-right-start-on-rectangle" class="w-full cursor-pointer">
                             {{ __('Log out') }}

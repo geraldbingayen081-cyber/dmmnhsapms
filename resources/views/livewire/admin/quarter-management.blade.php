@@ -1,18 +1,19 @@
 <div class="space-y-6 font-sans">
     <!-- Header & Action Button -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
-        <div>
-            <h2 class="text-base font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-                <i class="fas fa-list-ol text-[#166534]"></i>
-                <span>Quarter Management</span>
-            </h2>
-            <p class="text-xs text-zinc-500 mt-0.5">Manage quarterly grading periods and active evaluation periods per school year.</p>
+        <div class="flex items-center gap-3">
+            <a href="{{ $selectedSchoolYearId ? route('admin.school-years.configure', $selectedSchoolYearId) : route('admin.school-years') }}" title="Back to School Year Configuration" class="p-2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition">
+                <i class="fas fa-arrow-left text-sm"></i>
+            </a>
+            <div>
+                <h2 class="text-base font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                    <i class="fas fa-list-ol text-[#166534]"></i>
+                    <span>Term Management</span>
+                </h2>
+                <p class="text-xs text-zinc-500 mt-0.5">Manage term grading periods and active evaluation periods per school year.</p>
+            </div>
         </div>
 
-        <!--<button wire:click="openCreateModal" class="px-4 py-2.5 bg-[#166534] hover:bg-emerald-800 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center gap-2 self-start sm:self-auto cursor-pointer">
-            <i class="fas fa-plus"></i>
-            <span>Add Quarter</span>
-        </button>-->
     </div>
 
     <!-- School Year Selector Toolbar -->
@@ -27,14 +28,14 @@
         </div>
     </div>
 
-    <!-- Quarters Data Table -->
+    <!-- Terms Data Table -->
     <div class="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden">
         <div class="overflow-x-auto">
             <table class="w-full text-xs text-start">
                 <thead class="bg-zinc-50 dark:bg-zinc-800/80 text-zinc-500 uppercase text-[10px] font-bold tracking-wider border-b border-zinc-200 dark:border-zinc-800">
                     <tr>
                         <th class="py-3 px-4 text-center w-24">Sort Order</th>
-                        <th class="py-3 px-4 text-start">Quarter Name</th>
+                        <th class="py-3 px-4 text-start">Term Name</th>
                         <th class="py-3 px-4 text-start">Short Code</th>
                         <th class="py-3 px-4 text-start">Grading Period Dates</th>
                         <th class="py-3 px-4 text-center">Status</th>
@@ -82,7 +83,7 @@
                                     <i class="fas fa-pen-to-square text-xs"></i>
                                 </button>
                                 @if ($q->status !== 'active')
-                                    <button wire:click="activateQuarter({{ $q->id }})" title="Set as Active Quarter" class="p-1.5 text-zinc-600 hover:text-emerald-700 hover:bg-zinc-100 rounded-md transition">
+                                    <button wire:click="activateQuarter({{ $q->id }})" title="Set as Active Term" class="p-1.5 text-zinc-600 hover:text-emerald-700 hover:bg-zinc-100 rounded-md transition">
                                         <i class="fas fa-play text-xs text-emerald-600"></i>
                                     </button>
                                 @endif
@@ -97,7 +98,7 @@
                         <tr>
                             <td colspan="6" class="p-8 text-center text-zinc-400 italic">
                                 <i class="fas fa-list-ol text-2xl mb-2 text-zinc-300 block"></i>
-                                No quarters configured for the selected school year.
+                                No terms configured for the selected school year.
                             </td>
                         </tr>
                     @endforelse
@@ -114,7 +115,7 @@
                 <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-3">
                     <h3 class="text-sm font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
                         <i class="fas fa-plus text-[#166534]"></i>
-                        <span>Add Quarter</span>
+                        <span>Add Term</span>
                     </h3>
                     <button wire:click="$set('showCreateModal', false)" class="text-zinc-400 hover:text-zinc-600">
                         <i class="fas fa-times text-base"></i>
@@ -123,15 +124,15 @@
 
                 <form wire:submit.prevent="createQuarter" class="space-y-4">
                     <div>
-                        <label class="block font-bold text-zinc-700 dark:text-zinc-300 mb-1">Quarter Name *</label>
-                        <input type="text" wire:model.defer="name" required placeholder="e.g. 1st Quarter" class="w-full px-3 py-2 text-xs rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-[#166534]">
+                        <label class="block font-bold text-zinc-700 dark:text-zinc-300 mb-1">Term Name *</label>
+                        <input type="text" wire:model.defer="name" required placeholder="e.g. 1st Term" class="w-full px-3 py-2 text-xs rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-[#166534]">
                         @error('name') <span class="text-rose-600 text-[11px] font-bold block mt-1">{{ $message }}</span> @enderror
                     </div>
 
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block font-bold text-zinc-700 dark:text-zinc-300 mb-1">Short Code *</label>
-                            <input type="text" wire:model.defer="short_name" required placeholder="e.g. Q1" class="w-full px-3 py-2 text-xs rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-[#166534]">
+                            <input type="text" wire:model.defer="short_name" required placeholder="e.g. T1" class="w-full px-3 py-2 text-xs rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-[#166534]">
                             @error('short_name') <span class="text-rose-600 text-[11px] font-bold block mt-1">{{ $message }}</span> @enderror
                         </div>
 
@@ -164,7 +165,7 @@
 
                     <div class="flex justify-end gap-2 pt-2 border-t border-zinc-100 dark:border-zinc-800">
                         <button type="button" wire:click="$set('showCreateModal', false)" class="px-4 py-2 text-xs font-bold rounded-lg border border-zinc-300 text-zinc-700 hover:bg-zinc-100">Cancel</button>
-                        <button type="submit" class="px-4 py-2 text-xs font-bold rounded-lg bg-[#166534] text-white hover:bg-emerald-800 shadow-sm">Save Quarter</button>
+                        <button type="submit" class="px-4 py-2 text-xs font-bold rounded-lg bg-[#166534] text-white hover:bg-emerald-800 shadow-sm">Save Term</button>
                     </div>
                 </form>
             </div>
@@ -179,7 +180,7 @@
                 <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800 pb-3">
                     <h3 class="text-sm font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
                         <i class="fas fa-pen-to-square text-[#166534]"></i>
-                        <span>Edit Quarter</span>
+                        <span>Edit Term</span>
                     </h3>
                     <button wire:click="$set('showEditModal', false)" class="text-zinc-400 hover:text-zinc-600">
                         <i class="fas fa-times text-base"></i>
@@ -188,7 +189,7 @@
 
                 <form wire:submit.prevent="updateQuarter" class="space-y-4">
                     <div>
-                        <label class="block font-bold text-zinc-700 dark:text-zinc-300 mb-1">Quarter Name *</label>
+                        <label class="block font-bold text-zinc-700 dark:text-zinc-300 mb-1">Term Name *</label>
                         <input type="text" wire:model.defer="name" required class="w-full px-3 py-2 text-xs rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">
                     </div>
 

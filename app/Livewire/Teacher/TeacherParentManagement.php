@@ -39,7 +39,7 @@ class TeacherParentManagement extends Component
     // Link Modal
     public $linkParentId = null;
     public $selectedStudentId = null;
-    public $relationship = 'Mother';
+    public $relationship = 'Parent';
     public $studentSearch = '';
 
     public $selectedParent = null;
@@ -162,7 +162,7 @@ class TeacherParentManagement extends Component
         $this->resetValidation();
         $this->linkParentId = $id;
         $this->selectedStudentId = null;
-        $this->relationship = 'Mother';
+        $this->relationship = 'Parent';
         $this->studentSearch = '';
         $this->showLinkModal = true;
     }
@@ -174,6 +174,25 @@ class TeacherParentManagement extends Component
             'selectedStudentId' => 'required|exists:students,id',
             'relationship' => 'required|string|max:100',
         ]);
+
+        $teacher = auth()->user()->teacher;
+        $activeSy = AcademicContextService::getActiveSchoolYear();
+        $adviseeIds = collect();
+
+        if ($teacher && $activeSy) {
+            $advisedSectionIds = SchoolYearSection::where('school_year_id', $activeSy->id)
+                ->where('adviser_id', $teacher->id)
+                ->pluck('id');
+
+            if ($advisedSectionIds->isNotEmpty()) {
+                $adviseeIds = StudentEnrollment::whereIn('school_year_section_id', $advisedSectionIds)->pluck('student_id');
+            }
+        }
+
+        if (!$adviseeIds->contains((int)$this->selectedStudentId)) {
+            $this->addError('selectedStudentId', 'You can only link students from your assigned advisee section.');
+            return;
+        }
 
         $parent = ParentModel::findOrFail($this->linkParentId);
         $student = Student::findOrFail($this->selectedStudentId);
@@ -233,19 +252,26 @@ class TeacherParentManagement extends Component
         // Advisee students list for quick filtering / linking
         $adviseeIds = collect();
         if ($teacher && $activeSy) {
-            $advisedSection = SchoolYearSection::where('school_year_id', $activeSy->id)
+            $advisedSectionIds = SchoolYearSection::where('school_year_id', $activeSy->id)
                 ->where('adviser_id', $teacher->id)
-                ->first();
+                ->pluck('id');
 
-            if ($advisedSection) {
-                $adviseeIds = StudentEnrollment::where('school_year_section_id', $advisedSection->id)->pluck('student_id');
+            if ($advisedSectionIds->isNotEmpty()) {
+                $adviseeIds = StudentEnrollment::whereIn('school_year_section_id', $advisedSectionIds)->pluck('student_id');
             }
         }
 
         $query = ParentModel::with(['user', 'students']);
 
-        if ($this->filterScope === 'advisees' && $adviseeIds->isNotEmpty()) {
-            $query->whereHas('students', fn($q) => $q->whereIn('students.id', $adviseeIds));
+        // Only show parents who are linked to the teacher's advisee students (regardless of who linked them) or unlinked parents
+        if ($adviseeIds->isNotEmpty()) {
+            $query->where(function ($q) use ($adviseeIds) {
+                $q->whereHas('students', function ($sq) use ($adviseeIds) {
+                    $sq->whereIn('students.id', $adviseeIds);
+                })->orWhereDoesntHave('students');
+            });
+        } else {
+            $query->whereDoesntHave('students');
         }
 
         if (!empty($this->search)) {
@@ -261,8 +287,14 @@ class TeacherParentManagement extends Component
             });
         }
 
-        // Available students for linking dropdown
+        // Available students for linking dropdown (restricted strictly to advisees of assigned section)
         $studentsQuery = Student::query();
+        if ($adviseeIds->isNotEmpty()) {
+            $studentsQuery->whereIn('id', $adviseeIds);
+        } else {
+            $studentsQuery->whereRaw('1 = 0');
+        }
+
         if (!empty($this->studentSearch)) {
             $studentsQuery->where(function ($q) {
                 $q->where('first_name', 'LIKE', '%' . $this->studentSearch . '%')
@@ -270,7 +302,7 @@ class TeacherParentManagement extends Component
                   ->orWhere('student_number', 'LIKE', '%' . $this->studentSearch . '%');
             });
         }
-        $availableStudents = $studentsQuery->orderBy('last_name')->take(25)->get();
+        $availableStudents = $studentsQuery->orderBy('last_name')->take(50)->get();
 
         return view('livewire.teacher.teacher-parent-management', [
             'parents' => $query->orderBy('last_name')->paginate(10),

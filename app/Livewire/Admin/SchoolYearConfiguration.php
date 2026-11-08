@@ -131,6 +131,6 @@ class SchoolYearConfiguration extends Component
             'sections' => $sections,
             'teachers' => $teachers,
             'sectionsByGradeLevel' => $sectionsByGradeLevel,
-        ])->layout('layouts.admin', ['title' => "SY {$this->schoolYearModel->school_year} Configuration", 'subtitle' => 'Configure academic quarters, year level sections, and advisers']);
+        ])->layout('layouts.admin', ['title' => "SY {$this->schoolYearModel->school_year} Configuration", 'subtitle' => 'Configure academic terms, year level sections, and advisers']);
     }
 }

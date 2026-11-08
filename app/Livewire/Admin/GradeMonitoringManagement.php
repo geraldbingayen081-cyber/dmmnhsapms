@@ -130,6 +130,18 @@ class GradeMonitoringManagement extends Component
         $this->resetPage();
     }
 
+    public function updatedFilterYearLevelId()
+    {
+        $this->filterSectionId = 'all';
+        $this->resetPage();
+    }
+
+    public function updatedFilterSchoolYearId()
+    {
+        $this->filterSectionId = 'all';
+        $this->resetPage();
+    }
+
     public function approveGrade($id)
     {
         $grade = Grade::with(['studentEnrollment.student', 'sectionSubject.subject'])->findOrFail($id);
@@ -171,7 +183,18 @@ class GradeMonitoringManagement extends Component
         $schoolYears = SchoolYear::orderBy('school_year', 'desc')->get();
         $quarters = $this->filterSchoolYearId !== 'all' ? Quarter::where('school_year_id', $this->filterSchoolYearId)->orderBy('sort_order')->get() : Quarter::orderBy('sort_order')->get();
         $yearLevels = YearLevel::orderBy('sort_order')->get();
-        $sections = Section::all();
+        $sectionsQuery = Section::query();
+        if ($this->filterYearLevelId !== 'all' || $this->filterSchoolYearId !== 'all') {
+            $sectionsQuery->whereHas('schoolYearSections', function ($q) {
+                if ($this->filterSchoolYearId !== 'all') {
+                    $q->where('school_year_id', $this->filterSchoolYearId);
+                }
+                if ($this->filterYearLevelId !== 'all') {
+                    $q->where('year_level_id', $this->filterYearLevelId);
+                }
+            });
+        }
+        $sections = $sectionsQuery->orderBy('name')->get();
         $subjects = Subject::all();
         $teachers = Teacher::with('user')->get();
 
@@ -231,10 +254,11 @@ class GradeMonitoringManagement extends Component
             'grades' => $query->orderBy('created_at', 'desc')->paginate(12),
             'schoolYears' => $schoolYears,
             'quarters' => $quarters,
+            'terms' => $quarters,
             'yearLevels' => $yearLevels,
             'sections' => $sections,
             'subjects' => $subjects,
             'teachers' => $teachers,
-        ])->layout('layouts.admin', ['title' => 'Grade Monitoring & Review', 'subtitle' => 'Monitor, review, edit, and approve quarterly subject grades across JHS sections']);
+        ])->layout('layouts.admin', ['title' => 'Grade Monitoring & Review', 'subtitle' => 'Monitor, review, edit, and approve term subject grades across JHS sections']);
     }
 }

@@ -91,11 +91,12 @@ class StudentGrades extends Component
             'activeSy' => $activeSy,
             'activeEnrollment' => $activeEnrollment,
             'quarters' => $quarters,
+            'terms' => $quarters,
             'subjectRows' => $subjectRows,
             'gwa' => $gwa,
         ])->layout('layouts.student', [
             'title' => 'Official Progress Report Card (SF9)',
-            'subtitle' => 'DepEd Form 138-JHS Consolidated Quarterly Ratings (Q1 to Q3)',
+            'subtitle' => 'DepEd Form 138-JHS Consolidated Term Ratings (T1 to T3)',
         ]);
     }
 }

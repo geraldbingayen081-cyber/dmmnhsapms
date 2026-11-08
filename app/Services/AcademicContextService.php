@@ -35,6 +35,14 @@ class AcademicContextService
     }
 
     /**
+     * Get current active Term for the active school year (alias of getCurrentQuarter)
+     */
+    public static function getCurrentTerm(?int $schoolYearId = null): ?Quarter
+    {
+        return static::getCurrentQuarter($schoolYearId);
+    }
+
+    /**
      * Get currently selected school year ID from session or default active
      */
     public static function getSelectedSchoolYearId(): ?int

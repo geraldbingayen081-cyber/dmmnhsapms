@@ -9,7 +9,7 @@
                 Student Directory & Performance Cards
             </h1>
             <p class="text-xs text-zinc-500 dark:text-zinc-400 font-medium mt-1">
-                Don Mariano Marcos National High School • Search students, view 3-quarter grades, and print Form 138 report cards.
+                Don Mariano Marcos National High School • Search students, view 3-term grades, and print Form 138 report cards.
             </p>
         </div>
 
@@ -123,10 +123,10 @@
                     </div>
                 </div>
 
-                <!-- 3-Quarter Grades Table -->
+                <!-- 3-Term Grades Table -->
                 <div class="space-y-3">
                     <h3 class="text-sm font-bold text-zinc-900 dark:text-zinc-100 flex items-center justify-between">
-                        <span>📚 3-Quarter Subject Grade Sheet (SY {{ $currentSy?->year }})</span>
+                        <span>📚 3-Term Subject Grade Sheet (SY {{ $currentSy?->year }})</span>
                         <span class="text-xs text-zinc-400 font-normal">Grading Standard: 75 Passing</span>
                     </h3>
                     <div class="overflow-x-auto rounded-2xl border border-zinc-200 dark:border-zinc-800">
@@ -135,9 +135,9 @@
                                 <tr>
                                     <th class="py-3 px-4 text-start">Subject Code</th>
                                     <th class="py-3 px-4 text-start">Subject Name</th>
-                                    <th class="py-3 px-4 text-center">Q1 Grade</th>
-                                    <th class="py-3 px-4 text-center">Q2 Grade</th>
-                                    <th class="py-3 px-4 text-center">Q3 Grade</th>
+                                    <th class="py-3 px-4 text-center">T1 Grade</th>
+                                    <th class="py-3 px-4 text-center">T2 Grade</th>
+                                    <th class="py-3 px-4 text-center">T3 Grade</th>
                                     <th class="py-3 px-4 text-center">Final Grade</th>
                                     <th class="py-3 px-4 text-end">Remarks</th>
                                 </tr>

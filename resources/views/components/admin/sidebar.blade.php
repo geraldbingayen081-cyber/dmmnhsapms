@@ -3,13 +3,13 @@
         $schoolLogoUrl = \App\Models\SystemSetting::logoUrl();
     @endphp
     <!-- Header / Branding Area -->
-    <div class="p-4 border-b border-emerald-800/60 flex items-center gap-3">
+    <div onclick="toggleSecretDarkMode()" class="p-4 border-b border-emerald-800/60 flex items-center gap-3 cursor-pointer select-none" title="DMMNHS APMS">
         @if ($schoolLogoUrl)
-            <div class="w-10 h-10 rounded-xl bg-white p-1 flex items-center justify-center border border-white/20 shadow-sm shrink-0 overflow-hidden" style="width: 40px; height: 40px; min-width: 40px; max-width: 40px; max-height: 40px;">
-                <img src="{{ $schoolLogoUrl }}" alt="Logo" class="max-w-full max-h-full w-auto h-auto object-contain block" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+            <div class="w-10 h-10 rounded-full bg-white p-1 flex items-center justify-center border border-white/20 shadow-sm shrink-0 overflow-hidden" style="width: 40px; height: 40px; min-width: 40px; max-width: 40px; max-height: 40px;">
+                <img src="{{ $schoolLogoUrl }}" alt="Logo" class="max-w-full max-h-full w-auto h-auto object-contain block rounded-full" style="max-width: 100%; max-height: 100%; object-fit: contain;">
             </div>
         @else
-            <div class="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center text-amber-400 font-black text-lg border border-white/20 shadow-inner shrink-0" style="width: 40px; height: 40px; min-width: 40px; max-width: 40px; max-height: 40px;">
+            <div class="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-amber-400 font-black text-lg border border-white/20 shadow-inner shrink-0" style="width: 40px; height: 40px; min-width: 40px; max-width: 40px; max-height: 40px;">
                 <i class="fas fa-graduation-cap"></i>
             </div>
         @endif
@@ -24,7 +24,7 @@
         <!-- Overview & Core System Section -->
         <div class="space-y-1">
             <span class="px-3 text-[10px] font-bold text-emerald-300 uppercase tracking-widest block mb-1">Core System</span>
-            
+
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition {{ request()->routeIs('admin.dashboard') ? 'bg-white/15 text-white font-bold border-l-4 border-amber-400 shadow-sm' : 'text-emerald-100 hover:bg-white/10 hover:text-white' }}">
                 <i class="fas fa-gauge-high w-4 text-center text-amber-300"></i>
                 <span>Dashboard</span>
@@ -39,15 +39,15 @@
         <!-- Academic Structure -->
         <div class="space-y-1">
             <span class="px-3 text-[10px] font-bold text-emerald-300 uppercase tracking-widest block mb-1">Academic Structure</span>
-            
+
             <a href="{{ route('admin.school-years') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg transition {{ request()->routeIs('admin.school-years*') ? 'bg-white/15 text-white font-bold border-l-4 border-amber-400' : 'text-emerald-100 hover:bg-white/10' }}">
                 <i class="fas fa-calendar-days w-4 text-center"></i>
                 <span>School Years</span>
             </a>
 
-            <!--<a href="{{ route('admin.quarters') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg transition {{ request()->routeIs('admin.quarters*') ? 'bg-white/15 text-white font-bold border-l-4 border-amber-400' : 'text-emerald-100 hover:bg-white/10' }}">
+            <!--<a href="{{ route('admin.terms') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg transition {{ request()->routeIs('admin.terms*') || request()->routeIs('admin.quarters*') ? 'bg-white/15 text-white font-bold border-l-4 border-amber-400' : 'text-emerald-100 hover:bg-white/10' }}">
                 <i class="fas fa-list-ol w-4 text-center"></i>
-                <span>Quarter Periods</span>
+                <span>Term Periods</span>
             </a>
 
             <a href="{{ route('admin.year-levels') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg transition {{ request()->routeIs('admin.year-levels*') ? 'bg-white/15 text-white font-bold border-l-4 border-amber-400' : 'text-emerald-100 hover:bg-white/10' }}">
@@ -55,7 +55,7 @@
                 <span>Year Levels (G7-G10)</span>
             </a>-->
 
-            <a href="{{ route('admin.sections') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg transition {{ request()->routeIs('admin.sections') ? 'bg-white/15 text-white font-bold border-l-4 border-amber-400' : 'text-emerald-100 hover:bg-white/10' }}">
+            <!--<a href="{{ route('admin.sections') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg transition {{ request()->routeIs('admin.sections') ? 'bg-white/15 text-white font-bold border-l-4 border-amber-400' : 'text-emerald-100 hover:bg-white/10' }}">
                 <i class="fas fa-users-rectangle w-4 text-center"></i>
                 <span>Sections</span>
             </a>
@@ -63,13 +63,13 @@
             <a href="{{ route('admin.subjects') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg transition {{ request()->routeIs('admin.subjects*') ? 'bg-white/15 text-white font-bold border-l-4 border-amber-400' : 'text-emerald-100 hover:bg-white/10' }}">
                 <i class="fas fa-book w-4 text-center"></i>
                 <span>Subjects</span>
-            </a>
+            </a>-->
         </div>
 
         <!-- Users & Accounts -->
         <div class="space-y-1">
             <span class="px-3 text-[10px] font-bold text-emerald-300 uppercase tracking-widest block mb-1">User Directory</span>
-            
+
             <a href="{{ route('admin.students') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg transition {{ request()->routeIs('admin.students*') ? 'bg-white/15 text-white font-bold border-l-4 border-amber-400' : 'text-emerald-100 hover:bg-white/10' }}">
                 <i class="fas fa-user-graduate w-4 text-center"></i>
                 <span>Students Directory</span>
@@ -89,7 +89,7 @@
         <!-- Academic Operations -->
         <div class="space-y-1">
             <span class="px-3 text-[10px] font-bold text-emerald-300 uppercase tracking-widest block mb-1">Academic Operations</span>
-            
+
             <a href="{{ route('admin.advisers') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg transition {{ request()->routeIs('admin.advisers*') ? 'bg-white/15 text-white font-bold border-l-4 border-amber-400' : 'text-emerald-100 hover:bg-white/10' }}">
                 <i class="fas fa-shield-halved w-4 text-center"></i>
                 <span>Class Advisers</span>
@@ -114,16 +114,16 @@
         <!-- Intelligence & Outputs -->
         <div class="space-y-1">
             <span class="px-3 text-[10px] font-bold text-emerald-300 uppercase tracking-widest block mb-1">Settings</span>
-            
+
             <!-- <a href="{{ route('admin.analytics') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg transition {{ request()->routeIs('admin.analytics*') ? 'bg-white/15 text-white font-bold border-l-4 border-amber-400' : 'text-emerald-100 hover:bg-white/10' }}">
                 <i class="fas fa-chart-column w-4 text-center"></i>
                 <span>Academic Analytics</span>
             </a>-->
 
-           <!--  <a href="{{ route('admin.reports') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg transition {{ request()->routeIs('admin.reports*') ? 'bg-white/15 text-white font-bold border-l-4 border-amber-400' : 'text-emerald-100 hover:bg-white/10' }}">
+          <a href="{{ route('admin.reports') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg transition {{ request()->routeIs('admin.reports*') ? 'bg-white/15 text-white font-bold border-l-4 border-amber-400' : 'text-emerald-100 hover:bg-white/10' }}">
                 <i class="fas fa-file-pdf w-4 text-center"></i>
                 <span>DepEd Reports (SF9/10)</span>
-            </a>-->
+            </a>
 
             <a href="{{ route('admin.activity-logs') }}" class="flex items-center gap-3 px-3 py-2 rounded-lg transition {{ request()->routeIs('admin.activity-logs*') ? 'bg-white/15 text-white font-bold border-l-4 border-amber-400' : 'text-emerald-100 hover:bg-white/10' }}">
                 <i class="fas fa-clock-rotate-left w-4 text-center"></i>
@@ -149,9 +149,9 @@
             </div>
         </div>
 
-        <form method="POST" action="{{ route('logout') }}">
+        <form method="POST" action="{{ route('logout') }}" onsubmit="return confirmLogout(event, this)">
             @csrf
-            <button type="submit" title="Logout" class="p-1.5 text-emerald-200 hover:text-white hover:bg-white/10 rounded-lg transition">
+            <button type="submit" title="Logout" class="p-1.5 text-emerald-200 hover:text-white hover:bg-white/10 rounded-lg transition cursor-pointer">
                 <i class="fas fa-right-from-bracket text-xs"></i>
             </button>
         </form>

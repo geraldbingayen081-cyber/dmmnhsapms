@@ -1,0 +1,223 @@
+<svg width="980" height="1520" viewBox="0 0 980 1520" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 8 5 L 0 9 z" fill="#334155" />
+        </marker>
+        <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%" filterUnits="userSpaceOnUse">
+            <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#0f172a" flood-opacity="0.12"/>
+        </filter>
+    </defs>
+
+    <rect width="980" height="1520" fill="#ffffff"/>
+
+    <text x="490" y="38" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="16" font-weight="800" fill="#0f172a" text-anchor="middle" letter-spacing="0.5">PARENT / GUARDIAN USER FLOWCHART</text>
+    <text x="490" y="58" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="500" fill="#64748b" text-anchor="middle">Academic Performance Monitoring System with Analytics</text>
+
+    <!-- START (Oval) -->
+    <g filter="url(#shadow)">
+        <rect x="400" y="80" width="180" height="46" rx="23" ry="23" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+        <text x="490" y="108" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#0369a1" text-anchor="middle">START: Access Portal</text>
+    </g>
+
+    <path d="M 490 126 L 490 160" stroke="#334155" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+    <!-- INPUT CREDENTIALS (Parallelogram) -->
+    <g filter="url(#shadow)">
+        <polygon points="370,160 630,160 590,210 330,210" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+        <text x="480" y="185" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#92400e" text-anchor="middle">INPUT: Parent Email &amp; Password</text>
+        <text x="480" y="200" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#b45309" text-anchor="middle">(Submit Guardian Login)</text>
+    </g>
+
+    <path d="M 480 210 L 480 245" stroke="#334155" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+    <!-- PROCESS AUTH (Rectangle) -->
+    <g filter="url(#shadow)">
+        <rect x="360" y="245" width="240" height="46" rx="4" fill="#f1f5f9" stroke="#475569" stroke-width="2"/>
+        <text x="480" y="268" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Validate Parent Credentials</text>
+        <text x="480" y="282" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#64748b" text-anchor="middle">&amp; Query Linked Student Mappings</text>
+    </g>
+
+    <path d="M 480 291 L 480 325" stroke="#334155" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+    <!-- DECISION AUTH (Diamond) -->
+    <g filter="url(#shadow)">
+        <polygon points="480,325 610,370 480,415 350,370" fill="#fae8ff" stroke="#a855f7" stroke-width="2"/>
+        <text x="480" y="367" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#6b21a8" text-anchor="middle">Are Credentials</text>
+        <text x="480" y="381" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#6b21a8" text-anchor="middle">Valid &amp; Active?</text>
+    </g>
+
+    <!-- NO -->
+    <path d="M 610 370 L 760 370 L 760 300" stroke="#e11d48" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+    <text x="645" y="362" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#e11d48">No</text>
+
+    <!-- Error Notice (Parallelogram) -->
+    <g filter="url(#shadow)">
+        <polygon points="665,250 865,250 835,298 635,298" fill="#ffe4e6" stroke="#e11d48" stroke-width="2"/>
+        <text x="750" y="272" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="700" fill="#9f1239" text-anchor="middle">OUTPUT: Error Notice</text>
+        <text x="750" y="286" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#be123c" text-anchor="middle">'Invalid Credentials'</text>
+    </g>
+    <path d="M 750 250 L 750 185 L 635 185" stroke="#e11d48" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+    <!-- YES -->
+    <path d="M 480 415 L 480 455" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+    <text x="490" y="438" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#16a34a">Yes</text>
+
+    <!-- DECISION: HAS LINKED STUDENTS? (Diamond) -->
+    <g filter="url(#shadow)">
+        <polygon points="480,455 605,495 480,535 355,495" fill="#fae8ff" stroke="#a855f7" stroke-width="2"/>
+        <text x="480" y="492" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="700" fill="#6b21a8" text-anchor="middle">Are Linked Children</text>
+        <text x="480" y="505" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="700" fill="#6b21a8" text-anchor="middle">Found in Registry?</text>
+    </g>
+
+    <!-- NO LINKED STUDENTS -->
+    <path d="M 605 495 L 750 495 L 750 540" stroke="#e11d48" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+    <text x="635" y="488" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="700" fill="#e11d48">No</text>
+    <g filter="url(#shadow)">
+        <polygon points="660,540 840,540 815,585 635,585" fill="#ffe4e6" stroke="#e11d48" stroke-width="1.5"/>
+        <text x="737" y="560" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" font-weight="700" fill="#9f1239" text-anchor="middle">OUTPUT: 'No Child Linked'</text>
+        <text x="737" y="574" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8" fill="#be123c" text-anchor="middle">Contact School Registrar</text>
+    </g>
+
+    <!-- YES LINKED STUDENTS -->
+    <path d="M 480 535 L 480 570" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+    <text x="490" y="555" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#16a34a">Yes</text>
+
+    <!-- OUTPUT: PARENT DASHBOARD (Parallelogram) -->
+    <g filter="url(#shadow)">
+        <polygon points="310,570 670,570 630,625 270,625" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+        <text x="470" y="593" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#92400e" text-anchor="middle">OUTPUT: Display Parent Dashboard</text>
+        <text x="470" y="609" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#b45309" text-anchor="middle">Child Selector Dropdown, Overall Averages &amp; Early Academic Alerts</text>
+    </g>
+
+    <path d="M 470 625 L 470 660" stroke="#334155" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+    <!-- INPUT: SELECT CHILD (Parallelogram) -->
+    <g filter="url(#shadow)">
+        <polygon points="340,660 620,660 580,710 300,710" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+        <text x="460" y="683" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#92400e" text-anchor="middle">INPUT: Select Target Child / Ward</text>
+        <text x="460" y="698" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#b45309" text-anchor="middle">(Switch Active Child Context)</text>
+    </g>
+
+    <path d="M 460 710 L 460 745" stroke="#334155" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+    <!-- PROCESS: SET CONTEXT (Rectangle) -->
+    <g filter="url(#shadow)">
+        <rect x="330" y="745" width="260" height="42" rx="4" fill="#f1f5f9" stroke="#475569" stroke-width="2"/>
+        <text x="460" y="770" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Retrieve Selected Child's Performance Data</text>
+    </g>
+
+    <path d="M 460 787 L 460 820" stroke="#334155" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+    <!-- DECISION: PARENT ACTION (Diamond) -->
+    <g filter="url(#shadow)">
+        <polygon points="460,820 600,870 460,920 320,870" fill="#fae8ff" stroke="#a855f7" stroke-width="2"/>
+        <text x="460" y="865" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#6b21a8" text-anchor="middle">Select Monitoring</text>
+        <text x="460" y="880" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#6b21a8" text-anchor="middle">Feature / Action?</text>
+    </g>
+
+    <!-- Branch 1: Academic Grades & Alerts -->
+    <path d="M 320 870 L 140 870 L 140 930" stroke="#334155" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+    <text x="145" y="915" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="700" fill="#0369a1">1. View Child Grades</text>
+
+    <!-- Input SY & Quarter (Parallelogram) -->
+    <g filter="url(#shadow)">
+        <polygon points="60,930 220,930 190,980 30,980" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+        <text x="125" y="952" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="700" fill="#92400e" text-anchor="middle">INPUT: Select School Year</text>
+        <text x="125" y="966" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#b45309" text-anchor="middle">&amp; Academic Quarter</text>
+    </g>
+    <path d="M 125 980 L 125 1015" stroke="#334155" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+
+    <!-- Output Grades (Parallelogram) -->
+    <g filter="url(#shadow)">
+        <polygon points="50,1015 200,1015 180,1065 30,1065" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+        <text x="115" y="1036" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" font-weight="700" fill="#92400e" text-anchor="middle">OUTPUT: Subject Grades Table,</text>
+        <text x="115" y="1050" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8" fill="#b45309" text-anchor="middle">General Average &amp; Remarks</text>
+    </g>
+    <path d="M 115 1065 L 115 1095" stroke="#334155" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+
+    <!-- Check Failing (Diamond) -->
+    <g filter="url(#shadow)">
+        <polygon points="115,1095 190,1135 115,1175 40,1135" fill="#fae8ff" stroke="#a855f7" stroke-width="1.5"/>
+        <text x="115" y="1132" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8" font-weight="700" fill="#6b21a8" text-anchor="middle">Any Subject</text>
+        <text x="115" y="1144" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8" font-weight="700" fill="#6b21a8" text-anchor="middle">At-Risk / Failing?</text>
+    </g>
+
+    <!-- Warning = YES -->
+    <path d="M 40 1135 L 15 1135 L 15 1205" stroke="#e11d48" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+    <text x="20" y="1125" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8" font-weight="700" fill="#e11d48">Yes</text>
+    <g filter="url(#shadow)">
+        <polygon points="0,1205 105,1205 90,1250 0,1250" fill="#ffe4e6" stroke="#e11d48" stroke-width="1.5"/>
+        <text x="45" y="1225" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8" font-weight="700" fill="#9f1239" text-anchor="middle">OUTPUT: At-Risk Alert</text>
+        <text x="45" y="1238" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="7" fill="#be123c" text-anchor="middle">Teacher Consultation</text>
+    </g>
+
+    <!-- Warning = NO -->
+    <path d="M 115 1175 L 115 1205" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+    <text x="125" y="1195" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8" font-weight="700" fill="#16a34a">No</text>
+    <g filter="url(#shadow)">
+        <polygon points="115,1205 230,1205 215,1250 100,1250" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+        <text x="165" y="1225" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8" font-weight="700" fill="#92400e" text-anchor="middle">OUTPUT: Satisfactory</text>
+        <text x="165" y="1238" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="7" fill="#b45309" text-anchor="middle">Progress Record</text>
+    </g>
+
+    <!-- Branch 2: Child Achievements -->
+    <path d="M 390 905 L 360 905 L 360 930" stroke="#334155" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+    <text x="365" y="915" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="700" fill="#0369a1">2. Honors &amp; Awards</text>
+
+    <g filter="url(#shadow)">
+        <polygon points="290,930 430,930 410,980 270,980" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+        <text x="350" y="952" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" font-weight="700" fill="#92400e" text-anchor="middle">OUTPUT: Display Child's</text>
+        <text x="350" y="966" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8" fill="#b45309" text-anchor="middle">Honors &amp; Certificates</text>
+    </g>
+
+    <!-- Branch 3: Adviser & Teacher Contacts -->
+    <path d="M 530 905 L 565 905 L 565 930" stroke="#334155" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+    <text x="570" y="915" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="700" fill="#0369a1">3. Faculty Contacts</text>
+
+    <g filter="url(#shadow)">
+        <polygon points="495,930 645,930 625,980 475,980" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+        <text x="560" y="952" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" font-weight="700" fill="#92400e" text-anchor="middle">OUTPUT: Section Adviser &amp;</text>
+        <text x="560" y="966" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8" fill="#b45309" text-anchor="middle">Subject Teachers Info</text>
+    </g>
+
+    <!-- Branch 4: Switch Child / Ward -->
+    <path d="M 600 870 L 780 870 L 780 930" stroke="#334155" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+    <text x="785" y="915" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="700" fill="#0369a1">4. Switch Child</text>
+
+    <path d="M 780 930 L 780 685 L 625 685" stroke="#334155" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+
+    <!-- Return Bus -->
+    <path d="M 45 1250 L 45 1270 L 460 1270" stroke="#64748b" stroke-width="1.5" fill="none"/>
+    <path d="M 165 1250 L 165 1270" stroke="#64748b" stroke-width="1.5" fill="none"/>
+    <path d="M 350 980 L 350 1270" stroke="#64748b" stroke-width="1.5" fill="none"/>
+    <path d="M 560 980 L 560 1270" stroke="#64748b" stroke-width="1.5" fill="none"/>
+
+    <path d="M 460 1270 L 460 1300" stroke="#334155" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+    <!-- DECISION: ANOTHER TASK? (Diamond) -->
+    <g filter="url(#shadow)">
+        <polygon points="460,1300 585,1345 460,1390 335,1345" fill="#fae8ff" stroke="#a855f7" stroke-width="2"/>
+        <text x="460" y="1340" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#6b21a8" text-anchor="middle">Continue Monitoring</text>
+        <text x="460" y="1355" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#6b21a8" text-anchor="middle">Child's Records?</text>
+    </g>
+
+    <path d="M 335 1345 L 10 1345 L 10 600 L 270 600" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+    <text x="210" y="1335" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#16a34a">Yes (Return to Dashboard)</text>
+
+    <path d="M 460 1390 L 460 1430" stroke="#334155" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+    <text x="470" y="1410" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#475569">No</text>
+
+    <!-- PROCESS LOGOUT (Rectangle) -->
+    <g filter="url(#shadow)">
+        <rect x="350" y="1430" width="220" height="42" rx="4" fill="#f1f5f9" stroke="#475569" stroke-width="2"/>
+        <text x="460" y="1455" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">Clear Parent Session</text>
+    </g>
+
+    <path d="M 460 1472 L 460 1495" stroke="#334155" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+    <!-- END (Oval) -->
+    <g filter="url(#shadow)">
+        <rect x="370" y="1495" width="180" height="24" rx="12" ry="12" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+        <text x="460" y="1511" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="700" fill="#0369a1" text-anchor="middle">END: Session Terminated</text>
+    </g>
+</svg>

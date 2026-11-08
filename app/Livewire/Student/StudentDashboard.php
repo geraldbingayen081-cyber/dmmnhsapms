@@ -258,7 +258,9 @@ class StudentDashboard extends Component
             'student' => $student,
             'activeSy' => $activeSy,
             'currentQuarter' => $currentQuarter,
+            'currentTerm' => $currentQuarter,
             'quarters' => $quarters,
+            'terms' => $quarters,
             'activeEnrollment' => $activeEnrollment,
             'kpi' => $kpi,
             'subjectRows' => $subjectRows,
@@ -267,7 +269,7 @@ class StudentDashboard extends Component
             'subjectMasteryChart' => $subjectMasteryChart,
         ])->layout('layouts.student', [
             'title' => 'Student Dashboard & Academic Performance',
-            'subtitle' => 'Personal grade monitoring, quarterly progression, and academic achievements',
+            'subtitle' => 'Personal grade monitoring, term progression, and academic achievements',
         ]);
     }
 }

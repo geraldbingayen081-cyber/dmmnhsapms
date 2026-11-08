@@ -37,7 +37,7 @@ class ParentManagement extends Component
     // Linking Modal Fields
     public $linkParentId = null;
     public $selectedStudentId = null;
-    public $relationship = 'Mother';
+    public $relationship = 'Parent';
     public $studentSearch = '';
 
     public $selectedParent = null;
@@ -174,7 +174,7 @@ class ParentManagement extends Component
         $this->resetValidation();
         $this->linkParentId = $id;
         $this->selectedStudentId = null;
-        $this->relationship = 'Mother';
+        $this->relationship = 'Parent';
         $this->studentSearch = '';
         $this->showLinkModal = true;
     }

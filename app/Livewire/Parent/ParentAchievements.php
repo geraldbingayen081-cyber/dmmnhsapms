@@ -145,7 +145,7 @@ class ParentAchievements extends Component
                         // 2. Official registered achievements from database
                         $dbAchievements = $selectedStudent->achievements;
                         foreach ($dbAchievements as $dba) {
-                            $dbaQuarter = !empty($dba->quarter) ? $dba->quarter : '1st Quarter';
+                            $dbaQuarter = !empty($dba->quarter) ? $dba->quarter : '1st Term';
                             $matchingQ = $quarters->first(fn($q) => stripos($q->name, $dbaQuarter) !== false || stripos($q->short_name, $dbaQuarter) !== false);
 
                             $exists = collect($allAwards)->contains(function ($item) use ($dba, $dbaQuarter) {
@@ -184,11 +184,12 @@ class ParentAchievements extends Component
             'selectedStudent' => $selectedStudent,
             'activeSy' => $activeSy,
             'quarters' => $quarters,
+            'terms' => $quarters,
             'awardsList' => $filteredAwards,
             'totalAwardsCount' => count($allAwards),
         ])->layout('layouts.parent', [
             'title' => 'Child Awards and Achievements',
-            'subtitle' => 'Quarterly Academic Recognitions and Subject Excellence Awards',
+            'subtitle' => 'Term Academic Recognitions and Subject Excellence Awards',
         ]);
     }
 }

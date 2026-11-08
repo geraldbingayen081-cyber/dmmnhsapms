@@ -43,7 +43,7 @@
             </div>
         </div>
 
-        <!-- Navigation Tabs & Quarter Filter -->
+        <!-- Navigation Tabs & Term Filter -->
         <div class="bg-white dark:bg-zinc-900 p-3 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-3 text-xs">
             <div class="flex items-center gap-1.5 p-1 bg-zinc-100 dark:bg-zinc-800 rounded-xl overflow-x-auto">
                 <button wire:click="$set('activeTab', 'roster')" class="px-4 py-2 font-bold rounded-lg transition whitespace-nowrap {{ $activeTab === 'roster' ? 'bg-white dark:bg-zinc-900 text-[#166534] dark:text-emerald-400 shadow-xs' : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900' }}">
@@ -62,9 +62,9 @@
 
             @if ($activeTab === 'grades')
                 <div class="flex items-center gap-2">
-                    <span class="text-zinc-500 font-bold text-[11px]">Quarter:</span>
+                    <span class="text-zinc-500 font-bold text-[11px]">Term:</span>
                     <select wire:model.live="selectedQuarterId" class="px-3 py-1.5 text-xs font-bold rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">
-                        <option value="all">Consolidated / All Quarters</option>
+                        <option value="all">Consolidated / All Terms</option>
                         @foreach ($quarters as $q)
                             <option value="{{ $q->id }}">{{ $q->name }}</option>
                         @endforeach
@@ -209,7 +209,7 @@
                             @empty
                                 <tr>
                                     <td colspan="{{ count($subjects) + 3 }}" class="p-8 text-center text-zinc-400 italic">
-                                        No grades recorded for this quarter period.
+                                        No grades recorded for this term period.
                                     </td>
                                 </tr>
                             @endforelse
@@ -251,10 +251,10 @@
                             </select>
                         </div>
 
-                        <!-- Quarter Filter -->
+                        <!-- Term Filter -->
                         <div>
                             <select wire:model.live="selectedQuarterId" class="px-3 py-1.5 text-xs font-bold rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-[#166534]">
-                                <option value="all">Consolidated / All Quarters</option>
+                                <option value="all">Consolidated / All Terms</option>
                                 @foreach ($quarters as $q)
                                     <option value="{{ $q->id }}">{{ $q->name }}</option>
                                 @endforeach
@@ -411,14 +411,8 @@
                         <div>
                             <label class="block font-bold text-zinc-700 dark:text-zinc-300 mb-1">Relationship to Student *</label>
                             <select wire:model.defer="relationship" required class="w-full px-3 py-2 text-xs rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">
-                                <option value="Mother">Mother</option>
-                                <option value="Father">Father</option>
+                                <option value="Parent">Parent</option>
                                 <option value="Guardian">Guardian</option>
-                                <option value="Grandmother">Grandmother</option>
-                                <option value="Grandfather">Grandfather</option>
-                                <option value="Aunt">Aunt</option>
-                                <option value="Uncle">Uncle</option>
-                                <option value="Other">Other</option>
                             </select>
                         </div>
 

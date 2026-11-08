@@ -15,7 +15,13 @@ use Livewire\Component;
 class SubjectTeacherAssignment extends Component
 {
     public $selectedSchoolYearId = null;
+    public $selectedYearLevelId = 'all';
     public $selectedSchoolYearSectionId = 'all';
+
+    public function updatedSelectedYearLevelId()
+    {
+        $this->selectedSchoolYearSectionId = 'all';
+    }
 
     public $showAssignModal = false;
     public $showAutoAssignModal = false;
@@ -79,7 +85,14 @@ class SubjectTeacherAssignment extends Component
             $teachersTotal = $teachers->count();
 
             foreach ($sections as $sec) {
+                $sec->loadMissing('section');
+                $secName = $sec->section ? $sec->section->name : null;
+
                 foreach ($subjects as $sub) {
+                    if ($sub->subject_code === 'JOURN' && strtoupper(trim($secName ?? '')) !== 'SPJ') {
+                        continue;
+                    }
+
                     $ss = SectionSubject::firstOrCreate([
                         'school_year_section_id' => $sec->id,
                         'subject_id' => $sub->id,
@@ -139,6 +152,11 @@ class SubjectTeacherAssignment extends Component
         $sys = SchoolYearSection::with(['section', 'yearLevel', 'schoolYear'])->findOrFail($this->school_year_section_id);
         $sub = Subject::findOrFail($this->subject_id);
         $teacher = $this->teacher_id ? Teacher::find($this->teacher_id) : null;
+
+        if ($sub->subject_code === 'JOURN' && strtoupper(trim($sys->section?->name ?? '')) !== 'SPJ') {
+            $this->addError('subject_id', 'Journalism is only offered in the SPJ section.');
+            return;
+        }
 
         DB::transaction(function () use ($sys, $sub, $teacher) {
             $ss = SectionSubject::updateOrCreate(
@@ -202,12 +220,16 @@ class SubjectTeacherAssignment extends Component
     public function render()
     {
         $schoolYears = SchoolYear::orderBy('school_year', 'desc')->get();
+        $yearLevels = \App\Models\YearLevel::orderBy('sort_order')->get();
 
-        $sections = $this->selectedSchoolYearId 
-            ? SchoolYearSection::with(['section', 'yearLevel'])
-                ->where('school_year_id', $this->selectedSchoolYearId)
-                ->get() 
-            : collect();
+        $sectionsQuery = SchoolYearSection::with(['section', 'yearLevel']);
+        if ($this->selectedSchoolYearId) {
+            $sectionsQuery->where('school_year_id', $this->selectedSchoolYearId);
+        }
+        if ($this->selectedYearLevelId !== 'all') {
+            $sectionsQuery->where('year_level_id', $this->selectedYearLevelId);
+        }
+        $sections = $sectionsQuery->get();
 
         $query = SectionSubject::with([
             'schoolYearSection.schoolYear',
@@ -219,6 +241,9 @@ class SubjectTeacherAssignment extends Component
             if ($this->selectedSchoolYearId) {
                 $q->where('school_year_id', $this->selectedSchoolYearId);
             }
+            if ($this->selectedYearLevelId !== 'all') {
+                $q->where('year_level_id', $this->selectedYearLevelId);
+            }
             if ($this->selectedSchoolYearSectionId !== 'all') {
                 $q->where('id', $this->selectedSchoolYearSectionId);
             }
@@ -229,6 +254,7 @@ class SubjectTeacherAssignment extends Component
 
         return view('livewire.admin.subject-teacher-assignment', [
             'schoolYears' => $schoolYears,
+            'yearLevels' => $yearLevels,
             'sections' => $sections,
             'sectionSubjects' => $query->get(),
             'subjects' => $subjects,

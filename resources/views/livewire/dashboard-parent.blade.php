@@ -9,7 +9,7 @@
                 Child Academic Progress Portal
             </h1>
             <p class="text-xs text-zinc-300 font-medium">
-                Don Mariano Marcos National High School • Real-time 3-quarter grades and subject performance for your child.
+                Don Mariano Marcos National High School • Real-time 3-term grades and subject performance for your child.
             </p>
         </div>
 
@@ -65,11 +65,11 @@
 
         <!-- Personal Analytics Charts for Child -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <!-- Child Quarterly Trend -->
+            <!-- Child Term Trend -->
             <div class="bg-white dark:bg-zinc-900 p-6 rounded-3xl border border-zinc-200/80 dark:border-zinc-800 shadow-sm space-y-4">
                 <div class="border-b border-zinc-100 dark:border-zinc-800 pb-3">
-                    <h3 class="text-base font-bold text-zinc-900 dark:text-zinc-100">{{ $activeChild->first_name }}'s 3-Quarter Trajectory</h3>
-                    <p class="text-xs text-zinc-400">Quarterly average progression from Q1 to Q3</p>
+                    <h3 class="text-base font-bold text-zinc-900 dark:text-zinc-100">{{ $activeChild->first_name }}'s 3-Term Trajectory</h3>
+                    <p class="text-xs text-zinc-400">Term average progression from T1 to T3</p>
                 </div>
                 <div id="chart-parent-quarter" class="w-full h-64"></div>
             </div>
@@ -124,7 +124,7 @@
                     }],
                     colors: ['#0284c7'],
                     stroke: { curve: 'smooth', width: 4 },
-                    xaxis: { categories: ['Quarter 1', 'Quarter 2', 'Quarter 3'] },
+                    xaxis: { categories: ['1st Term', '2nd Term', '3rd Term'] },
                     yaxis: { min: 70, max: 100 }
                 };
                 new ApexCharts(document.querySelector("#chart-parent-quarter"), quarterOptions).render();

@@ -1,0 +1,323 @@
+<svg width="1200" height="1350" viewBox="0 0 1200 1350" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <marker id="sa-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 8 5 L 0 9 z" fill="#3b82f6" />
+        </marker>
+        <marker id="sa-arrow-down" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 1 L 8 5 L 0 9 z" fill="#475569" />
+        </marker>
+        <marker id="sa-arrow-up" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 8 5 L 0 9 z" fill="#475569" />
+        </marker>
+        <filter id="sa-shadow" x="-5%" y="-5%" width="110%" height="110%" filterUnits="userSpaceOnUse">
+            <feDropShadow dx="1" dy="2" stdDeviation="2.5" flood-color="#0f172a" flood-opacity="0.08"/>
+        </filter>
+    </defs>
+
+    <!-- Background Canvas -->
+    <rect width="1200" height="1350" fill="#ffffff"/>
+
+    <!-- Document Header -->
+    <text x="600" y="38" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="18" font-weight="800" fill="#0f172a" text-anchor="middle" letter-spacing="0.5">SYSTEM ARCHITECTURE DIAGRAM</text>
+    <text x="600" y="58" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" fill="#64748b" text-anchor="middle">Academic Performance Monitoring System with Analytics • 3-Tier Layered Architecture</text>
+
+    <!-- =========================================================================
+         TIER 1: USER & PRESENTATION LAYER (CLIENT TIER)
+         ========================================================================= -->
+    <rect x="40" y="80" width="1120" height="240" rx="10" ry="10" fill="#f8fafc" stroke="#3b82f6" stroke-width="2"/>
+    <rect x="40" y="80" width="1120" height="34" rx="10" ry="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+    <rect x="40" y="102" width="1120" height="12" fill="#eff6ff"/>
+    <text x="60" y="103" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="800" fill="#1e40af">1. USER &amp; PRESENTATION LAYER (CLIENT TIER / FRONTEND)</text>
+
+    <!-- 4 User Portals Grid -->
+    <!-- Admin Portal -->
+    <g transform="translate(60, 125)" filter="url(#sa-shadow)">
+        <rect x="0" y="0" width="250" height="175" rx="8" ry="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+        <rect x="0" y="0" width="250" height="32" rx="8" ry="8" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+        <rect x="0" y="22" width="250" height="10" fill="#dbeafe"/>
+        <text x="125" y="21" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="800" fill="#1e3a8a" text-anchor="middle">ADMINISTRATOR PORTAL</text>
+        <text x="15" y="52" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Executive Analytics Dashboard</text>
+        <text x="15" y="70" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Academic Structure &amp; SY Setup</text>
+        <text x="15" y="88" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• User &amp; Faculty Load Provisioning</text>
+        <text x="15" y="106" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Grade Period Locking &amp; Audit</text>
+        <text x="15" y="124" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Institutional Honors &amp; Ranking</text>
+        <text x="15" y="142" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• DepEd SF10 &amp; Master Sheets</text>
+        <rect x="15" y="152" width="220" height="15" rx="3" fill="#eff6ff"/>
+        <text x="125" y="163" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8.5" font-weight="700" fill="#2563eb" text-anchor="middle">Livewire SPA + Blade View</text>
+    </g>
+
+    <!-- Teacher Portal -->
+    <g transform="translate(330, 125)" filter="url(#sa-shadow)">
+        <rect x="0" y="0" width="250" height="175" rx="8" ry="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+        <rect x="0" y="0" width="250" height="32" rx="8" ry="8" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1"/>
+        <rect x="0" y="22" width="250" height="10" fill="#e0f2fe"/>
+        <text x="125" y="21" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="800" fill="#0369a1" text-anchor="middle">FACULTY / TEACHER PORTAL</text>
+        <text x="15" y="52" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Assigned Subject Schedule</text>
+        <text x="15" y="70" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Quarterly Grade Encoding Form</text>
+        <text x="15" y="88" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Auto Transmutation Calculator</text>
+        <text x="15" y="106" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Advisory Section Management</text>
+        <text x="15" y="124" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• SF9 Progress Card Generator</text>
+        <text x="15" y="142" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Parent Contact Directory</text>
+        <rect x="15" y="152" width="220" height="15" rx="3" fill="#f0f9ff"/>
+        <text x="125" y="163" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8.5" font-weight="700" fill="#0284c7" text-anchor="middle">Reactive Livewire Data Tables</text>
+    </g>
+
+    <!-- Student Portal -->
+    <g transform="translate(600, 125)" filter="url(#sa-shadow)">
+        <rect x="0" y="0" width="250" height="175" rx="8" ry="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+        <rect x="0" y="0" width="250" height="32" rx="8" ry="8" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
+        <rect x="0" y="22" width="250" height="10" fill="#dcfce7"/>
+        <text x="125" y="21" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="800" fill="#15803d" text-anchor="middle">STUDENT / LEARNER PORTAL</text>
+        <text x="15" y="52" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Academic GPA &amp; Quarter Summary</text>
+        <text x="15" y="70" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Subject-by-Subject Grade Marks</text>
+        <text x="15" y="88" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Interactive Performance Visuals</text>
+        <text x="15" y="106" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• DepEd Honors &amp; Digital Badges</text>
+        <text x="15" y="124" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Electronic SF9 PDF Download</text>
+        <text x="15" y="142" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Profile &amp; Password Settings</text>
+        <rect x="15" y="152" width="220" height="15" rx="3" fill="#f0fdf4"/>
+        <text x="125" y="163" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8.5" font-weight="700" fill="#16a34a" text-anchor="middle">Responsive Mobile &amp; Desktop UI</text>
+    </g>
+
+    <!-- Parent Portal -->
+    <g transform="translate(870, 125)" filter="url(#sa-shadow)">
+        <rect x="0" y="0" width="270" height="175" rx="8" ry="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+        <rect x="0" y="0" width="270" height="32" rx="8" ry="8" fill="#fef3c7" stroke="#fcd34d" stroke-width="1"/>
+        <rect x="0" y="22" width="270" height="10" fill="#fef3c7"/>
+        <text x="135" y="21" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="800" fill="#b45309" text-anchor="middle">PARENT / GUARDIAN PORTAL</text>
+        <text x="15" y="52" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Multi-Child Context Switcher</text>
+        <text x="15" y="70" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Real-time Progress Monitoring</text>
+        <text x="15" y="88" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Early At-Risk Intervention Alert</text>
+        <text x="15" y="106" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Honors &amp; Awards Milestone View</text>
+        <text x="15" y="124" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Adviser &amp; Teacher Contact Card</text>
+        <text x="15" y="142" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" fill="#334155">• Report Card PDF Download</text>
+        <rect x="15" y="152" width="240" height="15" rx="3" fill="#fffbeb"/>
+        <text x="135" y="163" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8.5" font-weight="700" fill="#d97706" text-anchor="middle">Parent-Teacher Bridge Interface</text>
+    </g>
+
+
+    <!-- Connector 1 -> 2 (HTTPS / AJAX / WebSocket Wire Protocol) -->
+    <g transform="translate(600, 320)">
+        <line x1="0" y1="0" x2="0" y2="40" stroke="#3b82f6" stroke-width="2.5" stroke-dasharray="4,3"/>
+        <polygon points="-6,35 0,45 6,35" fill="#3b82f6"/>
+        <rect x="-160" y="8" width="320" height="24" rx="12" ry="12" fill="#ffffff" stroke="#93c5fd" stroke-width="1.2"/>
+        <text x="0" y="24" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">HTTPS / REST API / Livewire 3 Wire Protocol (AJAX/DOM Morph)</text>
+    </g>
+
+
+    <!-- =========================================================================
+         TIER 2: APPLICATION & BUSINESS LOGIC LAYER (BACKEND TIER)
+         ========================================================================= -->
+    <rect x="40" y="370" width="1120" height="520" rx="10" ry="10" fill="#f8fafc" stroke="#6366f1" stroke-width="2"/>
+    <rect x="40" y="370" width="1120" height="34" rx="10" ry="10" fill="#e0e7ff" stroke="#6366f1" stroke-width="1.5"/>
+    <rect x="40" y="392" width="1120" height="12" fill="#e0e7ff"/>
+    <text x="60" y="393" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="800" fill="#3730a3">2. APPLICATION &amp; BUSINESS LOGIC LAYER (LARAVEL 11 / LIVEWIRE 3 ENGINE)</text>
+
+    <!-- Sub-Block 2.1: Web Server & Gateway -->
+    <g transform="translate(60, 415)" filter="url(#sa-shadow)">
+        <rect x="0" y="0" width="320" height="90" rx="6" ry="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+        <rect x="0" y="0" width="320" height="24" rx="6" ry="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="160" y="16" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="800" fill="#1e293b" text-anchor="middle">WEB SERVER &amp; ENVIRONMENT</text>
+        <text x="15" y="42" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Web Server: Nginx / Apache / Laravel Herd</text>
+        <text x="15" y="58" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Runtime Environment: PHP 8.2+ Engine</text>
+        <text x="15" y="74" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Request Router &amp; Route Model Binding</text>
+    </g>
+
+    <!-- Sub-Block 2.2: Middleware & Security Governance -->
+    <g transform="translate(410, 415)" filter="url(#sa-shadow)">
+        <rect x="0" y="0" width="350" height="90" rx="6" ry="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+        <rect x="0" y="0" width="350" height="24" rx="6" ry="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="175" y="16" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="800" fill="#1e293b" text-anchor="middle">SECURITY &amp; MIDDLEWARE PIPELINE</text>
+        <text x="15" y="42" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Authentication: Multi-Role Auth Guard</text>
+        <text x="15" y="58" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Authorization: Role-Based Access Control (RBAC)</text>
+        <text x="15" y="74" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Security: CSRF Protection, XSS Filtering, Bcrypt Hash</text>
+    </g>
+
+    <!-- Sub-Block 2.3: State & Session Management -->
+    <g transform="translate(790, 415)" filter="url(#sa-shadow)">
+        <rect x="0" y="0" width="350" height="90" rx="6" ry="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+        <rect x="0" y="0" width="350" height="24" rx="6" ry="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="175" y="16" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="800" fill="#1e293b" text-anchor="middle">CONTEXT &amp; SESSION CONTROLLER</text>
+        <text x="15" y="42" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• AcademicContextService (Active SY &amp; Quarter)</text>
+        <text x="15" y="58" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• SchoolYearRotationService &amp; Context State</text>
+        <text x="15" y="74" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Multi-Child Session Switcher Context</text>
+    </g>
+
+    <!-- Sub-Block 2.4: Core Business Logic Services (6 Engines) -->
+    <text x="60" y="535" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="800" fill="#4338ca">CORE DOMAIN SERVICES &amp; COMPUTATION ENGINES</text>
+
+    <!-- Engine 1: Grade Computation & Transmutation -->
+    <g transform="translate(60, 545)" filter="url(#sa-shadow)">
+        <rect x="0" y="0" width="335" height="150" rx="6" ry="6" fill="#ffffff" stroke="#818cf8" stroke-width="1.2"/>
+        <rect x="0" y="0" width="335" height="26" rx="6" ry="6" fill="#e0e7ff" stroke="#818cf8" stroke-width="1"/>
+        <text x="167" y="18" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="800" fill="#3730a3" text-anchor="middle">Grade Computation &amp; Transmutation Engine</text>
+        <text x="12" y="45" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Transmutes Raw Scores to DepEd Scale (60-100)</text>
+        <text x="12" y="63" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Calculates Subject Final Grades &amp; General Average</text>
+        <text x="12" y="81" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Validates Grade Completion &amp; Missing Scores</text>
+        <text x="12" y="99" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Draft vs. Final Submission Commit Handler</text>
+        <text x="12" y="117" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Grade Locking Window Compliance Validator</text>
+        <rect x="12" y="127" width="311" height="15" rx="3" fill="#eef2ff"/>
+        <text x="167" y="138" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8" font-weight="700" fill="#4f46e5" text-anchor="middle">GradeManagement.php / GradeEncoding.php</text>
+    </g>
+
+    <!-- Engine 2: DepEd Honors & Ranking Engine -->
+    <g transform="translate(425, 545)" filter="url(#sa-shadow)">
+        <rect x="0" y="0" width="335" height="150" rx="6" ry="6" fill="#ffffff" stroke="#818cf8" stroke-width="1.2"/>
+        <rect x="0" y="0" width="335" height="26" rx="6" ry="6" fill="#e0e7ff" stroke="#818cf8" stroke-width="1"/>
+        <text x="167" y="18" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="800" fill="#3730a3" text-anchor="middle">Automated Honors &amp; Ranking Engine</text>
+        <text x="12" y="45" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• DepEd Policy Evaluation (Order No. 36, s. 2016)</text>
+        <text x="12" y="63" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Evaluates Tiers: Honors, High Honors, Highest</text>
+        <text x="12" y="81" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Enforces 85% Minimum Grade Disqualification Rule</text>
+        <text x="12" y="99" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Dynamic Section &amp; Batch Ranking Sorter</text>
+        <text x="12" y="117" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Issues Digital Achievement Badges &amp; Certificates</text>
+        <rect x="12" y="127" width="311" height="15" rx="3" fill="#eef2ff"/>
+        <text x="167" y="138" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8" font-weight="700" fill="#4f46e5" text-anchor="middle">AcademicAchievementsManagement.php</text>
+    </g>
+
+    <!-- Engine 3: At-Risk & Early Warning Analytics -->
+    <g transform="translate(790, 545)" filter="url(#sa-shadow)">
+        <rect x="0" y="0" width="350" height="150" rx="6" ry="6" fill="#ffffff" stroke="#818cf8" stroke-width="1.2"/>
+        <rect x="0" y="0" width="350" height="26" rx="6" ry="6" fill="#e0e7ff" stroke="#818cf8" stroke-width="1"/>
+        <text x="175" y="18" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="800" fill="#3730a3" text-anchor="middle">At-Risk Early Warning &amp; Analytics Engine</text>
+        <text x="12" y="45" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Flags Failing Marks (&lt; 75 Passing Benchmark)</text>
+        <text x="12" y="63" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Detects Negative Quarterly Grade Trajectories</text>
+        <text x="12" y="81" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Triggers Parent &amp; Adviser Intervention Badges</text>
+        <text x="12" y="99" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Aggregates School-Wide Pass/Fail Rates</text>
+        <text x="12" y="117" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Renders Trend Charts (Chart.js Data Feeder)</text>
+        <rect x="12" y="127" width="326" height="15" rx="3" fill="#eef2ff"/>
+        <text x="175" y="138" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8" font-weight="700" fill="#4f46e5" text-anchor="middle">DashboardAnalytics.php / AcademicAnalyticsManagement.php</text>
+    </g>
+
+    <!-- Sub-Row 2: Secondary Business Services -->
+    <!-- Service 4: Report Card & Forms Exporter -->
+    <g transform="translate(60, 715)" filter="url(#sa-shadow)">
+        <rect x="0" y="0" width="335" height="145" rx="6" ry="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+        <rect x="0" y="0" width="335" height="24" rx="6" ry="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="167" y="16" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="800" fill="#1e293b" text-anchor="middle">DepEd Form &amp; Document Generator</text>
+        <text x="12" y="42" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Form SF9 (Learner Progress Report Card)</text>
+        <text x="12" y="58" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Form SF10 / Form 137 (Permanent Academic Record)</text>
+        <text x="12" y="74" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Master Grading Sheets &amp; Section Roster</text>
+        <text x="12" y="90" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• PDF Engine (DomPDF / Snappy) &amp; Excel Exporter</text>
+        <rect x="12" y="105" width="311" height="28" rx="3" fill="#f8fafc"/>
+        <text x="167" y="122" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8.5" font-weight="700" fill="#475569" text-anchor="middle">ReportManagement.php / TeacherReportManagement.php</text>
+    </g>
+
+    <!-- Service 5: Enrollment & Assignment Allocator -->
+    <g transform="translate(425, 715)" filter="url(#sa-shadow)">
+        <rect x="0" y="0" width="335" height="145" rx="6" ry="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+        <rect x="0" y="0" width="335" height="24" rx="6" ry="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="167" y="16" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="800" fill="#1e293b" text-anchor="middle">Enrollment &amp; Schedule Allocator</text>
+        <text x="12" y="42" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Student Registration &amp; Sectioning Dispatcher</text>
+        <text x="12" y="58" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Subject-Teacher Allocation Matrix</text>
+        <text x="12" y="74" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Section Adviser Assignment Manager</text>
+        <text x="12" y="90" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Sibling Linking to Parent Accounts</text>
+        <rect x="12" y="105" width="311" height="28" rx="3" fill="#f8fafc"/>
+        <text x="167" y="122" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8.5" font-weight="700" fill="#475569" text-anchor="middle">StudentEnrollmentManagement.php / TeacherAssignment.php</text>
+    </g>
+
+    <!-- Service 6: Audit & Activity Logging Engine -->
+    <g transform="translate(790, 715)" filter="url(#sa-shadow)">
+        <rect x="0" y="0" width="350" height="145" rx="6" ry="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+        <rect x="0" y="0" width="335" height="24" rx="6" ry="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+        <text x="175" y="16" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="800" fill="#1e293b" text-anchor="middle">Audit Trail &amp; System Activity Logger</text>
+        <text x="12" y="42" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Logs Grade Modifications, Timestamps &amp; Authors</text>
+        <text x="12" y="58" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Tracks User Logins, Logouts &amp; Password Changes</text>
+        <text x="12" y="74" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Records Quarter Lock/Unlock Governance Actions</text>
+        <text x="12" y="90" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#334155">• Prevents Grade Tampering &amp; Data Repudiation</text>
+        <rect x="12" y="105" width="326" height="28" rx="3" fill="#f8fafc"/>
+        <text x="175" y="122" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8.5" font-weight="700" fill="#475569" text-anchor="middle">ActivityLogManagement.php / SystemSettingsManagement.php</text>
+    </g>
+
+
+    <!-- Connector 2 -> 3 (Eloquent ORM & Query Builder) -->
+    <g transform="translate(600, 900)">
+        <line x1="0" y1="0" x2="0" y2="40" stroke="#10b981" stroke-width="2.5" stroke-dasharray="4,3"/>
+        <polygon points="-6,35 0,45 6,35" fill="#10b981"/>
+        <rect x="-170" y="8" width="340" height="24" rx="12" ry="12" fill="#ffffff" stroke="#6ee7b7" stroke-width="1.2"/>
+        <text x="0" y="24" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" font-weight="700" fill="#047857" text-anchor="middle">Database Connectivity (Eloquent ORM / PDO / SQL Query Builder)</text>
+    </g>
+
+
+    <!-- =========================================================================
+         TIER 3: DATA & PERSISTENCE LAYER (DATABASE & STORAGE TIER)
+         ========================================================================= -->
+    <rect x="40" y="950" width="1120" height="340" rx="10" ry="10" fill="#f8fafc" stroke="#10b981" stroke-width="2"/>
+    <rect x="40" y="950" width="1120" height="34" rx="10" ry="10" fill="#d1fae5" stroke="#10b981" stroke-width="1.5"/>
+    <rect x="40" y="972" width="1120" height="12" fill="#d1fae5"/>
+    <text x="60" y="973" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="800" fill="#065f46">3. DATA &amp; PERSISTENCE LAYER (DATABASE &amp; STORAGE TIER)</text>
+
+    <!-- Sub-Block 3.1: Relational Database Schema (MySQL) -->
+    <g transform="translate(60, 1000)" filter="url(#sa-shadow)">
+        <rect x="0" y="0" width="700" height="270" rx="8" ry="8" fill="#ffffff" stroke="#6ee7b7" stroke-width="1.5"/>
+        <rect x="0" y="0" width="700" height="30" rx="8" ry="8" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="1"/>
+        <text x="350" y="20" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="800" fill="#047857" text-anchor="middle">RELATIONAL DATABASE SCHEMA (MySQL 8.0 / MariaDB)</text>
+        
+        <!-- Entity Grid in 3 columns -->
+        <!-- Col 1: Users & Structures -->
+        <g transform="translate(20, 45)">
+            <rect x="0" y="0" width="200" height="195" rx="4" fill="#f8fafc" stroke="#e2e8f0"/>
+            <text x="10" y="20" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="800" fill="#1e293b">Identity &amp; Structure</text>
+            <text x="10" y="40" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• users (auth, roles, status)</text>
+            <text x="10" y="60" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• teachers (faculty profile)</text>
+            <text x="10" y="80" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• students (LRN, birthdate)</text>
+            <text x="10" y="100" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• parents (contact, linkings)</text>
+            <text x="10" y="120" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• school_years (is_active)</text>
+            <text x="10" y="140" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• quarters (Q1-Q4, is_locked)</text>
+            <text x="10" y="160" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• year_levels &amp; sections</text>
+            <text x="10" y="180" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• subjects &amp; curricula</text>
+        </g>
+
+        <!-- Col 2: Academic Operations -->
+        <g transform="translate(240, 45)">
+            <rect x="0" y="0" width="210" height="195" rx="4" fill="#f8fafc" stroke="#e2e8f0"/>
+            <text x="10" y="20" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="800" fill="#1e293b">Enrollment &amp; Grades</text>
+            <text x="10" y="40" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• student_enrollments</text>
+            <text x="10" y="60" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• subject_teachers (class load)</text>
+            <text x="10" y="80" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• section_advisers (assign)</text>
+            <text x="10" y="100" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• grades (raw &amp; transmuted)</text>
+            <text x="10" y="120" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• quarterly_grades (status)</text>
+            <text x="10" y="140" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• final_grades &amp; remarks</text>
+            <text x="10" y="160" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• general_averages (GPA)</text>
+            <text x="10" y="180" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• grade_submission_logs</text>
+        </g>
+
+        <!-- Col 3: Analytics & Recognition -->
+        <g transform="translate(470, 45)">
+            <rect x="0" y="0" width="210" height="195" rx="4" fill="#f8fafc" stroke="#e2e8f0"/>
+            <text x="10" y="20" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="800" fill="#1e293b">Honors, Alerts &amp; Logs</text>
+            <text x="10" y="40" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• honors_qualifications</text>
+            <text x="10" y="60" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• academic_achievements</text>
+            <text x="10" y="80" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• student_rankings</text>
+            <text x="10" y="100" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• at_risk_interventions</text>
+            <text x="10" y="120" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• activity_logs (audit trail)</text>
+            <text x="10" y="140" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• system_settings (configs)</text>
+            <text x="10" y="160" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• parent_student_links</text>
+            <text x="10" y="180" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• failed_jobs &amp; migrations</text>
+        </g>
+    </g>
+
+    <!-- Sub-Block 3.2: File Storage & Cache Tier -->
+    <g transform="translate(790, 1000)" filter="url(#sa-shadow)">
+        <rect x="0" y="0" width="350" height="270" rx="8" ry="8" fill="#ffffff" stroke="#6ee7b7" stroke-width="1.5"/>
+        <rect x="0" y="0" width="350" height="30" rx="8" ry="8" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="1"/>
+        <text x="175" y="20" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="800" fill="#047857" text-anchor="middle">FILE STORAGE &amp; CACHE ENGINE</text>
+        
+        <g transform="translate(15, 45)">
+            <rect x="0" y="0" width="320" height="90" rx="4" fill="#f8fafc" stroke="#e2e8f0"/>
+            <text x="10" y="18" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="800" fill="#1e293b">File System Storage (Local / S3)</text>
+            <text x="10" y="38" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• Generated SF9 Report Card PDFs</text>
+            <text x="10" y="56" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• Compiled SF10 Permanent Record PDFs</text>
+            <text x="10" y="74" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• Exported Excel Grade Sheets &amp; Masterlists</text>
+        </g>
+
+        <g transform="translate(15, 150)">
+            <rect x="0" y="0" width="320" height="90" rx="4" fill="#f8fafc" stroke="#e2e8f0"/>
+            <text x="10" y="18" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="800" fill="#1e293b">Caching &amp; Session Store</text>
+            <text x="10" y="38" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• Active Session Tokens &amp; State Cache</text>
+            <text x="10" y="56" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• Query Result Cache for Analytics KPIs</text>
+            <text x="10" y="74" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" fill="#475569">• Livewire Component State Hydration Cache</text>
+        </g>
+    </g>
+
+    <!-- Footer Note inside SVG -->
+    <text x="600" y="1320" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#64748b" text-anchor="middle">Academic Performance Monitoring System with Analytics • High-Cohesion, Low-Coupling 3-Tier Enterprise Architecture</text>
+</svg>

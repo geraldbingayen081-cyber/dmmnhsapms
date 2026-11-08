@@ -29,4 +29,14 @@ class Achievement extends Model
     {
         return $this->belongsTo(SchoolYear::class, 'school_year_id');
     }
+
+    public function getTermAttribute()
+    {
+        return $this->quarter;
+    }
+
+    public function setTermAttribute($value)
+    {
+        $this->attributes['quarter'] = $value;
+    }
 }

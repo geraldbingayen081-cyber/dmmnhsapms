@@ -49,11 +49,11 @@
                 </div>
 
                 <div>
-                    <label class="block font-semibold text-zinc-700 dark:text-zinc-300 mb-1">Grading Quarter</label>
+                    <label class="block font-semibold text-zinc-700 dark:text-zinc-300 mb-1">Grading Term</label>
                     <select wire:model="quarter" class="w-full px-3 py-2 rounded-xl border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100">
-                        <option value="Q1">Quarter 1</option>
-                        <option value="Q2">Quarter 2</option>
-                        <option value="Q3">Quarter 3</option>
+                        <option value="T1">1st Term</option>
+                        <option value="T2">2nd Term</option>
+                        <option value="T3">3rd Term</option>
                         <option value="Final">Final Academic Year</option>
                     </select>
                 </div>

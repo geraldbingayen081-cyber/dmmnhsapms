@@ -49,19 +49,19 @@
                         <div class="relative group shrink-0" style="width: 88px; height: 88px;">
                             @if ($logo)
                                 <!-- Live Temporary Preview of newly chosen file -->
-                                <div class="w-22 h-22 rounded-2xl bg-white border-2 border-emerald-500 shadow-md p-1.5 flex items-center justify-center overflow-hidden shrink-0" style="width: 88px; height: 88px; max-width: 88px; max-height: 88px;">
-                                    <img src="{{ $logo->temporaryUrl() }}" alt="New Logo Preview" class="max-w-full max-h-full w-auto h-auto object-contain block" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain;">
+                                <div class="w-22 h-22 rounded-full bg-white border-2 border-emerald-500 shadow-md p-1.5 flex items-center justify-center overflow-hidden shrink-0" style="width: 88px; height: 88px; max-width: 88px; max-height: 88px;">
+                                    <img src="{{ $logo->temporaryUrl() }}" alt="New Logo Preview" class="max-w-full max-h-full w-auto h-auto object-contain block rounded-full" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain;">
                                 </div>
                                 <span class="absolute -top-2 -right-2 px-1.5 py-0.5 rounded-full bg-emerald-600 text-white text-[9px] font-black uppercase shadow z-10">New</span>
                             @elseif ($current_logo_url)
                                 <!-- Currently Saved Logo -->
-                                <div class="w-22 h-22 rounded-2xl bg-white border-2 border-emerald-600 shadow-md p-1.5 flex items-center justify-center overflow-hidden shrink-0" style="width: 88px; height: 88px; max-width: 88px; max-height: 88px;">
-                                    <img src="{{ $current_logo_url }}" alt="School Logo" class="max-w-full max-h-full w-auto h-auto object-contain block" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain;">
+                                <div class="w-22 h-22 rounded-full bg-white border-2 border-emerald-600 shadow-md p-1.5 flex items-center justify-center overflow-hidden shrink-0" style="width: 88px; height: 88px; max-width: 88px; max-height: 88px;">
+                                    <img src="{{ $current_logo_url }}" alt="School Logo" class="max-w-full max-h-full w-auto h-auto object-contain block rounded-full" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain;">
                                 </div>
                                 <span class="absolute -top-2 -right-2 px-1.5 py-0.5 rounded-full bg-[#166534] text-white text-[9px] font-black uppercase shadow z-10">Active</span>
                             @else
                                 <!-- Default Crest Icon -->
-                                <div class="w-22 h-22 rounded-2xl bg-[#166534] text-white border-2 border-emerald-700/60 shadow-md flex flex-col items-center justify-center p-2 shrink-0" style="width: 88px; height: 88px; max-width: 88px; max-height: 88px;">
+                                <div class="w-22 h-22 rounded-full bg-[#166534] text-white border-2 border-emerald-700/60 shadow-md flex flex-col items-center justify-center p-2 shrink-0" style="width: 88px; height: 88px; max-width: 88px; max-height: 88px;">
                                     <i class="fas fa-graduation-cap text-3xl text-amber-400 mb-0.5"></i>
                                     <span class="text-[8px] font-black tracking-widest text-emerald-200 font-mono">DEFAULT</span>
                                 </div>
@@ -124,6 +124,17 @@
                     <label class="block font-bold text-zinc-700 dark:text-zinc-300 mb-1">DepEd Division & Region *</label>
                     <input type="text" wire:model.defer="school_division" required class="w-full px-3 py-2 text-xs rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-[#166534]">
                     @error('school_division') <span class="text-rose-600 text-[11px] font-bold block mt-1">{{ $message }}</span> @enderror
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-bold text-zinc-700 dark:text-zinc-300 mb-1">School Principal Name</label>
+                        <input type="text" wire:model.defer="principal_name" placeholder="e.g. LANY F. GAYUMA" class="w-full px-3 py-2 text-xs rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-[#166534]">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-zinc-700 dark:text-zinc-300 mb-1">Principal Official Title</label>
+                        <input type="text" wire:model.defer="principal_title" placeholder="e.g. Principal II" class="w-full px-3 py-2 text-xs rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-[#166534]">
+                    </div>
                 </div>
 
                 <!--<div>

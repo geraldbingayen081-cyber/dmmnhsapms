@@ -27,10 +27,10 @@
         </div>
 
         <div class="flex items-center gap-2">
-            <select wire:model.live="filterScope" class="px-3 py-2 text-xs font-bold rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">
-                <option value="advisees">My Advisees' Parents</option>
-                <option value="all">All School Parents</option>
-            </select>
+            <span class="px-3.5 py-2 text-xs font-bold rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-[#166534] dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 flex items-center gap-1.5 shadow-xs">
+                <i class="fas fa-user-shield text-[11px]"></i>
+                <span>Advisee Section Scope</span>
+            </span>
         </div>
     </div>
 
@@ -251,30 +251,30 @@
 
                 <form wire:submit.prevent="linkChild" class="space-y-4">
                     <div>
-                        <label class="block font-bold text-zinc-700 dark:text-zinc-300 mb-1">Search Student Learner</label>
-                        <input type="text" wire:model.live.debounce.300ms="studentSearch" placeholder="Type name or student number..." class="w-full px-3 py-2 text-xs rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 mb-2">
+                        <label class="block font-bold text-zinc-700 dark:text-zinc-300 mb-1">Search Advisee Student</label>
+                        <input type="text" wire:model.live.debounce.300ms="studentSearch" placeholder="Type advisee name or student number..." class="w-full px-3 py-2 text-xs rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 mb-2">
 
-                        <label class="block font-bold text-zinc-700 dark:text-zinc-300 mb-1">Select Student *</label>
+                        <label class="block font-bold text-zinc-700 dark:text-zinc-300 mb-1">Select Student (Assigned Advisees Only) *</label>
                         <select wire:model.defer="selectedStudentId" required class="w-full px-3 py-2 text-xs rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">
-                            <option value="">-- Choose Student Learner --</option>
+                            <option value="">-- Choose Advisee Student Learner --</option>
                             @foreach ($availableStudents as $st)
                                 <option value="{{ $st->id }}">{{ $st->full_name }} ({{ $st->student_number }})</option>
                             @endforeach
                         </select>
+                        @if ($availableStudents->isEmpty())
+                            <p class="text-[11px] text-amber-600 dark:text-amber-400 mt-1.5 font-medium flex items-center gap-1">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span>Only students in your assigned advisee section can be linked to parent accounts.</span>
+                            </p>
+                        @endif
                         @error('selectedStudentId') <span class="text-rose-600 text-[10px] font-bold block mt-1">{{ $message }}</span> @enderror
                     </div>
 
                     <div>
                         <label class="block font-bold text-zinc-700 dark:text-zinc-300 mb-1">Relationship to Child *</label>
                         <select wire:model.defer="relationship" required class="w-full px-3 py-2 text-xs rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">
-                            <option value="Mother">Mother</option>
-                            <option value="Father">Father</option>
+                            <option value="Parent">Parent</option>
                             <option value="Guardian">Guardian</option>
-                            <option value="Grandmother">Grandmother</option>
-                            <option value="Grandfather">Grandfather</option>
-                            <option value="Aunt">Aunt</option>
-                            <option value="Uncle">Uncle</option>
-                            <option value="Other">Other</option>
                         </select>
                     </div>
 

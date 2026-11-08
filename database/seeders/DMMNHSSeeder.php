@@ -250,8 +250,8 @@ class DMMNHSSeeder extends Seeder
                     'academic_year_id' => $syCurrent->id,
                     'type' => 'Honor Roll',
                     'title' => $honorStanding,
-                    'quarter' => 'Q3',
-                    'remarks' => "Calculated General Average of {$ga}% with no quarter subject grade below 85.",
+                    'quarter' => 'T3',
+                    'remarks' => "Calculated General Average of {$ga}% with no term subject grade below 85.",
                 ]);
             }
 
@@ -262,16 +262,16 @@ class DMMNHSSeeder extends Seeder
                     'academic_year_id' => $syCurrent->id,
                     'type' => 'Best in Subject',
                     'title' => 'Best in Science',
-                    'quarter' => 'Q3',
-                    'remarks' => 'Highest Q3 subject performance rating in Science.',
+                    'quarter' => 'T3',
+                    'remarks' => 'Highest T3 subject performance rating in Science.',
                 ]);
                 Achievement::create([
                     'student_id' => $student->id,
                     'academic_year_id' => $syCurrent->id,
                     'type' => 'Best in Subject',
                     'title' => 'Best in Mathematics',
-                    'quarter' => 'Q3',
-                    'remarks' => 'Highest Q3 subject performance rating in Mathematics.',
+                    'quarter' => 'T3',
+                    'remarks' => 'Highest T3 subject performance rating in Mathematics.',
                 ]);
             }
         }

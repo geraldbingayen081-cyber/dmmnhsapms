@@ -24,7 +24,7 @@ class AdvisoryManagement extends Component
     public $showLinkParentModal = false;
     public $targetStudentId = null;
     public $selectedParentId = null;
-    public $relationship = 'Mother';
+    public $relationship = 'Parent';
     public $parentSearch = '';
 
     public function mount()
@@ -43,7 +43,7 @@ class AdvisoryManagement extends Component
         $this->resetValidation();
         $this->targetStudentId = $studentId;
         $this->selectedParentId = null;
-        $this->relationship = 'Mother';
+        $this->relationship = 'Parent';
         $this->parentSearch = '';
         $this->showLinkParentModal = true;
     }
@@ -55,6 +55,23 @@ class AdvisoryManagement extends Component
             'selectedParentId' => 'required|exists:parents,id',
             'relationship' => 'required|string|max:50',
         ]);
+
+        $teacher = auth()->user()->teacher;
+        $activeSy = AcademicContextService::getActiveSchoolYear();
+        if ($teacher && $activeSy) {
+            $advisedSectionIds = SchoolYearSection::where('school_year_id', $activeSy->id)
+                ->where('adviser_id', $teacher->id)
+                ->pluck('id');
+
+            $isAdvisee = StudentEnrollment::whereIn('school_year_section_id', $advisedSectionIds)
+                ->where('student_id', $this->targetStudentId)
+                ->exists();
+
+            if (!$isAdvisee) {
+                $this->addError('targetStudentId', 'You can only link parents to students from your assigned advisee section.');
+                return;
+            }
+        }
 
         $parent = ParentModel::findOrFail($this->selectedParentId);
         $student = Student::findOrFail($this->targetStudentId);
@@ -102,7 +119,7 @@ class AdvisoryManagement extends Component
     {
         $enrollment = StudentEnrollment::with(['student', 'schoolYearSection.schoolYear'])->findOrFail($studentEnrollmentId);
 
-        $quarterName = '1st Quarter';
+        $quarterName = '1st Term';
         if ($this->selectedQuarterId !== 'all') {
             $quarterModel = \App\Models\Quarter::find($this->selectedQuarterId);
             if ($quarterModel) {
@@ -308,6 +325,7 @@ class AdvisoryManagement extends Component
             'advisedSection' => $advisedSection,
             'enrollments' => $enrollments,
             'quarters' => $quarters,
+            'terms' => $quarters,
             'subjects' => $subjects,
             'candidates' => $candidates,
             'availableParents' => $availableParents,

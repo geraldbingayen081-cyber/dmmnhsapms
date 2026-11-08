@@ -22,14 +22,14 @@
                 <i class="fas fa-list-ol text-[11px]"></i>
                 <span>Student Achievements</span>
             </button>
-            <button wire:click="$set('activeTab', 'analytics')"
+            <!--<button wire:click="$set('activeTab', 'analytics')"
                 class="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all duration-200
                     {{ $activeTab === 'analytics'
                         ? 'bg-white dark:bg-zinc-900 text-amber-600 dark:text-amber-400 shadow-sm border border-zinc-200 dark:border-zinc-700'
                         : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300' }}">
                 <i class="fas fa-chart-line text-[11px]"></i>
                 <span>Achievements Analytics</span>
-            </button>
+            </button>-->
         </div>
     </div>
 
@@ -50,9 +50,9 @@
                 </select>
             </div>
             <div class="flex items-center gap-2">
-                <label class="font-bold text-zinc-500 uppercase text-[10px]">Quarter:</label>
+                <label class="font-bold text-zinc-500 uppercase text-[10px]">Term:</label>
                 <select wire:model.live="selectedQuarterId" class="px-3 py-1.5 font-bold rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">
-                    <option value="all">Cumulative (All Quarters)</option>
+                    <option value="all">Cumulative (All Terms)</option>
                     @foreach ($quarters as $q)
                         <option value="{{ $q->id }}">{{ $q->name }}</option>
                     @endforeach

@@ -6,7 +6,7 @@
                 <span>👨‍👩‍👧 Parent Academic Performance Portal</span>
             </h1>
             <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
-                Don Mariano Marcos National High School • Real-time 3-quarter grades, general average, and awards for your children.
+                Don Mariano Marcos National High School • Real-time 3-term grades, general average, and awards for your children.
             </p>
         </div>
 
@@ -49,7 +49,7 @@
                 <div>
                     <span class="text-[11px] text-zinc-400 font-semibold block uppercase">General Average</span>
                     <span class="text-2xl font-black text-emerald-600 dark:text-emerald-400">{{ $ga ? $ga.'%' : 'N/A' }}</span>
-                    <span class="text-[11px] text-zinc-500 block">SY {{ $currentSy?->year }} 3-Quarter Average</span>
+                    <span class="text-[11px] text-zinc-500 block">SY {{ $currentSy?->year }} 3-Term Average</span>
                 </div>
             </div>
 
@@ -65,10 +65,10 @@
             </div>
         </div>
 
-        <!-- 3-Quarter Grades Table -->
+        <!-- 3-Term Grades Table -->
         <div class="bg-white dark:bg-zinc-800 p-6 rounded-2xl border border-zinc-200 dark:border-zinc-700 shadow-sm space-y-4">
             <h3 class="text-sm font-bold text-zinc-900 dark:text-zinc-100 flex items-center justify-between">
-                <span>📚 3-Quarter Subject Grades (SY {{ $currentSy?->year }})</span>
+                <span>📚 3-Term Subject Grades (SY {{ $currentSy?->year }})</span>
             </h3>
             <div class="overflow-x-auto">
                 <table class="w-full text-xs text-start">
@@ -76,9 +76,9 @@
                         <tr class="border-b border-zinc-200 dark:border-zinc-700 text-zinc-500 uppercase tracking-wider text-[10px]">
                             <th class="py-2.5 px-3 text-start">Subject Code</th>
                             <th class="py-2.5 px-3 text-start">Subject Name</th>
-                            <th class="py-2.5 px-3 text-center">Quarter 1</th>
-                            <th class="py-2.5 px-3 text-center">Quarter 2</th>
-                            <th class="py-2.5 px-3 text-center">Quarter 3</th>
+                            <th class="py-2.5 px-3 text-center">1st Term</th>
+                            <th class="py-2.5 px-3 text-center">2nd Term</th>
+                            <th class="py-2.5 px-3 text-center">3rd Term</th>
                             <th class="py-2.5 px-3 text-center">Final Grade</th>
                             <th class="py-2.5 px-3 text-end">Remarks</th>
                         </tr>

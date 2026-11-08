@@ -20,9 +20,9 @@ class SchoolYearSeeder extends Seeder
         );
 
         $quarters = [
-            ['name' => '1st Quarter', 'short_name' => 'Q1', 'sort_order' => 1, 'status' => 'active'],
-            ['name' => '2nd Quarter', 'short_name' => 'Q2', 'sort_order' => 2, 'status' => 'upcoming'],
-            ['name' => '3rd Quarter', 'short_name' => 'Q3', 'sort_order' => 3, 'status' => 'upcoming'],
+            ['name' => '1st Term', 'short_name' => 'T1', 'sort_order' => 1, 'status' => 'active'],
+            ['name' => '2nd Term', 'short_name' => 'T2', 'sort_order' => 2, 'status' => 'upcoming'],
+            ['name' => '3rd Term', 'short_name' => 'T3', 'sort_order' => 3, 'status' => 'upcoming'],
         ];
 
         foreach ($quarters as $q) {

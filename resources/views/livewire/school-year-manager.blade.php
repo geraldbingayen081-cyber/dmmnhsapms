@@ -6,7 +6,7 @@
                 <span>🗓️ Academic School Year Configuration</span>
             </h1>
             <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
-                Manage academic periods, toggle active school year context, control quarter grade encoding locks, and trigger batch student promotions.
+                Manage academic periods, toggle active school year context, control term grade encoding locks, and trigger batch student promotions.
             </p>
         </div>
     </div>
@@ -48,7 +48,7 @@
                         <tr class="border-b border-zinc-200 dark:border-zinc-700 text-zinc-500 uppercase tracking-wider">
                             <th class="py-2.5 px-3 text-start">School Year</th>
                             <th class="py-2.5 px-3 text-start">Active Status</th>
-                            <th class="py-2.5 px-3 text-start">Grading Quarter Status</th>
+                            <th class="py-2.5 px-3 text-start">Grading Term Status</th>
                             <th class="py-2.5 px-3 text-end">Actions</th>
                         </tr>
                     </thead>
@@ -71,9 +71,9 @@
                                 </td>
                                 <td class="py-3 px-3">
                                     <select wire:change="updateStatus({{ $sy->id }}, $event.target.value)" class="px-2 py-1 text-xs rounded-lg border border-zinc-300 dark:border-zinc-600 bg-white dark:bg-zinc-900 font-semibold text-zinc-800 dark:text-zinc-200">
-                                        <option value="Q1_OPEN" @selected($sy->status === 'Q1_OPEN')>🟢 Quarter 1 Open</option>
-                                        <option value="Q2_OPEN" @selected($sy->status === 'Q2_OPEN')>🟢 Quarter 2 Open</option>
-                                        <option value="Q3_OPEN" @selected($sy->status === 'Q3_OPEN')>🟢 Quarter 3 Open</option>
+                                        <option value="Q1_OPEN" @selected($sy->status === 'Q1_OPEN')>🟢 1st Term Open</option>
+                                        <option value="Q2_OPEN" @selected($sy->status === 'Q2_OPEN')>🟢 2nd Term Open</option>
+                                        <option value="Q3_OPEN" @selected($sy->status === 'Q3_OPEN')>🟢 3rd Term Open</option>
                                         <option value="LOCKED" @selected($sy->status === 'LOCKED')>🔒 Grading Closed / Locked</option>
                                     </select>
                                 </td>

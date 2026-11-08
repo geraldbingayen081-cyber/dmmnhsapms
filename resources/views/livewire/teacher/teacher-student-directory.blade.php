@@ -178,13 +178,13 @@
 
                     <!-- Grades Table -->
                     <div>
-                        <h4 class="font-bold text-zinc-900 dark:text-zinc-100 mb-2">Subject Quarterly Ratings</h4>
+                        <h4 class="font-bold text-zinc-900 dark:text-zinc-100 mb-2">Subject Term Ratings</h4>
                         <div class="overflow-x-auto border border-zinc-200 dark:border-zinc-700 rounded-xl">
                             <table class="w-full text-xs text-start">
                                 <thead class="bg-zinc-100 dark:bg-zinc-800 font-bold uppercase text-[10px]">
                                     <tr>
                                         <th class="py-2.5 px-3 text-start">Subject</th>
-                                        <th class="py-2.5 px-3 text-center">Quarter</th>
+                                        <th class="py-2.5 px-3 text-center">Term</th>
                                         <th class="py-2.5 px-3 text-center">Rating</th>
                                         <th class="py-2.5 px-3 text-center">Status</th>
                                     </tr>

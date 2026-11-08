@@ -12,13 +12,25 @@
 
     <!-- Target School Year Filter Toolbar -->
     <div class="bg-white dark:bg-zinc-900 p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs">
-        <div class="flex items-center gap-3">
-            <label class="font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider">Target School Year:</label>
-            <select wire:model.live="selectedSchoolYearId" class="px-3.5 py-2 font-bold rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-[#166534]">
-                @foreach ($schoolYears as $sy)
-                    <option value="{{ $sy->id }}">SY {{ $sy->school_year }} {{ $sy->status === 'active' ? '(Active SY)' : '' }}</option>
-                @endforeach
-            </select>
+        <div class="flex flex-wrap items-center gap-4">
+            <div class="flex items-center gap-2">
+                <label class="font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider">School Year:</label>
+                <select wire:model.live="selectedSchoolYearId" class="px-3.5 py-2 font-bold rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-[#166534]">
+                    @foreach ($schoolYears as $sy)
+                        <option value="{{ $sy->id }}">SY {{ $sy->school_year }} {{ $sy->status === 'active' ? '(Active SY)' : '' }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <label class="font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider">Year Level:</label>
+                <select wire:model.live="selectedYearLevelId" class="px-3.5 py-2 font-bold rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-[#166534]">
+                    <option value="all">All Year Levels</option>
+                    @foreach ($yearLevels as $yl)
+                        <option value="{{ $yl->id }}">{{ $yl->name }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
     </div>
 

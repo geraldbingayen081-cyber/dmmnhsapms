@@ -2,7 +2,7 @@
     <!-- Header & Action Toolbar -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
         <div class="flex items-center gap-3">
-            <a href="{{ route('admin.school-years') }}" class="p-2 text-zinc-400 hover:text-zinc-600 hover:bg-zinc-100 rounded-lg transition">
+            <a href="{{ route('admin.school-years') }}" title="Back to School Years" class="p-2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition">
                 <i class="fas fa-arrow-left text-sm"></i>
             </a>
             <div>
@@ -10,14 +10,17 @@
                     <i class="fas fa-sliders text-[#166534]"></i>
                     <span>SY {{ $schoolYear->school_year }} Configuration</span>
                 </h2>
-                <p class="text-xs text-zinc-500 mt-0.5">Academic quarters, grade level section instances, and faculty advisers.</p>
+                <p class="text-xs text-zinc-500 mt-0.5">Academic terms, grade level section instances, and faculty advisers.</p>
             </div>
         </div>
 
-        <button wire:click="openAddSectionModal" class="px-4 py-2.5 bg-[#166534] hover:bg-emerald-800 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center gap-2 self-start sm:self-auto cursor-pointer">
-            <i class="fas fa-plus"></i>
-            <span>Add Section Instance</span>
-        </button>
+        <div class="flex items-center gap-2.5 self-start sm:self-auto">
+
+           <!-- <button wire:click="openAddSectionModal" class="px-4 py-2.5 bg-[#166534] hover:bg-emerald-800 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center gap-2 cursor-pointer">
+                <i class="fas fa-plus"></i>
+                <span>Add Section Instance</span>
+            </button>-->
+        </div>
     </div>
 
     <!-- 1. GENERAL INFORMATION SUMMARY CARD -->
@@ -61,18 +64,18 @@
         </div>
     </div>
 
-    <!-- 2. QUARTERS OVERVIEW -->
+    <!-- 2. TERMS OVERVIEW -->
     <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm space-y-4">
         <div class="border-b border-zinc-100 dark:border-zinc-800 pb-3 flex items-center justify-between">
             <div>
                 <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
                     <i class="fas fa-list-ol text-[#166534]"></i>
-                    <span>Academic Quarters</span>
+                    <span>Academic Terms</span>
                 </h3>
-                <p class="text-[11px] text-zinc-500">Configured evaluation quarters for SY {{ $schoolYear->school_year }}</p>
+                <p class="text-[11px] text-zinc-500">Configured evaluation terms for SY {{ $schoolYear->school_year }}</p>
             </div>
-            <a href="{{ route('admin.school-years.quarters', $schoolYear->id) }}" class="text-xs font-bold text-[#166534] hover:underline">
-                Manage Quarters →
+            <a href="{{ route('admin.school-years.terms', $schoolYear->id) }}" class="text-xs font-bold text-[#166534] hover:underline">
+                Manage Terms →
             </a>
         </div>
 
@@ -93,7 +96,7 @@
                     </span>
                 </div>
             @empty
-                <div class="col-span-4 p-4 text-center text-zinc-400 italic">No quarters configured.</div>
+                <div class="col-span-4 p-4 text-center text-zinc-400 italic">No terms configured.</div>
             @endforelse
         </div>
     </div>

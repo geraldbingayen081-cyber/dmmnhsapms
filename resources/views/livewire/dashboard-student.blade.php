@@ -26,11 +26,11 @@
 
     <!-- Personal Analytics Charts (2 Clean Charts) -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- Personal 3-Quarter Growth Line Chart -->
+        <!-- Personal 3-Term Growth Line Chart -->
         <div class="bg-white dark:bg-zinc-900 p-6 rounded-3xl border border-zinc-200/80 dark:border-zinc-800 shadow-sm space-y-4">
             <div class="border-b border-zinc-100 dark:border-zinc-800 pb-3">
-                <h3 class="text-base font-bold text-zinc-900 dark:text-zinc-100">My 3-Quarter Academic Trajectory</h3>
-                <p class="text-xs text-zinc-400">Personal quarterly average from Q1 to Q3</p>
+                <h3 class="text-base font-bold text-zinc-900 dark:text-zinc-100">My 3-Term Academic Trajectory</h3>
+                <p class="text-xs text-zinc-400">Personal term average from T1 to T3</p>
             </div>
             <div id="chart-student-quarter" class="w-full h-64"></div>
         </div>
@@ -77,7 +77,7 @@
         });
 
         function initStudentCharts() {
-            // Chart 1: Quarter Trend
+            // Chart 1: Term Trend
             const quarterOptions = {
                 chart: { type: 'line', height: 250, toolbar: { show: false } },
                 series: [{
@@ -86,7 +86,7 @@
                 }],
                 colors: ['#0284c7'],
                 stroke: { curve: 'smooth', width: 4 },
-                xaxis: { categories: ['Quarter 1', 'Quarter 2', 'Quarter 3'] },
+                xaxis: { categories: ['1st Term', '2nd Term', '3rd Term'] },
                 yaxis: { min: 70, max: 100 }
             };
             new ApexCharts(document.querySelector("#chart-student-quarter"), quarterOptions).render();

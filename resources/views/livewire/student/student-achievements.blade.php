@@ -11,16 +11,16 @@
                     My Awards and Achievements Wall
                 </h2>
                 <p class="text-xs text-zinc-500 mt-0.5">
-                    Official quarterly honors and subject citations based on DepEd Order No. 36, s. 2016.
+                    Official term honors and subject citations based on DepEd Order No. 36, s. 2016.
                 </p>
             </div>
 
-            <!-- Quarter Filter & Total Pill -->
+            <!-- Term Filter & Total Pill -->
             <div class="flex flex-wrap items-center gap-3">
                 <div class="flex items-center gap-1.5 text-xs">
                     <span class="text-zinc-500 font-medium">Filter by:</span>
                     <select wire:model.live="selectedQuarter" class="px-3 py-1.5 text-xs font-bold rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-xs focus:ring-2 focus:ring-emerald-500">
-                        <option value="all">All Quarters ({{ $totalAwardsCount }})</option>
+                        <option value="all">All Terms ({{ $totalAwardsCount }})</option>
                         @foreach ($quarters as $q)
                             <option value="{{ $q->id }}">{{ $q->name }} ({{ $q->short_name }})</option>
                         @endforeach
@@ -47,19 +47,19 @@
             <span>•</span>
             <span class="flex items-center gap-1.5">
                 <i class="fas fa-calendar-check text-amber-500"></i>
-                <span>Quarterly Recognition Scope: Q1 to Q3</span>
+                <span>Term Recognition Scope: T1 to T3</span>
             </span>
         </div>
     </div>
 
-    <!-- Awards Cards Grid with Prominent Quarter Badges -->
+    <!-- Awards Cards Grid with Prominent Term Badges -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         @forelse ($awardsList as $aw)
             <div class="p-5 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-amber-400 dark:hover:border-amber-600 transition space-y-4 flex flex-col justify-between shadow-xs">
                 <div class="space-y-3">
-                    <!-- Top Ribbon: Quarter Badge & Award Type -->
+                    <!-- Top Ribbon: Term Badge & Award Type -->
                     <div class="flex items-center justify-between gap-2">
-                        <!-- Quarter Badge -->
+                        <!-- Term Badge -->
                         <span class="px-2.5 py-1 rounded-lg text-[10px] font-black tracking-wider uppercase bg-emerald-100 dark:bg-emerald-950/60 text-[#166534] dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 flex items-center gap-1.5 shadow-2xs">
                             <i class="fas fa-calendar-day text-emerald-600 dark:text-emerald-400"></i>
                             <span>{{ $aw['quarter'] }}</span>
@@ -98,7 +98,7 @@
                     </p>
                 </div>
 
-                <!-- Footer details: Quarter mark or Awarded Date -->
+                <!-- Footer details: Term mark or Awarded Date -->
                 <div class="pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between text-xs font-bold">
                     @if (isset($aw['grade']))
                         <span class="text-zinc-400 text-[11px]">{{ $aw['quarter'] }} Rating:</span>
@@ -116,7 +116,7 @@
         @empty
             <div class="col-span-3 p-12 text-center text-zinc-400 italic bg-white dark:bg-zinc-900 rounded-2xl border border-dashed border-zinc-200 dark:border-zinc-700">
                 <i class="fas fa-award text-3xl mb-2 text-zinc-300 block"></i>
-                No academic awards found for the selected quarter filter.
+                No academic awards found for the selected term filter.
             </div>
         @endforelse
     </div>

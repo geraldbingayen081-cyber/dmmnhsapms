@@ -113,7 +113,7 @@ return new class extends Migration
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
 
-            $table->unique(['school_year_id', 'section_id'], 'sy_section_unique');
+            $table->unique(['school_year_id', 'year_level_id', 'section_id'], 'sy_section_unique');
         });
 
         // 10. Student Enrollments Table (Source of Truth for Academic Placement)

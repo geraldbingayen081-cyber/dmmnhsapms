@@ -438,5 +438,147 @@ class AcademicAnalyticsService
             'totalStudents'=> $totalStudents,
         ];
     }
+
+    /**
+     * Get achievements and awards area chart data
+     * Y-Axis: Number of achievements
+     * X-Axis: Achievements & awards (DepEd Honors + Top 1 Best in Subjects)
+     * Series: Junior High School Year Levels (Grade 7 to Grade 10)
+     */
+    public static function getAchievementsAndAwardsAreaChart($schoolYearId = null, $quarterId = null): array
+    {
+        [$syId, $qId] = self::parseFilterIds($schoolYearId, $quarterId);
+
+        $yearLevels = YearLevel::orderBy('sort_order')->get();
+        $subjects = Subject::orderBy('id')->get();
+
+        // X-Axis Categories: DepEd Academic Honors + Best in Subject awards
+        $categories = [
+            'With Highest Honors',
+            'With High Honors',
+            'With Honors',
+        ];
+
+        foreach ($subjects as $s) {
+            $categories[] = "Best in {$s->subject_name}";
+        }
+
+        $series = [];
+        $uniqueHonorStudents = [];
+        $uniqueBestStudents = [];
+        $uniqueTotalAchievers = [];
+
+        $highestTotal = 0;
+        $highTotal = 0;
+        $honorsTotal = 0;
+        $bestSubjectsAwardsTotal = 0;
+        $hasAnyData = false;
+
+        foreach ($yearLevels as $yl) {
+            // 1. Academic Honors for this year level (DepEd criteria: avg >= 90 & min >= 85)
+            $enrollments = StudentEnrollment::whereHas('schoolYearSection', function ($q) use ($syId, $yl) {
+                if ($syId) $q->where('school_year_id', $syId);
+                $q->where('year_level_id', $yl->id);
+            })
+            ->with(['grades' => function ($q) use ($qId) {
+                if ($qId) $q->where('quarter_id', $qId);
+            }])
+            ->get();
+
+            $highest = 0;
+            $high = 0;
+            $honors = 0;
+
+            foreach ($enrollments as $enr) {
+                $gr = $enr->grades;
+                if ($gr->count() === 0) continue;
+
+                $avg = $gr->avg('grade');
+                $min = $gr->min('grade');
+
+                if ($avg >= 98.00 && $min >= 85.00) {
+                    $highest++;
+                    $uniqueHonorStudents[$enr->student_id] = true;
+                    $uniqueTotalAchievers[$enr->student_id] = true;
+                } elseif ($avg >= 95.00 && $min >= 85.00) {
+                    $high++;
+                    $uniqueHonorStudents[$enr->student_id] = true;
+                    $uniqueTotalAchievers[$enr->student_id] = true;
+                } elseif ($avg >= 90.00 && $min >= 85.00) {
+                    $honors++;
+                    $uniqueHonorStudents[$enr->student_id] = true;
+                    $uniqueTotalAchievers[$enr->student_id] = true;
+                }
+            }
+
+            // 2. Best in Subject Award (DepEd DO 36 s.2016: Highest/Top 1 grade per section with minimum grade >= 90)
+            $secSubs = SectionSubject::whereHas('schoolYearSection', function ($q) use ($syId, $yl) {
+                if ($syId) $q->where('school_year_id', $syId);
+                $q->where('year_level_id', $yl->id);
+            })
+            ->with(['grades' => function ($q) use ($qId) {
+                if ($qId) $q->where('quarter_id', $qId);
+            }, 'grades.studentEnrollment'])
+            ->get();
+
+            $subTopCounts = array_fill_keys($subjects->pluck('id')->toArray(), 0);
+
+            foreach ($secSubs as $ss) {
+                $validGrades = $ss->grades->where('grade', '>=', 90.00);
+                if ($validGrades->isEmpty()) continue;
+
+                $maxGrade = $validGrades->max('grade');
+                $topGrades = $validGrades->where('grade', $maxGrade);
+
+                $subTopCounts[$ss->subject_id] += $topGrades->count();
+
+                foreach ($topGrades as $tg) {
+                    $studId = $tg->studentEnrollment?->student_id ?? $tg->student_enrollment_id;
+                    $uniqueBestStudents[$studId] = true;
+                    $uniqueTotalAchievers[$studId] = true;
+                }
+            }
+
+            $ylData = [$highest, $high, $honors];
+            foreach ($subjects as $s) {
+                $count = $subTopCounts[$s->id] ?? 0;
+                $ylData[] = $count;
+                $bestSubjectsAwardsTotal += $count;
+            }
+
+            $highestTotal += $highest;
+            $highTotal += $high;
+            $honorsTotal += $honors;
+
+            if (array_sum($ylData) > 0) {
+                $hasAnyData = true;
+            }
+
+            $series[] = [
+                'name' => $yl->name,
+                'data' => $ylData,
+            ];
+        }
+
+        $awardTypeSummary = [
+            'highest_honors' => $highestTotal,
+            'high_honors' => $highTotal,
+            'honors' => $honorsTotal,
+            'unique_honors_students' => count($uniqueHonorStudents),
+            'best_in_subjects_awards' => $bestSubjectsAwardsTotal,
+            'best_in_subjects_students' => count($uniqueBestStudents),
+            'unique_total_achievers' => count($uniqueTotalAchievers),
+        ];
+
+        return [
+            'categories' => $categories,
+            'series' => $series,
+            'hasData' => $hasAnyData,
+            'totalAwards' => $bestSubjectsAwardsTotal + $highestTotal + $highTotal + $honorsTotal,
+            'uniqueTotalAchievers' => count($uniqueTotalAchievers),
+            'summary' => $awardTypeSummary,
+        ];
+    }
 }
+
 

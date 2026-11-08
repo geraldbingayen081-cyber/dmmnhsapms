@@ -28,7 +28,7 @@ class UserManagement extends Component
 
     public $selectedParentId = null;
     public $selectedStudentId = null;
-    public $relationship = 'Guardian';
+    public $relationship = 'Parent';
 
     public $search = '';
     public $filterRole = 'all';

@@ -9,10 +9,10 @@
                     <span>Official Grade Sheet — {{ $activeSy?->school_year }}</span>
                 </div>
                 <h1 class="text-base font-black text-zinc-900 dark:text-zinc-100">
-                    Quarterly Subject Grade Encoding
+                    Term Subject Grade Encoding
                 </h1>
                 <p class="text-[11px] text-zinc-500 mt-0.5 font-medium">
-                    All existing grades (Q1–Q3) are shown per student. The <strong>active quarter's column</strong> is editable when encoding is open. Changes are saved to the shared database and immediately visible to the admin.
+                    All existing grades (1st Term to 3rd Term) are shown per student. The <strong>active term's column</strong> is editable when encoding is open. Changes are saved to the shared database and immediately visible to the admin.
                 </p>
             </div>
 
@@ -28,7 +28,7 @@
                 @else
                     <button disabled
                             class="px-5 py-2.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-400 font-bold text-xs rounded-xl border border-zinc-200 dark:border-zinc-700 flex items-center gap-2 cursor-not-allowed"
-                            title="Encoding is locked by the administration for this quarter.">
+                            title="Encoding is locked by the administration for this term.">
                         <i class="fas fa-lock text-xs"></i>
                         <span>Read-Only Mode</span>
                     </button>
@@ -58,14 +58,14 @@
 
             <div>
                 <label class="block font-bold text-zinc-600 dark:text-zinc-300 mb-1.5 uppercase tracking-wide text-[10px]">
-                    View / Encode Quarter
+                    View / Encode Term
                 </label>
                 <select wire:model.live="selectedQuarterId"
                         class="w-full px-3.5 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 font-bold focus:ring-2 focus:ring-[#166534]">
                     @foreach ($quarters as $q)
                         <option value="{{ $q->id }}">
                             {{ $q->name }} ({{ $q->short_name }})
-                            @if ($q->status === 'active') — 🔓 Open
+                            @if ($q->status === 'active') — 🔓 Active
                             @elseif ($q->status === 'completed') — ✅ Completed
                             @else — ⏳ Upcoming
                             @endif
@@ -91,7 +91,7 @@
                     @else
                         <span class="text-amber-700 dark:text-amber-400 font-bold flex items-center gap-1.5">
                             <i class="fas fa-lock text-[10px]"></i>
-                            LOCKED — {{ $selectedQuarter?->name ?? 'Quarter' }} is
+                            LOCKED — {{ $selectedQuarter?->name ?? 'Term' }} is
                             <strong>{{ strtoupper($selectedQuarter?->status ?? 'CLOSED') }}</strong>.
                         </span>
                     @endif
@@ -122,7 +122,7 @@
                 Grade Encoding is <strong>OPEN</strong> for <strong>{{ $selectedQuarter?->name }}</strong>.
                 Type marks into the highlighted column and click <strong>Save All Grades</strong>.
             </span>
-            <span class="hidden md:block font-mono text-[11px]">DepEd Passing: 75.00</span>
+            
         </div>
     @else
         <div class="p-3.5 rounded-xl bg-amber-50 text-amber-800 border border-amber-300 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800 text-xs font-bold flex items-center justify-between">
@@ -131,7 +131,7 @@
                 Encoding is <strong>LOCKED</strong> — <strong>{{ $selectedQuarter?->name }}</strong>
                 is {{ strtoupper($selectedQuarter?->status ?? 'CLOSED') }}.
                 Existing grades are shown in <strong>read-only</strong> mode.
-                Admin changes to this quarter are also visible below.
+                Admin changes to this term are also visible below.
             </span>
             <span class="hidden md:block shrink-0 px-2.5 py-0.5 rounded bg-amber-200/70 dark:bg-amber-900 text-[10px] font-mono uppercase">Read-Only</span>
         </div>
@@ -141,7 +141,7 @@
     @if ($studentsList->isNotEmpty() && $stats['encodedCount'] > 0)
         <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs">
             <div class="bg-white dark:bg-zinc-900 p-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
-                <span class="text-[10px] font-bold text-zinc-400 uppercase block">Quarter Avg</span>
+                <span class="text-[10px] font-bold text-zinc-400 uppercase block">Term Avg</span>
                 <span class="text-base font-black {{ ($stats['average'] ?? 0) >= 75 ? 'text-[#166534] dark:text-emerald-400' : 'text-rose-600' }}">
                     {{ $stats['average'] ? number_format($stats['average'], 2) : '—' }}
                 </span>
@@ -182,14 +182,14 @@
             </span>
             <span class="flex items-center gap-1.5">
                 <span class="size-2.5 rounded bg-emerald-200 dark:bg-emerald-800"></span>
-                @if ($isEncodingActive) Selected Quarter — Editable
-                @else Selected Quarter — Locked
+                @if ($isEncodingActive) Selected Term — Editable
+                @else Selected Term — Locked
                 @endif
             </span>
             <span class="flex items-center gap-1.5">
                 <span class="size-2.5 rounded bg-rose-200 dark:bg-rose-900"></span> Below Passing (< 75)
             </span>
-            <span class="ml-auto text-zinc-400 text-[10px] italic">Admin changes also reflected here (shared database)</span>
+            
         </div>
 
         <div class="overflow-x-auto">
@@ -200,7 +200,7 @@
                         <th class="py-3 px-4 text-start">Student ID</th>
                         <th class="py-3 px-4 text-start">Learner Name</th>
 
-                        {{-- One column per quarter --}}
+                        {{-- One column per term --}}
                         @foreach ($quarters as $q)
                             <th class="py-3 px-3 text-center min-w-[110px]
                                 {{ (int)$q->id === (int)$selectedQuarterId
@@ -221,10 +221,8 @@
                         <th class="py-3 px-3 text-center min-w-[90px] bg-zinc-100 dark:bg-zinc-800 text-zinc-500">
                             Gen. Avg
                         </th>
-                        <th class="py-3 px-3 text-center w-24">Status</th>
-                        @if ($isEncodingActive)
-                            <th class="py-3 px-4 text-start min-w-[130px]">Remarks</th>
-                        @endif
+                        <th class="py-3 px-3 text-center w-24">Remarks</th>
+                       
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-zinc-100 dark:divide-zinc-800">
@@ -255,7 +253,7 @@
                                 {{ $st?->last_name }}, {{ $st?->first_name }}
                             </td>
 
-                            {{-- Quarter columns: read-only for past/upcoming, editable for the active selected quarter --}}
+                            {{-- Term columns: read-only for past/upcoming, editable for the active selected term --}}
                             @foreach ($quarters as $q)
                                 @php
                                     $qid          = (string)$q->id;
@@ -268,7 +266,7 @@
                                     {{ $isThisSelected ? 'bg-emerald-50/50 dark:bg-emerald-950/20' : '' }}">
 
                                     @if ($isThisSelected && $isEncodingActive)
-                                        {{-- ✏️ Editable input for the active selected quarter --}}
+                                        {{-- ✏️ Editable input for the active selected term --}}
                                         <div class="max-w-[100px] mx-auto">
                                             <input
                                                 type="number"
@@ -288,7 +286,7 @@
                                         @enderror
 
                                     @elseif ($isThisSelected && !$isEncodingActive)
-                                        {{-- 🔒 Locked: show existing grade from DB (read-only) for selected but locked quarter --}}
+                                        {{-- 🔒 Locked: show existing grade from DB (read-only) for selected but locked term --}}
                                         <div class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg font-mono font-bold text-xs border
                                             {{ $cellNum !== null
                                                 ? ($cellNum >= 75
@@ -300,7 +298,7 @@
                                         </div>
 
                                     @else
-                                        {{-- 📋 Other quarters — show existing DB grade, read-only --}}
+                                        {{-- 📋 Other terms — show existing DB grade, read-only --}}
                                         @if ($cellNum !== null)
                                             <span class="font-mono font-bold text-xs
                                                 {{ $cellNum >= 75 ? 'text-zinc-800 dark:text-zinc-200' : 'text-rose-600 dark:text-rose-400' }}">
@@ -325,7 +323,7 @@
                                 @endif
                             </td>
 
-                            {{-- Pass/Fail status (based on selected quarter cell) --}}
+                            {{-- Pass/Fail status (based on selected term cell) --}}
                             <td class="py-3 px-3 text-center whitespace-nowrap">
                                 @php
                                     $selectedQid = (string)$selectedQuarterId;
@@ -342,15 +340,6 @@
                                 @endif
                             </td>
 
-                            {{-- Remarks (only when encoding open) --}}
-                            @if ($isEncodingActive)
-                                <td class="py-2 px-4">
-                                    <input type="text"
-                                           wire:model.defer="remarks.{{ $enr->id }}"
-                                           placeholder="Optional feedback..."
-                                           class="w-full px-2.5 py-1 text-[11px] rounded border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200">
-                                </td>
-                            @endif
                         </tr>
                     @empty
                         <tr>
@@ -384,7 +373,7 @@
                 @else
                     <span class="text-zinc-400 italic text-[11px] flex items-center gap-1.5">
                         <i class="fas fa-lock"></i>
-                        Encoding locked — activate this quarter in Admin → Quarter Management.
+                        Encoding locked — activate this term in Admin → Term Periods.
                     </span>
                 @endif
             </div>

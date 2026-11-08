@@ -13,6 +13,7 @@ use Livewire\Component;
 class AdviserAssignment extends Component
 {
     public $selectedSchoolYearId = null;
+    public $selectedYearLevelId = 'all';
 
     public $showAssignModal = false;
     public $sectionInstanceId = null;
@@ -87,12 +88,16 @@ class AdviserAssignment extends Component
     public function render()
     {
         $schoolYears = SchoolYear::orderBy('school_year', 'desc')->get();
+        $yearLevels = \App\Models\YearLevel::orderBy('sort_order')->get();
         
-        $sections = $this->selectedSchoolYearId 
-            ? SchoolYearSection::with(['yearLevel', 'section', 'adviser.user', 'enrollments'])
-                ->where('school_year_id', $this->selectedSchoolYearId)
-                ->get() 
-            : collect();
+        $sectionsQuery = SchoolYearSection::with(['yearLevel', 'section', 'adviser.user', 'enrollments']);
+        if ($this->selectedSchoolYearId) {
+            $sectionsQuery->where('school_year_id', $this->selectedSchoolYearId);
+        }
+        if ($this->selectedYearLevelId !== 'all') {
+            $sectionsQuery->where('year_level_id', $this->selectedYearLevelId);
+        }
+        $sections = $sectionsQuery->get();
 
         $teachers = Teacher::with('user')->get();
 
@@ -100,6 +105,7 @@ class AdviserAssignment extends Component
 
         return view('livewire.admin.adviser-assignment', [
             'schoolYears' => $schoolYears,
+            'yearLevels' => $yearLevels,
             'sections' => $sections,
             'teachers' => $teachers,
             'targetSection' => $targetSection,

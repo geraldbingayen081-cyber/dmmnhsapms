@@ -17,11 +17,11 @@
                 </select>
             </div>
 
-            <!-- Quarter Dropdown -->
+            <!-- Term Dropdown -->
             <div class="flex items-center gap-2">
-                <label class="text-xs font-bold text-zinc-500 uppercase">Quarter:</label>
+                <label class="text-xs font-bold text-zinc-500 uppercase">Term:</label>
                 <select wire:model.live="selectedQuarterId" class="px-3 py-1.5 text-xs font-bold rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-[#166534]">
-                    <option value="">All Quarters</option>
+                    <option value="">All Terms</option>
                     @foreach ($quarters as $q)
                         <option value="{{ $q->id }}">{{ $q->name }} {{ $q->status === 'active' ? '(Current)' : '' }}</option>
                     @endforeach
@@ -151,11 +151,11 @@
             @endif
         </div>
 
-        <!-- Chart B: Quarterly Performance Trend -->
+        <!-- Chart B: Term Performance Trend -->
         <div class="bg-white dark:bg-zinc-900 p-5 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm space-y-3 flex flex-col justify-between">
             <div class="border-b border-zinc-100 dark:border-zinc-800 pb-3">
-                <h3 class="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider">B. Quarterly Performance Trend</h3>
-                <p class="text-[11px] text-zinc-500">Academic progression across 1st to 3rd Quarters</p>
+                <h3 class="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider">B. Term Performance Trend</h3>
+                <p class="text-[11px] text-zinc-500">Academic progression across 1st to 3rd Terms</p>
             </div>
             @if ($quarterlyChart['hasData'])
                 <div wire:ignore
@@ -173,8 +173,9 @@
                             el._apexChart = new ApexCharts(el, {
                                 chart: { type: 'area', height: 250, toolbar: { show: false }, background: 'transparent' },
                                 theme: { mode: dark ? 'dark' : 'light' },
-                                series: [{ name: 'Quarter Average', data: values }],
+                                series: [{ name: 'Term Average', data: values }],
                                 colors: ['#2563eb'],
+                                dataLabels: { enabled: false },
                                 stroke: { curve: 'smooth', width: 3 },
                                 fill: { type: 'gradient', gradient: { shadeIntensity: 1, opacityFrom: 0.35, opacityTo: 0.05, stops: [0, 90, 100] } },
                                 markers: { size: 5, hover: { size: 7 } },
@@ -359,10 +360,202 @@
             @else
                 <div class="h-64 min-h-[250px] flex flex-col items-center justify-center text-center p-6 text-zinc-400 bg-zinc-50 dark:bg-zinc-800/40 rounded-xl border border-dashed border-zinc-200 dark:border-zinc-700">
                     <i class="fas fa-award text-2xl mb-2 text-zinc-300"></i>
-                    <span class="text-xs font-medium">No grade data found for the selected school year / quarter.</span>
+                    <span class="text-xs font-medium">No grade data found for the selected school year / term.</span>
                 </div>
             @endif
         </div>
+    </div>
+
+    <!-- Achievements & Awards Area Chart Card -->
+    <div class="bg-white dark:bg-zinc-900 p-5 md:p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm space-y-4">
+        <div class="border-b border-zinc-100 dark:border-zinc-800 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div>
+                <div class="flex items-center gap-2">
+                    <span class="p-1.5 rounded-lg bg-emerald-100 dark:bg-emerald-950/60 text-[#166534] dark:text-emerald-400">
+                        <i class="fas fa-chart-area text-sm"></i>
+                    </span>
+                    <h3 class="text-sm font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider">
+                        Achievements & Academic Awards Area Chart
+                    </h3>
+                </div>
+                <p class="text-xs text-zinc-500 mt-0.5">
+                    Distribution of DepEd academic honors and subject excellence awards
+                </p>
+            </div>
+
+            <!-- Summary KPI Badges -->
+            <div class="flex flex-wrap items-center gap-2">
+                <div class="px-3 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-[11px] font-bold text-emerald-700 dark:text-emerald-300 flex items-center gap-1.5">
+                    <i class="fas fa-award text-amber-500"></i>
+                    <span>Total Achievers: <strong>{{ number_format($achievementsAreaChart['uniqueTotalAchievers'] ?? 0) }} Students</strong></span>
+                </div>
+                <div class="px-3 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60 text-[11px] font-bold text-blue-700 dark:text-blue-300 flex items-center gap-1.5">
+                    <i class="fas fa-medal text-blue-500"></i>
+                    <span>Honors: <strong>{{ number_format($achievementsAreaChart['summary']['unique_honors_students'] ?? 0) }} Students</strong></span>
+                </div>
+                <div class="px-3 py-1.5 rounded-lg bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/60 text-[11px] font-bold text-purple-700 dark:text-purple-300 flex items-center gap-1.5">
+                    <i class="fas fa-star text-purple-500"></i>
+                    <span>Best in Subject: <strong>{{ number_format($achievementsAreaChart['summary']['best_in_subjects_students'] ?? 0) }} Students</strong></span>
+                </div>
+            </div>
+        </div>
+
+        @if ($achievementsAreaChart['hasData'])
+            <div wire:ignore
+                x-data="{}"
+                x-init="(function() {
+                    var categories = @js($achievementsAreaChart['categories']);
+                    var series = @js($achievementsAreaChart['series']);
+                    function draw() {
+                        var el = $el.querySelector('[data-area-chart]');
+                        if (!el || typeof ApexCharts === 'undefined') { setTimeout(draw, 80); return; }
+                        if (el._apexChart) { try { el._apexChart.destroy(); } catch(e){} }
+                        var dark = document.documentElement.classList.contains('dark');
+                        var tc = dark ? '#a1a1aa' : '#52525b';
+                        var gc = dark ? '#27272a' : '#f4f4f5';
+                        var colors = ['#2dd4bf', '#0284c7', '#be123c', '#7c3aed'];
+
+                        el._apexChart = new ApexCharts(el, {
+                            chart: {
+                                type: 'area',
+                                height: 330,
+                                toolbar: {
+                                    show: true,
+                                    tools: { download: true, selection: false, zoom: true, zoomin: true, zoomout: true, pan: false, reset: true }
+                                },
+                                background: 'transparent',
+                                animations: { enabled: true, easing: 'easeinout', speed: 600 }
+                            },
+                            theme: { mode: dark ? 'dark' : 'light' },
+                            series: series,
+                            colors: colors,
+                            dataLabels: { enabled: false },
+                            stroke: { curve: 'smooth', width: 2.5 },
+                            fill: {
+                                type: 'gradient',
+                                gradient: {
+                                    shadeIntensity: 1,
+                                    opacityFrom: 0.45,
+                                    opacityTo: 0.08,
+                                    stops: [0, 90, 100]
+                                }
+                            },
+                            markers: {
+                                size: 4,
+                                strokeWidth: 1.5,
+                                hover: { size: 6 }
+                            },
+                            legend: {
+                                position: 'top',
+                                horizontalAlign: 'center',
+                                fontSize: '11px',
+                                fontWeight: 600,
+                                labels: { colors: tc },
+                                markers: { radius: 3, width: 12, height: 12 },
+                                itemMargin: { horizontal: 10, vertical: 4 }
+                            },
+                            xaxis: {
+                                categories: categories,
+                                title: {
+                                    text: 'Achievements & Awards',
+                                    style: { color: tc, fontSize: '11px', fontWeight: 700 }
+                                },
+                                labels: {
+                                    rotate: -30,
+                                    rotateAlways: false,
+                                    trim: false,
+                                    style: { colors: tc, fontSize: '10px', fontWeight: 600 }
+                                },
+                                axisBorder: { show: false },
+                                axisTicks: { show: false }
+                            },
+                            yaxis: {
+                                min: 0,
+                                forceNiceScale: true,
+                                title: {
+                                    text: 'Number of Achievements',
+                                    style: { color: tc, fontSize: '11px', fontWeight: 700 }
+                                },
+                                labels: {
+                                    formatter: function(val) { return Math.round(val); },
+                                    style: { colors: tc, fontSize: '11px' }
+                                }
+                            },
+                            grid: {
+                                borderColor: gc,
+                                strokeDashArray: 4,
+                                padding: { top: 0, right: 15, bottom: 0, left: 10 }
+                            },
+                            tooltip: {
+                                theme: dark ? 'dark' : 'light',
+                                shared: true,
+                                intersect: false,
+                                y: {
+                                    formatter: function(val) {
+                                        return val + ' student awardee(s)';
+                                    }
+                                }
+                            }
+                        });
+                        el._apexChart.render();
+                    }
+                    draw();
+                })();">
+                <div data-area-chart class="w-full h-80 min-h-[320px]"></div>
+            </div>
+
+            <!-- Detailed Achievement Category Color-coded Legend & Counter Bar -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                <div class="flex items-center gap-2.5 p-3 rounded-lg bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/40">
+                    <div class="size-3 rounded bg-emerald-500 shrink-0"></div>
+                    <div class="min-w-0 flex-1">
+                        <span class="text-[10px] uppercase font-bold text-zinc-500 block truncate">With Highest Honors</span>
+                        <span class="text-sm font-extrabold text-emerald-700 dark:text-emerald-300">
+                            {{ $achievementsAreaChart['summary']['highest_honors'] ?? 0 }}
+                            <span class="text-[9px] font-normal text-zinc-400">recipients (avg ≥ 98)</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2.5 p-3 rounded-lg bg-blue-50/70 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/40">
+                    <div class="size-3 rounded bg-blue-500 shrink-0"></div>
+                    <div class="min-w-0 flex-1">
+                        <span class="text-[10px] uppercase font-bold text-zinc-500 block truncate">With High Honors</span>
+                        <span class="text-sm font-extrabold text-blue-700 dark:text-blue-300">
+                            {{ $achievementsAreaChart['summary']['high_honors'] ?? 0 }}
+                            <span class="text-[9px] font-normal text-zinc-400">recipients (avg ≥ 95)</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2.5 p-3 rounded-lg bg-amber-50/70 dark:bg-amber-950/30 border border-amber-100 dark:border-amber-900/40">
+                    <div class="size-3 rounded bg-amber-500 shrink-0"></div>
+                    <div class="min-w-0 flex-1">
+                        <span class="text-[10px] uppercase font-bold text-zinc-500 block truncate">With Honors</span>
+                        <span class="text-sm font-extrabold text-amber-700 dark:text-amber-300">
+                            {{ $achievementsAreaChart['summary']['honors'] ?? 0 }}
+                            <span class="text-[9px] font-normal text-zinc-400">recipients (avg ≥ 90)</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2.5 p-3 rounded-lg bg-purple-50/70 dark:bg-purple-950/30 border border-purple-100 dark:border-purple-900/40">
+                    <div class="size-3 rounded bg-purple-500 shrink-0"></div>
+                    <div class="min-w-0 flex-1">
+                        <span class="text-[10px] uppercase font-bold text-zinc-500 block truncate">Best in Subject (Top #1)</span>
+                        <span class="text-sm font-extrabold text-purple-700 dark:text-purple-300">
+                            {{ $achievementsAreaChart['summary']['best_in_subjects_students'] ?? 0 }}
+                            <span class="text-[9px] font-normal text-zinc-400">students ({{ $achievementsAreaChart['summary']['best_in_subjects_awards'] ?? 0 }} class awards)</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        @else
+            <div class="h-64 min-h-[250px] flex flex-col items-center justify-center text-center p-6 text-zinc-400 bg-zinc-50 dark:bg-zinc-800/40 rounded-xl border border-dashed border-zinc-200 dark:border-zinc-700">
+                <i class="fas fa-chart-area text-2xl mb-2 text-zinc-300"></i>
+                <span class="text-xs font-medium">No achievement or award records found for the selected academic context.</span>
+            </div>
+        @endif
     </div>
 
     <!-- Recent System Activity Logs -->

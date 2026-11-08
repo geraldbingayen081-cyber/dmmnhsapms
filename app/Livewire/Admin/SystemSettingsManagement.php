@@ -19,6 +19,8 @@ class SystemSettingsManagement extends Component
     public $school_address = 'Dummun, Gattaran, Cagayan, Philippines';
     public $school_division = 'DepEd Region II - Division of Cagayan';
     public $school_level = 'Junior High School Only (Grade 7 - Grade 10)';
+    public $principal_name = 'LANY F. GAYUMA';
+    public $principal_title = 'Principal II';
     public $logo;
     public $current_logo_url = null;
 
@@ -41,6 +43,8 @@ class SystemSettingsManagement extends Component
         $this->school_address = SystemSetting::get('school_address', 'Dummun, Gattaran, Cagayan, Philippines');
         $this->school_division = SystemSetting::get('school_division', 'DepEd Region II - Division of Cagayan');
         $this->school_level = SystemSetting::get('school_level', 'Junior High School Only (Grade 7 - Grade 10)');
+        $this->principal_name = SystemSetting::get('principal_name', 'LANY F. GAYUMA');
+        $this->principal_title = SystemSetting::get('principal_title', 'Principal II');
         $this->current_logo_url = SystemSetting::logoUrl();
 
         // Load academic policies if saved
@@ -89,6 +93,8 @@ class SystemSettingsManagement extends Component
         SystemSetting::set('school_address', $this->school_address);
         SystemSetting::set('school_division', $this->school_division);
         SystemSetting::set('school_level', $this->school_level);
+        SystemSetting::set('principal_name', $this->principal_name);
+        SystemSetting::set('principal_title', $this->principal_title);
 
         ActivityLog::create([
             'user_id' => auth()->id(),

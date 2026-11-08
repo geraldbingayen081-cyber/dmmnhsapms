@@ -1,0 +1,2262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1780" height="1580" viewBox="0 0 1780 1580" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <!-- Shadow filters -->
+        <filter id="erd-shadow" x="-5%" y="-5%" width="110%" height="110%" filterUnits="userSpaceOnUse">
+            <feDropShadow dx="2" dy="4" stdDeviation="3.5" flood-color="#0f172a" flood-opacity="0.12"/>
+        </filter>
+        <filter id="erd-glow" x="-10%" y="-10%" width="120%" height="120%" filterUnits="userSpaceOnUse">
+            <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#3b82f6" flood-opacity="0.3"/>
+        </filter>
+
+        <!-- Crow's foot / Cardinality Markers -->
+        <!-- 1-to-1: two perpendicular bars -->
+        <marker id="card-one" viewBox="0 0 16 16" refX="14" refY="8" markerWidth="14" markerHeight="14" orient="auto">
+            <line x1="8" y1="2" x2="8" y2="14" stroke="#475569" stroke-width="2.2"/>
+            <line x1="13" y1="2" x2="13" y2="14" stroke="#475569" stroke-width="2.2"/>
+        </marker>
+
+        <!-- 1-to-many: Crow's Foot with inner bar -->
+        <marker id="card-many" viewBox="0 0 20 16" refX="18" refY="8" markerWidth="16" markerHeight="14" orient="auto">
+            <line x1="6" y1="2" x2="6" y2="14" stroke="#475569" stroke-width="2"/>
+            <path d="M 18 2 L 6 8 L 18 14" fill="none" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+        </marker>
+
+        <!-- Zero-to-many: Crow's Foot with circle -->
+        <marker id="card-zero-many" viewBox="0 0 24 16" refX="22" refY="8" markerWidth="18" markerHeight="14" orient="auto">
+            <circle cx="6" cy="8" r="4.5" fill="#ffffff" stroke="#475569" stroke-width="1.8"/>
+            <path d="M 22 2 L 12 8 L 22 14" fill="none" stroke="#475569" stroke-width="2.2" stroke-linecap="round"/>
+        </marker>
+
+        <!-- Arrowhead for general foreign key dependency -->
+        <marker id="fk-arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <polygon points="0,1 8,5 0,9" fill="#0284c7"/>
+        </marker>
+        <marker id="fk-arrow-amber" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <polygon points="0,1 8,5 0,9" fill="#d97706"/>
+        </marker>
+        <marker id="fk-arrow-purple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <polygon points="0,1 8,5 0,9" fill="#7c3aed"/>
+        </marker>
+        <marker id="fk-arrow-green" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <polygon points="0,1 8,5 0,9" fill="#059669"/>
+        </marker>
+    </defs>
+
+    <!-- Canvas Background -->
+    <rect width="1780" height="1580" fill="#ffffff"/>
+
+    <!-- Subtle Background Grid Pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#f1f5f9" stroke-width="1"/>
+    </pattern>
+    <rect width="1780" height="1580" fill="url(#grid)" opacity="0.8"/>
+
+    <!-- Header Banner -->
+    <g transform="translate(40, 25)">
+        <rect x="0" y="0" width="1700" height="76" rx="12" fill="#0f172a"/>
+        
+        <!-- Header Text -->
+        <text x="35" y="34" font-family="'Plus Jakarta Sans', -apple-system, sans-serif" font-size="19" font-weight="800" fill="#ffffff" letter-spacing="0.5">
+            DATABASE ENTITY RELATIONSHIP DIAGRAM (ERD)
+        </text>
+        <text x="35" y="56" font-family="'Plus Jakarta Sans', -apple-system, sans-serif" font-size="12" font-weight="500" fill="#94a3b8">
+            Academic Performance Monitoring System with Analytics (APMS) • DepEd High School Relational Schema &amp; Data Architecture
+        </text>
+
+        <!-- Right badges in header -->
+        <g transform="translate(1400, 24)">
+            <rect x="0" y="0" width="120" height="28" rx="6" fill="#1e293b" stroke="#334155"/>
+            <text x="60" y="18" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#38bdf8" text-anchor="middle">18 ENTITIES</text>
+            <rect x="130" y="0" width="140" height="28" rx="6" fill="#1e293b" stroke="#334155"/>
+            <text x="200" y="18" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#34d399" text-anchor="middle">CROW'S FOOT NOTATION</text>
+        </g>
+    </g>
+
+    <!-- Visual Domain Zone Backdrops -->
+    <!-- 1. Identity & Profiles Domain -->
+    <g opacity="0.6">
+        <rect x="35" y="115" width="745" height="825" rx="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <rect x="45" y="125" width="230" height="24" rx="6" fill="#e2e8f0"/>
+        <text x="55" y="141" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="800" fill="#334155">DOMAIN 1: USER &amp; DEMOGRAPHICS</text>
+    </g>
+
+    <!-- 2. Academic Calendar & Structure Domain -->
+    <g opacity="0.6">
+        <rect x="805" y="115" width="765" height="240" rx="16" fill="#f5f3ff" stroke="#c4b5fd" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <rect x="815" y="125" width="220" height="24" rx="6" fill="#ede9fe"/>
+        <text x="825" y="141" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="800" fill="#5b21b6">DOMAIN 2: ACADEMIC CALENDAR</text>
+    </g>
+
+    <!-- 3. Offering, Curricula & Allocation Domain -->
+    <g opacity="0.6">
+        <rect x="805" y="370" width="765" height="570" rx="16" fill="#fefce8" stroke="#fde047" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <rect x="815" y="380" width="260" height="24" rx="6" fill="#fef08a"/>
+        <text x="825" y="396" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="800" fill="#854d0e">DOMAIN 3: SECTIONS &amp; CURRICULUM</text>
+    </g>
+
+    <!-- 4. DepEd Evaluation, Honors & Audit Domain -->
+    <g opacity="0.6">
+        <rect x="35" y="950" width="1705" height="340" rx="16" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" stroke-dasharray="6,4"/>
+        <rect x="45" y="960" width="280" height="24" rx="6" fill="#dcfce7"/>
+        <text x="55" y="976" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="800" fill="#15803d">DOMAIN 4: GRADES, HONORS &amp; AUDIT</text>
+    </g>
+
+    <g class="connector-group">
+        <path d="M 370, 200 L 440, 200" fill="none" stroke="#0284c7" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-one)"/>
+        <rect x="400" y="183" width="107.5" height="16" rx="4" fill="#ffffff" stroke="#0284c7" stroke-width="0.8" opacity="0.95"/>
+        <text x="405" y="195" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#0284c7">
+            1 : 1 (user_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 320, 400 L 320, 500 L 440, 500" fill="none" stroke="#0284c7" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-one)"/>
+        <rect x="355" y="481" width="107.5" height="16" rx="4" fill="#ffffff" stroke="#0284c7" stroke-width="0.8" opacity="0.95"/>
+        <text x="360" y="493" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#0284c7">
+            1 : 1 (user_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 210, 400 L 210, 460" fill="none" stroke="#0284c7" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-one)"/>
+        <rect x="215" y="426" width="107.5" height="16" rx="4" fill="#ffffff" stroke="#0284c7" stroke-width="0.8" opacity="0.95"/>
+        <text x="220" y="438" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#0284c7">
+            1 : 1 (user_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 90, 400 L 90, 960" fill="none" stroke="#64748b" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-many)"/>
+        <rect x="95" y="671" width="107.5" height="16" rx="4" fill="#ffffff" stroke="#64748b" stroke-width="0.8" opacity="0.95"/>
+        <text x="100" y="683" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#64748b">
+            1 : N (user_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 160, 680 L 160, 730" fill="none" stroke="#0284c7" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-many)"/>
+        <rect x="165" y="701" width="120.5" height="16" rx="4" fill="#ffffff" stroke="#0284c7" stroke-width="0.8" opacity="0.95"/>
+        <text x="170" y="713" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#0284c7">
+            1 : N (parent_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 440, 620 L 390, 620 L 390, 780 L 370, 780" fill="none" stroke="#0891b2" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-many)"/>
+        <rect x="395" y="651" width="127" height="16" rx="4" fill="#ffffff" stroke="#0891b2" stroke-width="0.8" opacity="0.95"/>
+        <text x="400" y="663" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#0891b2">
+            1 : N (student_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 600, 700 L 600, 770" fill="none" stroke="#d97706" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-many)"/>
+        <rect x="605" y="726" width="127" height="16" rx="4" fill="#ffffff" stroke="#d97706" stroke-width="0.8" opacity="0.95"/>
+        <text x="610" y="738" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#d97706">
+            1 : N (student_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 760, 220 L 800, 220 L 800, 450 L 830, 450" fill="none" stroke="#0284c7" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-zero-many)"/>
+        <rect x="785" y="331" width="127" height="16" rx="4" fill="#ffffff" stroke="#0284c7" stroke-width="0.8" opacity="0.95"/>
+        <text x="790" y="343" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#0284c7">
+            1 : N (adviser_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 760, 270 L 785, 270 L 785, 730 L 830, 730" fill="none" stroke="#0284c7" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-zero-many)"/>
+        <rect x="775" y="571" width="127" height="16" rx="4" fill="#ffffff" stroke="#0284c7" stroke-width="0.8" opacity="0.95"/>
+        <text x="780" y="583" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#0284c7">
+            1 : N (teacher_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 1150, 200 L 1220, 200" fill="none" stroke="#7c3aed" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-many)"/>
+        <rect x="1180" y="181" width="153" height="16" rx="4" fill="#ffffff" stroke="#7c3aed" stroke-width="0.8" opacity="0.95"/>
+        <text x="1185" y="193" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#7c3aed">
+            1 : N (school_year_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 990, 330 L 990, 400" fill="none" stroke="#7c3aed" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-many)"/>
+        <rect x="995" y="356" width="153" height="16" rx="4" fill="#ffffff" stroke="#7c3aed" stroke-width="0.8" opacity="0.95"/>
+        <text x="1000" y="368" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#7c3aed">
+            1 : N (school_year_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 1220, 480 L 1150, 480" fill="none" stroke="#9333ea" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-many)"/>
+        <rect x="1175" y="461" width="146.5" height="16" rx="4" fill="#ffffff" stroke="#9333ea" stroke-width="0.8" opacity="0.95"/>
+        <text x="1180" y="473" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#9333ea">
+            1 : N (year_level_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 1220, 650 L 1180, 650 L 1180, 540 L 1150, 540" fill="none" stroke="#9333ea" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-many)"/>
+        <rect x="1180" y="571" width="127" height="16" rx="4" fill="#ffffff" stroke="#9333ea" stroke-width="0.8" opacity="0.95"/>
+        <text x="1185" y="583" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#9333ea">
+            1 : N (section_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 830, 530 L 780, 530 L 780, 830 L 760, 830" fill="none" stroke="#d97706" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-many)"/>
+        <rect x="770" y="671" width="146.5" height="16" rx="4" fill="#ffffff" stroke="#d97706" stroke-width="0.8" opacity="0.95"/>
+        <text x="775" y="683" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#d97706">
+            1 : N (sy_section_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 990, 630 L 990, 700" fill="none" stroke="#d97706" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-many)"/>
+        <rect x="995" y="656" width="146.5" height="16" rx="4" fill="#ffffff" stroke="#d97706" stroke-width="0.8" opacity="0.95"/>
+        <text x="1000" y="668" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#d97706">
+            1 : N (sy_section_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 1220, 800 L 1150, 800" fill="none" stroke="#9333ea" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-many)"/>
+        <rect x="1175" y="781" width="127" height="16" rx="4" fill="#ffffff" stroke="#9333ea" stroke-width="0.8" opacity="0.95"/>
+        <text x="1180" y="793" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#9333ea">
+            1 : N (subject_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 600, 980 L 600, 1070 L 650, 1070" fill="none" stroke="#059669" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-many)"/>
+        <rect x="585" y="1031" width="198.5" height="16" rx="4" fill="#ffffff" stroke="#059669" stroke-width="0.8" opacity="0.95"/>
+        <text x="590" y="1043" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#059669">
+            1 : N (student_enrollment_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 890, 900 L 890, 1010" fill="none" stroke="#059669" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-many)"/>
+        <rect x="895" y="946" width="179" height="16" rx="4" fill="#ffffff" stroke="#059669" stroke-width="0.8" opacity="0.95"/>
+        <text x="900" y="958" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#059669">
+            1 : N (section_subject_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 1380, 360 L 1380, 940 L 980, 940 L 980, 1010" fill="none" stroke="#7c3aed" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-many)"/>
+        <rect x="1215" y="921" width="127" height="16" rx="4" fill="#ffffff" stroke="#7c3aed" stroke-width="0.8" opacity="0.95"/>
+        <text x="1220" y="933" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#7c3aed">
+            1 : N (quarter_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 300, 400 L 300, 1140 L 650, 1140" fill="none" stroke="#2563eb" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-zero-many)"/>
+        <rect x="455" y="1121" width="127" height="16" rx="4" fill="#ffffff" stroke="#2563eb" stroke-width="0.8" opacity="0.95"/>
+        <text x="460" y="1133" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#2563eb">
+            1 : N (created_by)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 1140, 330 L 1140, 980" fill="none" stroke="#db2777" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-many)"/>
+        <rect x="1140" y="631" width="153" height="16" rx="4" fill="#ffffff" stroke="#db2777" stroke-width="0.8" opacity="0.95"/>
+        <text x="1145" y="643" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#db2777">
+            1 : N (school_year_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 760, 570 L 810, 570 L 810, 920 L 1550, 920 L 1550, 980" fill="none" stroke="#db2777" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-many)"/>
+        <rect x="1465" y="901" width="127" height="16" rx="4" fill="#ffffff" stroke="#db2777" stroke-width="0.8" opacity="0.95"/>
+        <text x="1470" y="913" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#db2777">
+            1 : N (student_id)
+        </text>
+    </g>
+    <g class="connector-group">
+        <path d="M 1120, 330 L 1120, 370 L 1600, 370 L 1600, 980" fill="none" stroke="#db2777" stroke-width="2.2" 
+              stroke-linecap="round" stroke-linejoin="round"
+              marker-start="url(#card-one)" marker-end="url(#card-zero-many)"/>
+        <rect x="1525" y="351" width="153" height="16" rx="4" fill="#ffffff" stroke="#db2777" stroke-width="0.8" opacity="0.95"/>
+        <text x="1530" y="363" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="700" fill="#db2777">
+            1 : N (school_year_id)
+        </text>
+    </g>
+    <!-- TABLE ENTITY: users -->
+    <g id="entity-users" transform="translate(50, 140)" filter="url(#erd-shadow)">
+        <!-- Table Frame Base -->
+        <rect x="0" y="0" width="320" height="266" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+
+        <!-- Header Ribbon -->
+        <rect x="0" y="0" width="320" height="46" rx="8" fill="#2563eb"/>
+        <rect x="0" y="38" width="320" height="8" fill="#2563eb"/>
+
+        <!-- Stereotype -->
+        <text x="14" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#e0f2fe" opacity="0.9">
+            <<identity: core>>
+        </text>
+
+        <!-- Table Name -->
+        <text x="14" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+            users
+        </text>
+
+        <!-- Header Count Badge -->
+        <rect x="265" y="12" width="42" height="20" rx="4" fill="rgba(0,0,0,0.22)"/>
+        <text x="286" y="26" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">
+            10 col
+        </text>
+
+        <!-- Column Rows -->
+        <g transform="translate(0, 46)">
+            <!-- Row 1: id -->
+            <rect x="1" y="0" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="21" x2="319" y2="21" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="3" width="22" height="15" rx="3" fill="#eab308"/>
+            <text x="21" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#713f12" text-anchor="middle">PK</text>
+            <text x="38" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                id
+            </text>
+            <text x="308" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 2: login_id -->
+            <rect x="1" y="21" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="42" x2="319" y2="42" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="24" width="22" height="15" rx="3" fill="#8b5cf6"/>
+            <text x="21" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">UK</text>
+            <text x="38" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                login_id
+            </text>
+            <text x="308" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255)
+            </text>
+            <!-- Row 3: name -->
+            <rect x="1" y="42" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="63" x2="319" y2="63" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                name
+            </text>
+            <text x="308" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255)
+            </text>
+            <!-- Row 4: email -->
+            <rect x="1" y="63" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="84" x2="319" y2="84" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                email
+            </text>
+            <text x="308" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                VARCHAR(255) [N]
+            </text>
+            <!-- Row 5: password -->
+            <rect x="1" y="84" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="105" x2="319" y2="105" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                password
+            </text>
+            <text x="308" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255)
+            </text>
+            <!-- Row 6: role -->
+            <rect x="1" y="105" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="126" x2="319" y2="126" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                role
+            </text>
+            <text x="308" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                ENUM('admin','teacher','student','parent')
+            </text>
+            <!-- Row 7: status -->
+            <rect x="1" y="126" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="147" x2="319" y2="147" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                status
+            </text>
+            <text x="308" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                ENUM('active','inactive')
+            </text>
+            <!-- Row 8: profile_photo_path -->
+            <rect x="1" y="147" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="168" x2="319" y2="168" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                profile_photo_path
+            </text>
+            <text x="308" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                VARCHAR(2048) [N]
+            </text>
+            <!-- Row 9: remember_token -->
+            <rect x="1" y="168" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="189" x2="319" y2="189" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="182" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                remember_token
+            </text>
+            <text x="308" y="182" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                VARCHAR(100) [N]
+            </text>
+            <!-- Row 10: created_at / updated_at -->
+            <rect x="1" y="189" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="210" x2="319" y2="210" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="203" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                created_at / updated_at
+            </text>
+            <text x="308" y="203" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TIMESTAMP [N]
+            </text>
+        </g>
+    </g>
+    <!-- TABLE ENTITY: teachers -->
+    <g id="entity-teachers" transform="translate(440, 140)" filter="url(#erd-shadow)">
+        <!-- Table Frame Base -->
+        <rect x="0" y="0" width="320" height="245" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+
+        <!-- Header Ribbon -->
+        <rect x="0" y="0" width="320" height="46" rx="8" fill="#0284c7"/>
+        <rect x="0" y="38" width="320" height="8" fill="#0284c7"/>
+
+        <!-- Stereotype -->
+        <text x="14" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#e0f2fe" opacity="0.9">
+            <<profile: faculty>>
+        </text>
+
+        <!-- Table Name -->
+        <text x="14" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+            teachers
+        </text>
+
+        <!-- Header Count Badge -->
+        <rect x="265" y="12" width="42" height="20" rx="4" fill="rgba(0,0,0,0.22)"/>
+        <text x="286" y="26" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">
+            9 col
+        </text>
+
+        <!-- Column Rows -->
+        <g transform="translate(0, 46)">
+            <!-- Row 1: id -->
+            <rect x="1" y="0" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="21" x2="319" y2="21" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="3" width="22" height="15" rx="3" fill="#eab308"/>
+            <text x="21" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#713f12" text-anchor="middle">PK</text>
+            <text x="38" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                id
+            </text>
+            <text x="308" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 2: user_id -->
+            <rect x="1" y="21" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="42" x2="319" y2="42" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="24" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <rect x="34" y="24" width="22" height="15" rx="3" fill="#8b5cf6"/>
+            <text x="45" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">UK</text>
+            <text x="62" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                user_id
+            </text>
+            <text x="308" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 3: employee_number -->
+            <rect x="1" y="42" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="63" x2="319" y2="63" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="45" width="22" height="15" rx="3" fill="#8b5cf6"/>
+            <text x="21" y="56" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">UK</text>
+            <text x="38" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                employee_number
+            </text>
+            <text x="308" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255)
+            </text>
+            <!-- Row 4: first_name -->
+            <rect x="1" y="63" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="84" x2="319" y2="84" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                first_name
+            </text>
+            <text x="308" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255)
+            </text>
+            <!-- Row 5: middle_name -->
+            <rect x="1" y="84" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="105" x2="319" y2="105" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                middle_name
+            </text>
+            <text x="308" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                VARCHAR(255) [N]
+            </text>
+            <!-- Row 6: last_name -->
+            <rect x="1" y="105" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="126" x2="319" y2="126" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                last_name
+            </text>
+            <text x="308" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255)
+            </text>
+            <!-- Row 7: suffix -->
+            <rect x="1" y="126" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="147" x2="319" y2="147" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                suffix
+            </text>
+            <text x="308" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                VARCHAR(255) [N]
+            </text>
+            <!-- Row 8: contact_number -->
+            <rect x="1" y="147" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="168" x2="319" y2="168" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                contact_number
+            </text>
+            <text x="308" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                VARCHAR(255) [N]
+            </text>
+            <!-- Row 9: created_at / updated_at -->
+            <rect x="1" y="168" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="189" x2="319" y2="189" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="182" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                created_at / updated_at
+            </text>
+            <text x="308" y="182" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TIMESTAMP [N]
+            </text>
+        </g>
+    </g>
+    <!-- TABLE ENTITY: students -->
+    <g id="entity-students" transform="translate(440, 440)" filter="url(#erd-shadow)">
+        <!-- Table Frame Base -->
+        <rect x="0" y="0" width="320" height="287" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+
+        <!-- Header Ribbon -->
+        <rect x="0" y="0" width="320" height="46" rx="8" fill="#0284c7"/>
+        <rect x="0" y="38" width="320" height="8" fill="#0284c7"/>
+
+        <!-- Stereotype -->
+        <text x="14" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#e0f2fe" opacity="0.9">
+            <<profile: learner>>
+        </text>
+
+        <!-- Table Name -->
+        <text x="14" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+            students
+        </text>
+
+        <!-- Header Count Badge -->
+        <rect x="265" y="12" width="42" height="20" rx="4" fill="rgba(0,0,0,0.22)"/>
+        <text x="286" y="26" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">
+            11 col
+        </text>
+
+        <!-- Column Rows -->
+        <g transform="translate(0, 46)">
+            <!-- Row 1: id -->
+            <rect x="1" y="0" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="21" x2="319" y2="21" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="3" width="22" height="15" rx="3" fill="#eab308"/>
+            <text x="21" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#713f12" text-anchor="middle">PK</text>
+            <text x="38" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                id
+            </text>
+            <text x="308" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 2: user_id -->
+            <rect x="1" y="21" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="42" x2="319" y2="42" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="24" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <rect x="34" y="24" width="22" height="15" rx="3" fill="#8b5cf6"/>
+            <text x="45" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">UK</text>
+            <text x="62" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                user_id
+            </text>
+            <text x="308" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 3: student_number -->
+            <rect x="1" y="42" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="63" x2="319" y2="63" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="45" width="22" height="15" rx="3" fill="#8b5cf6"/>
+            <text x="21" y="56" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">UK</text>
+            <text x="38" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                student_number
+            </text>
+            <text x="308" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255)
+            </text>
+            <!-- Row 4: first_name -->
+            <rect x="1" y="63" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="84" x2="319" y2="84" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                first_name
+            </text>
+            <text x="308" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255)
+            </text>
+            <!-- Row 5: middle_name -->
+            <rect x="1" y="84" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="105" x2="319" y2="105" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                middle_name
+            </text>
+            <text x="308" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                VARCHAR(255) [N]
+            </text>
+            <!-- Row 6: last_name -->
+            <rect x="1" y="105" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="126" x2="319" y2="126" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                last_name
+            </text>
+            <text x="308" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255)
+            </text>
+            <!-- Row 7: suffix -->
+            <rect x="1" y="126" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="147" x2="319" y2="147" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                suffix
+            </text>
+            <text x="308" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                VARCHAR(255) [N]
+            </text>
+            <!-- Row 8: gender -->
+            <rect x="1" y="147" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="168" x2="319" y2="168" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                gender
+            </text>
+            <text x="308" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                VARCHAR(255) [N]
+            </text>
+            <!-- Row 9: birthdate -->
+            <rect x="1" y="168" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="189" x2="319" y2="189" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="182" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                birthdate
+            </text>
+            <text x="308" y="182" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                DATE [N]
+            </text>
+            <!-- Row 10: contact_number -->
+            <rect x="1" y="189" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="210" x2="319" y2="210" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="203" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                contact_number
+            </text>
+            <text x="308" y="203" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                VARCHAR(255) [N]
+            </text>
+            <!-- Row 11: created_at / updated_at -->
+            <rect x="1" y="210" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="231" x2="319" y2="231" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="224" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                created_at / updated_at
+            </text>
+            <text x="308" y="224" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TIMESTAMP [N]
+            </text>
+        </g>
+    </g>
+    <!-- TABLE ENTITY: parents -->
+    <g id="entity-parents" transform="translate(50, 460)" filter="url(#erd-shadow)">
+        <!-- Table Frame Base -->
+        <rect x="0" y="0" width="320" height="224" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+
+        <!-- Header Ribbon -->
+        <rect x="0" y="0" width="320" height="46" rx="8" fill="#0284c7"/>
+        <rect x="0" y="38" width="320" height="8" fill="#0284c7"/>
+
+        <!-- Stereotype -->
+        <text x="14" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#e0f2fe" opacity="0.9">
+            <<profile: guardian>>
+        </text>
+
+        <!-- Table Name -->
+        <text x="14" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+            parents
+        </text>
+
+        <!-- Header Count Badge -->
+        <rect x="265" y="12" width="42" height="20" rx="4" fill="rgba(0,0,0,0.22)"/>
+        <text x="286" y="26" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">
+            8 col
+        </text>
+
+        <!-- Column Rows -->
+        <g transform="translate(0, 46)">
+            <!-- Row 1: id -->
+            <rect x="1" y="0" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="21" x2="319" y2="21" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="3" width="22" height="15" rx="3" fill="#eab308"/>
+            <text x="21" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#713f12" text-anchor="middle">PK</text>
+            <text x="38" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                id
+            </text>
+            <text x="308" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 2: user_id -->
+            <rect x="1" y="21" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="42" x2="319" y2="42" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="24" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <rect x="34" y="24" width="22" height="15" rx="3" fill="#8b5cf6"/>
+            <text x="45" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">UK</text>
+            <text x="62" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                user_id
+            </text>
+            <text x="308" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 3: first_name -->
+            <rect x="1" y="42" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="63" x2="319" y2="63" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                first_name
+            </text>
+            <text x="308" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255)
+            </text>
+            <!-- Row 4: middle_name -->
+            <rect x="1" y="63" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="84" x2="319" y2="84" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                middle_name
+            </text>
+            <text x="308" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                VARCHAR(255) [N]
+            </text>
+            <!-- Row 5: last_name -->
+            <rect x="1" y="84" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="105" x2="319" y2="105" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                last_name
+            </text>
+            <text x="308" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255)
+            </text>
+            <!-- Row 6: suffix -->
+            <rect x="1" y="105" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="126" x2="319" y2="126" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                suffix
+            </text>
+            <text x="308" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                VARCHAR(255) [N]
+            </text>
+            <!-- Row 7: contact_number -->
+            <rect x="1" y="126" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="147" x2="319" y2="147" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                contact_number
+            </text>
+            <text x="308" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                VARCHAR(255) [N]
+            </text>
+            <!-- Row 8: created_at / updated_at -->
+            <rect x="1" y="147" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="168" x2="319" y2="168" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                created_at / updated_at
+            </text>
+            <text x="308" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TIMESTAMP [N]
+            </text>
+        </g>
+    </g>
+    <!-- TABLE ENTITY: parent_student -->
+    <g id="entity-parent_student" transform="translate(50, 730)" filter="url(#erd-shadow)">
+        <!-- Table Frame Base -->
+        <rect x="0" y="0" width="320" height="182" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+
+        <!-- Header Ribbon -->
+        <rect x="0" y="0" width="320" height="46" rx="8" fill="#0891b2"/>
+        <rect x="0" y="38" width="320" height="8" fill="#0891b2"/>
+
+        <!-- Stereotype -->
+        <text x="14" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#e0f2fe" opacity="0.9">
+            <<associative: pivot>>
+        </text>
+
+        <!-- Table Name -->
+        <text x="14" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+            parent_student
+        </text>
+
+        <!-- Header Count Badge -->
+        <rect x="265" y="12" width="42" height="20" rx="4" fill="rgba(0,0,0,0.22)"/>
+        <text x="286" y="26" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">
+            6 col
+        </text>
+
+        <!-- Column Rows -->
+        <g transform="translate(0, 46)">
+            <!-- Row 1: id -->
+            <rect x="1" y="0" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="21" x2="319" y2="21" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="3" width="22" height="15" rx="3" fill="#eab308"/>
+            <text x="21" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#713f12" text-anchor="middle">PK</text>
+            <text x="38" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                id
+            </text>
+            <text x="308" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 2: parent_id -->
+            <rect x="1" y="21" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="42" x2="319" y2="42" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="24" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                parent_id
+            </text>
+            <text x="308" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 3: student_id -->
+            <rect x="1" y="42" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="63" x2="319" y2="63" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="45" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="56" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                student_id
+            </text>
+            <text x="308" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 4: relationship -->
+            <rect x="1" y="63" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="84" x2="319" y2="84" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                relationship
+            </text>
+            <text x="308" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255) DEFAULT 'Guardian'
+            </text>
+            <!-- Row 5: (parent_id, student_id) -->
+            <rect x="1" y="84" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="105" x2="319" y2="105" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="87" width="22" height="15" rx="3" fill="#8b5cf6"/>
+            <text x="21" y="98" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">UK</text>
+            <text x="38" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                (parent_id, student_id)
+            </text>
+            <text x="308" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                COMPOSITE UNIQUE
+            </text>
+            <!-- Row 6: created_at / updated_at -->
+            <rect x="1" y="105" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="126" x2="319" y2="126" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                created_at / updated_at
+            </text>
+            <text x="308" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TIMESTAMP [N]
+            </text>
+        </g>
+    </g>
+    <!-- TABLE ENTITY: activity_logs -->
+    <g id="entity-activity_logs" transform="translate(50, 960)" filter="url(#erd-shadow)">
+        <!-- Table Frame Base -->
+        <rect x="0" y="0" width="320" height="245" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+
+        <!-- Header Ribbon -->
+        <rect x="0" y="0" width="320" height="46" rx="8" fill="#475569"/>
+        <rect x="0" y="38" width="320" height="8" fill="#475569"/>
+
+        <!-- Stereotype -->
+        <text x="14" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#e0f2fe" opacity="0.9">
+            <<security: audit trail>>
+        </text>
+
+        <!-- Table Name -->
+        <text x="14" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+            activity_logs
+        </text>
+
+        <!-- Header Count Badge -->
+        <rect x="265" y="12" width="42" height="20" rx="4" fill="rgba(0,0,0,0.22)"/>
+        <text x="286" y="26" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">
+            9 col
+        </text>
+
+        <!-- Column Rows -->
+        <g transform="translate(0, 46)">
+            <!-- Row 1: id -->
+            <rect x="1" y="0" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="21" x2="319" y2="21" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="3" width="22" height="15" rx="3" fill="#eab308"/>
+            <text x="21" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#713f12" text-anchor="middle">PK</text>
+            <text x="38" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                id
+            </text>
+            <text x="308" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 2: user_id -->
+            <rect x="1" y="21" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="42" x2="319" y2="42" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="24" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                user_id
+            </text>
+            <text x="308" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                BIGINT UNSIGNED [N]
+            </text>
+            <!-- Row 3: action -->
+            <rect x="1" y="42" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="63" x2="319" y2="63" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                action
+            </text>
+            <text x="308" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255)
+            </text>
+            <!-- Row 4: subject_type -->
+            <rect x="1" y="63" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="84" x2="319" y2="84" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                subject_type
+            </text>
+            <text x="308" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                VARCHAR(255) [N]
+            </text>
+            <!-- Row 5: subject_id -->
+            <rect x="1" y="84" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="105" x2="319" y2="105" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                subject_id
+            </text>
+            <text x="308" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                BIGINT UNSIGNED [N]
+            </text>
+            <!-- Row 6: description -->
+            <rect x="1" y="105" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="126" x2="319" y2="126" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                description
+            </text>
+            <text x="308" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TEXT [N]
+            </text>
+            <!-- Row 7: old_values -->
+            <rect x="1" y="126" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="147" x2="319" y2="147" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                old_values
+            </text>
+            <text x="308" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                JSON [N]
+            </text>
+            <!-- Row 8: new_values -->
+            <rect x="1" y="147" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="168" x2="319" y2="168" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                new_values
+            </text>
+            <text x="308" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                JSON [N]
+            </text>
+            <!-- Row 9: created_at / updated_at -->
+            <rect x="1" y="168" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="189" x2="319" y2="189" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="182" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                created_at / updated_at
+            </text>
+            <text x="308" y="182" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TIMESTAMP [N]
+            </text>
+        </g>
+    </g>
+    <!-- TABLE ENTITY: school_years -->
+    <g id="entity-school_years" transform="translate(830, 140)" filter="url(#erd-shadow)">
+        <!-- Table Frame Base -->
+        <rect x="0" y="0" width="320" height="182" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+
+        <!-- Header Ribbon -->
+        <rect x="0" y="0" width="320" height="46" rx="8" fill="#7c3aed"/>
+        <rect x="0" y="38" width="320" height="8" fill="#7c3aed"/>
+
+        <!-- Stereotype -->
+        <text x="14" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#e0f2fe" opacity="0.9">
+            <<calendar: academic period>>
+        </text>
+
+        <!-- Table Name -->
+        <text x="14" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+            school_years
+        </text>
+
+        <!-- Header Count Badge -->
+        <rect x="265" y="12" width="42" height="20" rx="4" fill="rgba(0,0,0,0.22)"/>
+        <text x="286" y="26" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">
+            6 col
+        </text>
+
+        <!-- Column Rows -->
+        <g transform="translate(0, 46)">
+            <!-- Row 1: id -->
+            <rect x="1" y="0" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="21" x2="319" y2="21" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="3" width="22" height="15" rx="3" fill="#eab308"/>
+            <text x="21" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#713f12" text-anchor="middle">PK</text>
+            <text x="38" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                id
+            </text>
+            <text x="308" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 2: school_year -->
+            <rect x="1" y="21" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="42" x2="319" y2="42" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="24" width="22" height="15" rx="3" fill="#8b5cf6"/>
+            <text x="21" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">UK</text>
+            <text x="38" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                school_year
+            </text>
+            <text x="308" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255) e.g. '2026-2027'
+            </text>
+            <!-- Row 3: start_date -->
+            <rect x="1" y="42" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="63" x2="319" y2="63" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                start_date
+            </text>
+            <text x="308" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                DATE
+            </text>
+            <!-- Row 4: end_date -->
+            <rect x="1" y="63" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="84" x2="319" y2="84" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                end_date
+            </text>
+            <text x="308" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                DATE
+            </text>
+            <!-- Row 5: status -->
+            <rect x="1" y="84" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="105" x2="319" y2="105" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                status
+            </text>
+            <text x="308" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                ENUM('draft','active','completed','archived')
+            </text>
+            <!-- Row 6: created_at / updated_at -->
+            <rect x="1" y="105" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="126" x2="319" y2="126" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                created_at / updated_at
+            </text>
+            <text x="308" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TIMESTAMP [N]
+            </text>
+        </g>
+    </g>
+    <!-- TABLE ENTITY: quarters -->
+    <g id="entity-quarters" transform="translate(1220, 140)" filter="url(#erd-shadow)">
+        <!-- Table Frame Base -->
+        <rect x="0" y="0" width="320" height="266" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+
+        <!-- Header Ribbon -->
+        <rect x="0" y="0" width="320" height="46" rx="8" fill="#7c3aed"/>
+        <rect x="0" y="38" width="320" height="8" fill="#7c3aed"/>
+
+        <!-- Stereotype -->
+        <text x="14" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#e0f2fe" opacity="0.9">
+            <<calendar: grading term>>
+        </text>
+
+        <!-- Table Name -->
+        <text x="14" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+            quarters
+        </text>
+
+        <!-- Header Count Badge -->
+        <rect x="265" y="12" width="42" height="20" rx="4" fill="rgba(0,0,0,0.22)"/>
+        <text x="286" y="26" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">
+            10 col
+        </text>
+
+        <!-- Column Rows -->
+        <g transform="translate(0, 46)">
+            <!-- Row 1: id -->
+            <rect x="1" y="0" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="21" x2="319" y2="21" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="3" width="22" height="15" rx="3" fill="#eab308"/>
+            <text x="21" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#713f12" text-anchor="middle">PK</text>
+            <text x="38" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                id
+            </text>
+            <text x="308" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 2: school_year_id -->
+            <rect x="1" y="21" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="42" x2="319" y2="42" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="24" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                school_year_id
+            </text>
+            <text x="308" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 3: name -->
+            <rect x="1" y="42" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="63" x2="319" y2="63" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                name
+            </text>
+            <text x="308" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255) e.g. '1st Quarter'
+            </text>
+            <!-- Row 4: short_name -->
+            <rect x="1" y="63" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="84" x2="319" y2="84" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                short_name
+            </text>
+            <text x="308" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255) e.g. 'Q1'
+            </text>
+            <!-- Row 5: sort_order -->
+            <rect x="1" y="84" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="105" x2="319" y2="105" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                sort_order
+            </text>
+            <text x="308" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                INT
+            </text>
+            <!-- Row 6: start_date -->
+            <rect x="1" y="105" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="126" x2="319" y2="126" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                start_date
+            </text>
+            <text x="308" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                DATE [N]
+            </text>
+            <!-- Row 7: end_date -->
+            <rect x="1" y="126" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="147" x2="319" y2="147" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                end_date
+            </text>
+            <text x="308" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                DATE [N]
+            </text>
+            <!-- Row 8: status -->
+            <rect x="1" y="147" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="168" x2="319" y2="168" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                status
+            </text>
+            <text x="308" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                ENUM('upcoming','active','completed')
+            </text>
+            <!-- Row 9: (school_year_id, sort_order) -->
+            <rect x="1" y="168" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="189" x2="319" y2="189" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="171" width="22" height="15" rx="3" fill="#8b5cf6"/>
+            <text x="21" y="182" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">UK</text>
+            <text x="38" y="182" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                (school_year_id, sort_order)
+            </text>
+            <text x="308" y="182" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                COMPOSITE UNIQUE
+            </text>
+            <!-- Row 10: created_at / updated_at -->
+            <rect x="1" y="189" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="210" x2="319" y2="210" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="203" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                created_at / updated_at
+            </text>
+            <text x="308" y="203" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TIMESTAMP [N]
+            </text>
+        </g>
+    </g>
+    <!-- TABLE ENTITY: year_levels -->
+    <g id="entity-year_levels" transform="translate(1220, 440)" filter="url(#erd-shadow)">
+        <!-- Table Frame Base -->
+        <rect x="0" y="0" width="320" height="161" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+
+        <!-- Header Ribbon -->
+        <rect x="0" y="0" width="320" height="46" rx="8" fill="#9333ea"/>
+        <rect x="0" y="38" width="320" height="8" fill="#9333ea"/>
+
+        <!-- Stereotype -->
+        <text x="14" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#e0f2fe" opacity="0.9">
+            <<curriculum: grade level>>
+        </text>
+
+        <!-- Table Name -->
+        <text x="14" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+            year_levels
+        </text>
+
+        <!-- Header Count Badge -->
+        <rect x="265" y="12" width="42" height="20" rx="4" fill="rgba(0,0,0,0.22)"/>
+        <text x="286" y="26" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">
+            5 col
+        </text>
+
+        <!-- Column Rows -->
+        <g transform="translate(0, 46)">
+            <!-- Row 1: id -->
+            <rect x="1" y="0" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="21" x2="319" y2="21" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="3" width="22" height="15" rx="3" fill="#eab308"/>
+            <text x="21" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#713f12" text-anchor="middle">PK</text>
+            <text x="38" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                id
+            </text>
+            <text x="308" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 2: name -->
+            <rect x="1" y="21" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="42" x2="319" y2="42" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                name
+            </text>
+            <text x="308" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255) e.g. 'Grade 7'
+            </text>
+            <!-- Row 3: code -->
+            <rect x="1" y="42" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="63" x2="319" y2="63" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="45" width="22" height="15" rx="3" fill="#8b5cf6"/>
+            <text x="21" y="56" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">UK</text>
+            <text x="38" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                code
+            </text>
+            <text x="308" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255) e.g. 'G7'
+            </text>
+            <!-- Row 4: sort_order -->
+            <rect x="1" y="63" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="84" x2="319" y2="84" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                sort_order
+            </text>
+            <text x="308" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                INT
+            </text>
+            <!-- Row 5: created_at / updated_at -->
+            <rect x="1" y="84" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="105" x2="319" y2="105" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                created_at / updated_at
+            </text>
+            <text x="308" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TIMESTAMP [N]
+            </text>
+        </g>
+    </g>
+    <!-- TABLE ENTITY: sections -->
+    <g id="entity-sections" transform="translate(1220, 620)" filter="url(#erd-shadow)">
+        <!-- Table Frame Base -->
+        <rect x="0" y="0" width="320" height="119" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+
+        <!-- Header Ribbon -->
+        <rect x="0" y="0" width="320" height="46" rx="8" fill="#9333ea"/>
+        <rect x="0" y="38" width="320" height="8" fill="#9333ea"/>
+
+        <!-- Stereotype -->
+        <text x="14" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#e0f2fe" opacity="0.9">
+            <<structure: section catalog>>
+        </text>
+
+        <!-- Table Name -->
+        <text x="14" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+            sections
+        </text>
+
+        <!-- Header Count Badge -->
+        <rect x="265" y="12" width="42" height="20" rx="4" fill="rgba(0,0,0,0.22)"/>
+        <text x="286" y="26" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">
+            3 col
+        </text>
+
+        <!-- Column Rows -->
+        <g transform="translate(0, 46)">
+            <!-- Row 1: id -->
+            <rect x="1" y="0" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="21" x2="319" y2="21" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="3" width="22" height="15" rx="3" fill="#eab308"/>
+            <text x="21" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#713f12" text-anchor="middle">PK</text>
+            <text x="38" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                id
+            </text>
+            <text x="308" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 2: name -->
+            <rect x="1" y="21" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="42" x2="319" y2="42" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="24" width="22" height="15" rx="3" fill="#8b5cf6"/>
+            <text x="21" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">UK</text>
+            <text x="38" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                name
+            </text>
+            <text x="308" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255) e.g. 'Rizal'
+            </text>
+            <!-- Row 3: created_at / updated_at -->
+            <rect x="1" y="42" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="63" x2="319" y2="63" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                created_at / updated_at
+            </text>
+            <text x="308" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TIMESTAMP [N]
+            </text>
+        </g>
+    </g>
+    <!-- TABLE ENTITY: subjects -->
+    <g id="entity-subjects" transform="translate(1220, 760)" filter="url(#erd-shadow)">
+        <!-- Table Frame Base -->
+        <rect x="0" y="0" width="320" height="140" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+
+        <!-- Header Ribbon -->
+        <rect x="0" y="0" width="320" height="46" rx="8" fill="#9333ea"/>
+        <rect x="0" y="38" width="320" height="8" fill="#9333ea"/>
+
+        <!-- Stereotype -->
+        <text x="14" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#e0f2fe" opacity="0.9">
+            <<curriculum: learning area>>
+        </text>
+
+        <!-- Table Name -->
+        <text x="14" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+            subjects
+        </text>
+
+        <!-- Header Count Badge -->
+        <rect x="265" y="12" width="42" height="20" rx="4" fill="rgba(0,0,0,0.22)"/>
+        <text x="286" y="26" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">
+            4 col
+        </text>
+
+        <!-- Column Rows -->
+        <g transform="translate(0, 46)">
+            <!-- Row 1: id -->
+            <rect x="1" y="0" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="21" x2="319" y2="21" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="3" width="22" height="15" rx="3" fill="#eab308"/>
+            <text x="21" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#713f12" text-anchor="middle">PK</text>
+            <text x="38" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                id
+            </text>
+            <text x="308" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 2: subject_code -->
+            <rect x="1" y="21" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="42" x2="319" y2="42" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="24" width="22" height="15" rx="3" fill="#8b5cf6"/>
+            <text x="21" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">UK</text>
+            <text x="38" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                subject_code
+            </text>
+            <text x="308" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255) e.g. 'MATH'
+            </text>
+            <!-- Row 3: subject_name -->
+            <rect x="1" y="42" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="63" x2="319" y2="63" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                subject_name
+            </text>
+            <text x="308" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255) e.g. 'Mathematics'
+            </text>
+            <!-- Row 4: created_at / updated_at -->
+            <rect x="1" y="63" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="84" x2="319" y2="84" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                created_at / updated_at
+            </text>
+            <text x="308" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TIMESTAMP [N]
+            </text>
+        </g>
+    </g>
+    <!-- TABLE ENTITY: school_year_sections -->
+    <g id="entity-school_year_sections" transform="translate(830, 400)" filter="url(#erd-shadow)">
+        <!-- Table Frame Base -->
+        <rect x="0" y="0" width="320" height="224" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+
+        <!-- Header Ribbon -->
+        <rect x="0" y="0" width="320" height="46" rx="8" fill="#d97706"/>
+        <rect x="0" y="38" width="320" height="8" fill="#d97706"/>
+
+        <!-- Stereotype -->
+        <text x="14" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#e0f2fe" opacity="0.9">
+            <<structure: class offering>>
+        </text>
+
+        <!-- Table Name -->
+        <text x="14" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+            school_year_sections
+        </text>
+
+        <!-- Header Count Badge -->
+        <rect x="265" y="12" width="42" height="20" rx="4" fill="rgba(0,0,0,0.22)"/>
+        <text x="286" y="26" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">
+            8 col
+        </text>
+
+        <!-- Column Rows -->
+        <g transform="translate(0, 46)">
+            <!-- Row 1: id -->
+            <rect x="1" y="0" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="21" x2="319" y2="21" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="3" width="22" height="15" rx="3" fill="#eab308"/>
+            <text x="21" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#713f12" text-anchor="middle">PK</text>
+            <text x="38" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                id
+            </text>
+            <text x="308" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 2: school_year_id -->
+            <rect x="1" y="21" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="42" x2="319" y2="42" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="24" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                school_year_id
+            </text>
+            <text x="308" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 3: section_id -->
+            <rect x="1" y="42" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="63" x2="319" y2="63" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="45" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="56" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                section_id
+            </text>
+            <text x="308" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 4: year_level_id -->
+            <rect x="1" y="63" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="84" x2="319" y2="84" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="66" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="77" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                year_level_id
+            </text>
+            <text x="308" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 5: adviser_id -->
+            <rect x="1" y="84" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="105" x2="319" y2="105" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="87" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="98" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                adviser_id
+            </text>
+            <text x="308" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                BIGINT UNSIGNED [N]
+            </text>
+            <!-- Row 6: status -->
+            <rect x="1" y="105" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="126" x2="319" y2="126" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                status
+            </text>
+            <text x="308" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                ENUM('active','inactive')
+            </text>
+            <!-- Row 7: (school_year_id, yl_id, sec_id) -->
+            <rect x="1" y="126" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="147" x2="319" y2="147" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="129" width="22" height="15" rx="3" fill="#8b5cf6"/>
+            <text x="21" y="140" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">UK</text>
+            <text x="38" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                (school_year_id, yl_id, sec_id)
+            </text>
+            <text x="308" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                COMPOSITE UNIQUE
+            </text>
+            <!-- Row 8: created_at / updated_at -->
+            <rect x="1" y="147" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="168" x2="319" y2="168" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                created_at / updated_at
+            </text>
+            <text x="308" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TIMESTAMP [N]
+            </text>
+        </g>
+    </g>
+    <!-- TABLE ENTITY: student_enrollments -->
+    <g id="entity-student_enrollments" transform="translate(440, 770)" filter="url(#erd-shadow)">
+        <!-- Table Frame Base -->
+        <rect x="0" y="0" width="320" height="203" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+
+        <!-- Header Ribbon -->
+        <rect x="0" y="0" width="320" height="46" rx="8" fill="#d97706"/>
+        <rect x="0" y="38" width="320" height="8" fill="#d97706"/>
+
+        <!-- Stereotype -->
+        <text x="14" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#e0f2fe" opacity="0.9">
+            <<enrollment: academic roster>>
+        </text>
+
+        <!-- Table Name -->
+        <text x="14" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+            student_enrollments
+        </text>
+
+        <!-- Header Count Badge -->
+        <rect x="265" y="12" width="42" height="20" rx="4" fill="rgba(0,0,0,0.22)"/>
+        <text x="286" y="26" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">
+            7 col
+        </text>
+
+        <!-- Column Rows -->
+        <g transform="translate(0, 46)">
+            <!-- Row 1: id -->
+            <rect x="1" y="0" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="21" x2="319" y2="21" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="3" width="22" height="15" rx="3" fill="#eab308"/>
+            <text x="21" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#713f12" text-anchor="middle">PK</text>
+            <text x="38" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                id
+            </text>
+            <text x="308" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 2: student_id -->
+            <rect x="1" y="21" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="42" x2="319" y2="42" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="24" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                student_id
+            </text>
+            <text x="308" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 3: school_year_section_id -->
+            <rect x="1" y="42" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="63" x2="319" y2="63" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="45" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="56" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                school_year_section_id
+            </text>
+            <text x="308" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 4: status -->
+            <rect x="1" y="63" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="84" x2="319" y2="84" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                status
+            </text>
+            <text x="308" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                ENUM('enrolled','promoted','retained',...)
+            </text>
+            <!-- Row 5: enrollment_date -->
+            <rect x="1" y="84" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="105" x2="319" y2="105" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                enrollment_date
+            </text>
+            <text x="308" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                DATE
+            </text>
+            <!-- Row 6: completion_date -->
+            <rect x="1" y="105" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="126" x2="319" y2="126" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                completion_date
+            </text>
+            <text x="308" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                DATE [N]
+            </text>
+            <!-- Row 7: created_at / updated_at -->
+            <rect x="1" y="126" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="147" x2="319" y2="147" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                created_at / updated_at
+            </text>
+            <text x="308" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TIMESTAMP [N]
+            </text>
+        </g>
+    </g>
+    <!-- TABLE ENTITY: section_subjects -->
+    <g id="entity-section_subjects" transform="translate(830, 700)" filter="url(#erd-shadow)">
+        <!-- Table Frame Base -->
+        <rect x="0" y="0" width="320" height="182" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+
+        <!-- Header Ribbon -->
+        <rect x="0" y="0" width="320" height="46" rx="8" fill="#d97706"/>
+        <rect x="0" y="38" width="320" height="8" fill="#d97706"/>
+
+        <!-- Stereotype -->
+        <text x="14" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#e0f2fe" opacity="0.9">
+            <<assignment: teacher load>>
+        </text>
+
+        <!-- Table Name -->
+        <text x="14" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+            section_subjects
+        </text>
+
+        <!-- Header Count Badge -->
+        <rect x="265" y="12" width="42" height="20" rx="4" fill="rgba(0,0,0,0.22)"/>
+        <text x="286" y="26" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">
+            6 col
+        </text>
+
+        <!-- Column Rows -->
+        <g transform="translate(0, 46)">
+            <!-- Row 1: id -->
+            <rect x="1" y="0" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="21" x2="319" y2="21" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="3" width="22" height="15" rx="3" fill="#eab308"/>
+            <text x="21" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#713f12" text-anchor="middle">PK</text>
+            <text x="38" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                id
+            </text>
+            <text x="308" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 2: school_year_section_id -->
+            <rect x="1" y="21" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="42" x2="319" y2="42" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="24" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                school_year_section_id
+            </text>
+            <text x="308" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 3: subject_id -->
+            <rect x="1" y="42" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="63" x2="319" y2="63" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="45" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="56" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                subject_id
+            </text>
+            <text x="308" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 4: teacher_id -->
+            <rect x="1" y="63" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="84" x2="319" y2="84" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="66" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="77" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                teacher_id
+            </text>
+            <text x="308" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                BIGINT UNSIGNED [N]
+            </text>
+            <!-- Row 5: (sy_section_id, subject_id) -->
+            <rect x="1" y="84" width="318" height="21" fill="#ffffff"/>
+            <line x1="1" y1="105" x2="319" y2="105" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="87" width="22" height="15" rx="3" fill="#8b5cf6"/>
+            <text x="21" y="98" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">UK</text>
+            <text x="38" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                (sy_section_id, subject_id)
+            </text>
+            <text x="308" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                COMPOSITE UNIQUE
+            </text>
+            <!-- Row 6: created_at / updated_at -->
+            <rect x="1" y="105" width="318" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="126" x2="319" y2="126" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                created_at / updated_at
+            </text>
+            <text x="308" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TIMESTAMP [N]
+            </text>
+        </g>
+    </g>
+    <!-- TABLE ENTITY: grades -->
+    <g id="entity-grades" transform="translate(650, 1010)" filter="url(#erd-shadow)">
+        <!-- Table Frame Base -->
+        <rect x="0" y="0" width="360" height="266" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+
+        <!-- Header Ribbon -->
+        <rect x="0" y="0" width="360" height="46" rx="8" fill="#059669"/>
+        <rect x="0" y="38" width="360" height="8" fill="#059669"/>
+
+        <!-- Stereotype -->
+        <text x="14" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#e0f2fe" opacity="0.9">
+            <<assessment: DepEd evaluation>>
+        </text>
+
+        <!-- Table Name -->
+        <text x="14" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+            grades
+        </text>
+
+        <!-- Header Count Badge -->
+        <rect x="305" y="12" width="42" height="20" rx="4" fill="rgba(0,0,0,0.22)"/>
+        <text x="326" y="26" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">
+            10 col
+        </text>
+
+        <!-- Column Rows -->
+        <g transform="translate(0, 46)">
+            <!-- Row 1: id -->
+            <rect x="1" y="0" width="358" height="21" fill="#ffffff"/>
+            <line x1="1" y1="21" x2="359" y2="21" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="3" width="22" height="15" rx="3" fill="#eab308"/>
+            <text x="21" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#713f12" text-anchor="middle">PK</text>
+            <text x="38" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                id
+            </text>
+            <text x="348" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 2: student_enrollment_id -->
+            <rect x="1" y="21" width="358" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="42" x2="359" y2="42" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="24" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                student_enrollment_id
+            </text>
+            <text x="348" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 3: section_subject_id -->
+            <rect x="1" y="42" width="358" height="21" fill="#ffffff"/>
+            <line x1="1" y1="63" x2="359" y2="63" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="45" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="56" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                section_subject_id
+            </text>
+            <text x="348" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 4: quarter_id -->
+            <rect x="1" y="63" width="358" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="84" x2="359" y2="84" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="66" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="77" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                quarter_id
+            </text>
+            <text x="348" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 5: grade -->
+            <rect x="1" y="84" width="358" height="21" fill="#ffffff"/>
+            <line x1="1" y1="105" x2="359" y2="105" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                grade
+            </text>
+            <text x="348" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                DECIMAL(5,2) [N]
+            </text>
+            <!-- Row 6: remarks -->
+            <rect x="1" y="105" width="358" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="126" x2="359" y2="126" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                remarks
+            </text>
+            <text x="348" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                VARCHAR(255) [N]
+            </text>
+            <!-- Row 7: status -->
+            <rect x="1" y="126" width="358" height="21" fill="#ffffff"/>
+            <line x1="1" y1="147" x2="359" y2="147" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                status
+            </text>
+            <text x="348" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                ENUM('draft','approved','locked')
+            </text>
+            <!-- Row 8: created_by -->
+            <rect x="1" y="147" width="358" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="168" x2="359" y2="168" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="150" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="161" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                created_by
+            </text>
+            <text x="348" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                BIGINT UNSIGNED [N]
+            </text>
+            <!-- Row 9: (enrollment, subject, quarter) -->
+            <rect x="1" y="168" width="358" height="21" fill="#ffffff"/>
+            <line x1="1" y1="189" x2="359" y2="189" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="171" width="22" height="15" rx="3" fill="#8b5cf6"/>
+            <text x="21" y="182" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">UK</text>
+            <text x="38" y="182" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                (enrollment, subject, quarter)
+            </text>
+            <text x="348" y="182" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                COMPOSITE UNIQUE
+            </text>
+            <!-- Row 10: created_at / updated_at -->
+            <rect x="1" y="189" width="358" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="210" x2="359" y2="210" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="203" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                created_at / updated_at
+            </text>
+            <text x="348" y="203" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TIMESTAMP [N]
+            </text>
+        </g>
+    </g>
+    <!-- TABLE ENTITY: achievement_rules -->
+    <g id="entity-achievement_rules" transform="translate(1080, 980)" filter="url(#erd-shadow)">
+        <!-- Table Frame Base -->
+        <rect x="0" y="0" width="300" height="266" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+
+        <!-- Header Ribbon -->
+        <rect x="0" y="0" width="300" height="46" rx="8" fill="#db2777"/>
+        <rect x="0" y="38" width="300" height="8" fill="#db2777"/>
+
+        <!-- Stereotype -->
+        <text x="14" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#e0f2fe" opacity="0.9">
+            <<honors: DepEd policy criteria>>
+        </text>
+
+        <!-- Table Name -->
+        <text x="14" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+            achievement_rules
+        </text>
+
+        <!-- Header Count Badge -->
+        <rect x="245" y="12" width="42" height="20" rx="4" fill="rgba(0,0,0,0.22)"/>
+        <text x="266" y="26" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">
+            10 col
+        </text>
+
+        <!-- Column Rows -->
+        <g transform="translate(0, 46)">
+            <!-- Row 1: id -->
+            <rect x="1" y="0" width="298" height="21" fill="#ffffff"/>
+            <line x1="1" y1="21" x2="299" y2="21" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="3" width="22" height="15" rx="3" fill="#eab308"/>
+            <text x="21" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#713f12" text-anchor="middle">PK</text>
+            <text x="38" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                id
+            </text>
+            <text x="288" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 2: school_year_id -->
+            <rect x="1" y="21" width="298" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="42" x2="299" y2="42" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="24" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                school_year_id
+            </text>
+            <text x="288" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 3: name -->
+            <rect x="1" y="42" width="298" height="21" fill="#ffffff"/>
+            <line x1="1" y1="63" x2="299" y2="63" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                name
+            </text>
+            <text x="288" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255) e.g. 'With Honors'
+            </text>
+            <!-- Row 4: type -->
+            <rect x="1" y="63" width="298" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="84" x2="299" y2="84" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                type
+            </text>
+            <text x="288" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255)
+            </text>
+            <!-- Row 5: minimum_average -->
+            <rect x="1" y="84" width="298" height="21" fill="#ffffff"/>
+            <line x1="1" y1="105" x2="299" y2="105" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                minimum_average
+            </text>
+            <text x="288" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                DECIMAL(5,2) [N]
+            </text>
+            <!-- Row 6: maximum_average -->
+            <rect x="1" y="105" width="298" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="126" x2="299" y2="126" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                maximum_average
+            </text>
+            <text x="288" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                DECIMAL(5,2) [N]
+            </text>
+            <!-- Row 7: minimum_subject_grade -->
+            <rect x="1" y="126" width="298" height="21" fill="#ffffff"/>
+            <line x1="1" y1="147" x2="299" y2="147" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                minimum_subject_grade
+            </text>
+            <text x="288" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                DECIMAL(5,2) [N]
+            </text>
+            <!-- Row 8: criteria -->
+            <rect x="1" y="147" width="298" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="168" x2="299" y2="168" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                criteria
+            </text>
+            <text x="288" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                JSON [N]
+            </text>
+            <!-- Row 9: is_active -->
+            <rect x="1" y="168" width="298" height="21" fill="#ffffff"/>
+            <line x1="1" y1="189" x2="299" y2="189" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="182" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                is_active
+            </text>
+            <text x="288" y="182" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BOOLEAN DEFAULT TRUE
+            </text>
+            <!-- Row 10: created_at / updated_at -->
+            <rect x="1" y="189" width="298" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="210" x2="299" y2="210" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="203" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                created_at / updated_at
+            </text>
+            <text x="288" y="203" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TIMESTAMP [N]
+            </text>
+        </g>
+    </g>
+    <!-- TABLE ENTITY: achievements -->
+    <g id="entity-achievements" transform="translate(1410, 980)" filter="url(#erd-shadow)">
+        <!-- Table Frame Base -->
+        <rect x="0" y="0" width="300" height="266" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+
+        <!-- Header Ribbon -->
+        <rect x="0" y="0" width="300" height="46" rx="8" fill="#db2777"/>
+        <rect x="0" y="38" width="300" height="8" fill="#db2777"/>
+
+        <!-- Stereotype -->
+        <text x="14" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#e0f2fe" opacity="0.9">
+            <<honors: awarded recognition>>
+        </text>
+
+        <!-- Table Name -->
+        <text x="14" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+            achievements
+        </text>
+
+        <!-- Header Count Badge -->
+        <rect x="245" y="12" width="42" height="20" rx="4" fill="rgba(0,0,0,0.22)"/>
+        <text x="266" y="26" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">
+            10 col
+        </text>
+
+        <!-- Column Rows -->
+        <g transform="translate(0, 46)">
+            <!-- Row 1: id -->
+            <rect x="1" y="0" width="298" height="21" fill="#ffffff"/>
+            <line x1="1" y1="21" x2="299" y2="21" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="3" width="22" height="15" rx="3" fill="#eab308"/>
+            <text x="21" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#713f12" text-anchor="middle">PK</text>
+            <text x="38" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                id
+            </text>
+            <text x="288" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 2: student_id -->
+            <rect x="1" y="21" width="298" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="42" x2="299" y2="42" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="24" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                student_id
+            </text>
+            <text x="288" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 3: school_year_id -->
+            <rect x="1" y="42" width="298" height="21" fill="#ffffff"/>
+            <line x1="1" y1="63" x2="299" y2="63" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="45" width="22" height="15" rx="3" fill="#3b82f6"/>
+            <text x="21" y="56" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+            <text x="38" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                school_year_id
+            </text>
+            <text x="288" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                BIGINT UNSIGNED [N]
+            </text>
+            <!-- Row 4: type -->
+            <rect x="1" y="63" width="298" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="84" x2="299" y2="84" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                type
+            </text>
+            <text x="288" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255)
+            </text>
+            <!-- Row 5: title -->
+            <rect x="1" y="84" width="298" height="21" fill="#ffffff"/>
+            <line x1="1" y1="105" x2="299" y2="105" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                title
+            </text>
+            <text x="288" y="98" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255)
+            </text>
+            <!-- Row 6: quarter -->
+            <rect x="1" y="105" width="298" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="126" x2="299" y2="126" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                quarter
+            </text>
+            <text x="288" y="119" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                VARCHAR(255) [N]
+            </text>
+            <!-- Row 7: description -->
+            <rect x="1" y="126" width="298" height="21" fill="#ffffff"/>
+            <line x1="1" y1="147" x2="299" y2="147" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                description
+            </text>
+            <text x="288" y="140" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TEXT [N]
+            </text>
+            <!-- Row 8: remarks -->
+            <rect x="1" y="147" width="298" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="168" x2="299" y2="168" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                remarks
+            </text>
+            <text x="288" y="161" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TEXT [N]
+            </text>
+            <!-- Row 9: date_awarded -->
+            <rect x="1" y="168" width="298" height="21" fill="#ffffff"/>
+            <line x1="1" y1="189" x2="299" y2="189" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="182" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                date_awarded
+            </text>
+            <text x="288" y="182" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                DATE [N]
+            </text>
+            <!-- Row 10: created_at / updated_at -->
+            <rect x="1" y="189" width="298" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="210" x2="299" y2="210" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="203" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                created_at / updated_at
+            </text>
+            <text x="288" y="203" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TIMESTAMP [N]
+            </text>
+        </g>
+    </g>
+    <!-- TABLE ENTITY: system_settings -->
+    <g id="entity-system_settings" transform="translate(1180, 1300)" filter="url(#erd-shadow)">
+        <!-- Table Frame Base -->
+        <rect x="0" y="0" width="340" height="140" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.4"/>
+
+        <!-- Header Ribbon -->
+        <rect x="0" y="0" width="340" height="46" rx="8" fill="#475569"/>
+        <rect x="0" y="38" width="340" height="8" fill="#475569"/>
+
+        <!-- Stereotype -->
+        <text x="14" y="16" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="700" fill="#e0f2fe" opacity="0.9">
+            <<configuration: key-value>>
+        </text>
+
+        <!-- Table Name -->
+        <text x="14" y="34" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="800" fill="#ffffff">
+            system_settings
+        </text>
+
+        <!-- Header Count Badge -->
+        <rect x="285" y="12" width="42" height="20" rx="4" fill="rgba(0,0,0,0.22)"/>
+        <text x="306" y="26" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">
+            4 col
+        </text>
+
+        <!-- Column Rows -->
+        <g transform="translate(0, 46)">
+            <!-- Row 1: id -->
+            <rect x="1" y="0" width="338" height="21" fill="#ffffff"/>
+            <line x1="1" y1="21" x2="339" y2="21" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="3" width="22" height="15" rx="3" fill="#eab308"/>
+            <text x="21" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#713f12" text-anchor="middle">PK</text>
+            <text x="38" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                id
+            </text>
+            <text x="328" y="14" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                BIGINT UNSIGNED
+            </text>
+            <!-- Row 2: key -->
+            <rect x="1" y="21" width="338" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="42" x2="339" y2="42" stroke="#f1f5f9" stroke-width="1"/>
+            <rect x="10" y="24" width="22" height="15" rx="3" fill="#8b5cf6"/>
+            <text x="21" y="35" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">UK</text>
+            <text x="38" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="800" fill="#0f172a">
+                key
+            </text>
+            <text x="328" y="35" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#0369a1" text-anchor="end">
+                VARCHAR(255)
+            </text>
+            <!-- Row 3: value -->
+            <rect x="1" y="42" width="338" height="21" fill="#ffffff"/>
+            <line x1="1" y1="63" x2="339" y2="63" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                value
+            </text>
+            <text x="328" y="56" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TEXT [N]
+            </text>
+            <!-- Row 4: created_at / updated_at -->
+            <rect x="1" y="63" width="338" height="21" fill="#f8fafc"/>
+            <line x1="1" y1="84" x2="339" y2="84" stroke="#f1f5f9" stroke-width="1"/>
+            <text x="16" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="9" font-weight="600" fill="#334155">
+                created_at / updated_at
+            </text>
+            <text x="328" y="77" font-family="'JetBrains Mono', 'Segoe UI', monospace" font-size="8.5" font-weight="500" fill="#64748b" text-anchor="end">
+                TIMESTAMP [N]
+            </text>
+        </g>
+    </g>
+    <!-- ========================================================
+         BOTTOM LEGEND & SPECIFICATION CARDS
+         ======================================================== -->
+    <g transform="translate(40, 1310)">
+        <!-- Card 1: Notation Legend -->
+        <g transform="translate(0, 0)">
+            <rect x="0" y="0" width="460" height="145" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" filter="url(#erd-shadow)"/>
+            <rect x="0" y="0" width="460" height="28" rx="10" fill="#f1f5f9"/>
+            <rect x="0" y="20" width="460" height="8" fill="#f1f5f9"/>
+            <text x="14" y="19" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="800" fill="#1e293b">ERD NOTATION &amp; CARDINALITY GUIDE</text>
+
+            <g transform="translate(14, 40)">
+                <!-- 1:1 -->
+                <line x1="0" y1="12" x2="35" y2="12" stroke="#475569" stroke-width="2"/>
+                <line x1="12" y1="5" x2="12" y2="19" stroke="#475569" stroke-width="2"/>
+                <line x1="18" y1="5" x2="18" y2="19" stroke="#475569" stroke-width="2"/>
+                <text x="45" y="15" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" fill="#334155">Exactly One (1 : 1)</text>
+
+                <!-- 1:N -->
+                <g transform="translate(230, 0)">
+                    <line x1="0" y1="12" x2="35" y2="12" stroke="#475569" stroke-width="2"/>
+                    <line x1="10" y1="5" x2="10" y2="19" stroke="#475569" stroke-width="2"/>
+                    <path d="M 28 5 L 18 12 L 28 19" fill="none" stroke="#475569" stroke-width="2"/>
+                    <text x="45" y="15" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" fill="#334155">One or Many (1 : N)</text>
+                </g>
+
+                <!-- 0:N -->
+                <g transform="translate(0, 32)">
+                    <line x1="0" y1="12" x2="35" y2="12" stroke="#475569" stroke-width="2"/>
+                    <circle cx="10" cy="12" r="4.5" fill="#ffffff" stroke="#475569" stroke-width="1.8"/>
+                    <path d="M 32 5 L 20 12 L 32 19" fill="none" stroke="#475569" stroke-width="2"/>
+                    <text x="45" y="15" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="700" fill="#334155">Zero or Many (0 : N)</text>
+                </g>
+
+                <!-- Key Badges -->
+                <g transform="translate(230, 32)">
+                    <rect x="0" y="3" width="22" height="15" rx="3" fill="#eab308"/>
+                    <text x="11" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#713f12" text-anchor="middle">PK</text>
+                    <text x="28" y="15" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#475569">Primary Key</text>
+
+                    <rect x="110" y="3" width="22" height="15" rx="3" fill="#3b82f6"/>
+                    <text x="121" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">FK</text>
+                    <text x="138" y="15" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#475569">Foreign Key</text>
+
+                    <rect x="195" y="3" width="22" height="15" rx="3" fill="#8b5cf6"/>
+                    <text x="206" y="14" font-family="'Plus Jakarta Sans', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" text-anchor="middle">UK</text>
+                    <text x="223" y="15" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" fill="#475569">Unique</text>
+                </g>
+
+                <!-- Status & Integrity rules -->
+                <text x="0" y="68" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="600" fill="#64748b">
+                    • Referential Actions: cascadeOnDelete (Profiles, Pivot) | restrictOnDelete (Grades, Calendar, Structure)
+                </text>
+                <text x="0" y="82" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="600" fill="#64748b">
+                    • Soft Deletions: Governed by status enum transitions ('active'/'inactive'/'draft'/'locked')
+                </text>
+            </g>
+        </g>
+
+        <!-- Card 2: Relational Architecture Highlights -->
+        <g transform="translate(480, 0)">
+            <rect x="0" y="0" width="600" height="145" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" filter="url(#erd-shadow)"/>
+            <rect x="0" y="0" width="600" height="28" rx="10" fill="#f1f5f9"/>
+            <rect x="0" y="20" width="600" height="8" fill="#f1f5f9"/>
+            <text x="14" y="19" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="800" fill="#1e293b">RELATIONAL ARCHITECTURE &amp; DEPED COMPLIANCE HIGHLIGHTS</text>
+
+            <g transform="translate(14, 42)">
+                <text x="0" y="10" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="700" fill="#0f172a">
+                    1. Atomic Fact Table: <tspan font-weight="500" fill="#475569">The <tspan font-family="'JetBrains Mono', monospace" font-weight="700">grades</tspan> table stores quarterly grades with a unique constraint on (student_enrollment_id, section_subject_id, quarter_id).</tspan>
+                </text>
+                <text x="0" y="28" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="700" fill="#0f172a">
+                    2. Role-Segregated Profiles: <tspan font-weight="500" fill="#475569">The <tspan font-family="'JetBrains Mono', monospace" font-weight="700">users</tspan> table handles authentication while teachers, students, and parents hold domain-specific profile records.</tspan>
+                </text>
+                <text x="0" y="46" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="700" fill="#0f172a">
+                    3. Reusable Catalogs vs Instance Offerings: <tspan font-weight="500" fill="#475569"><tspan font-family="'JetBrains Mono', monospace" font-weight="700">sections</tspan> is reusable; <tspan font-family="'JetBrains Mono', monospace" font-weight="700">school_year_sections</tspan> instantiates sections per academic year.</tspan>
+                </text>
+                <text x="0" y="64" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="700" fill="#0f172a">
+                    4. Honors Policy Engine: <tspan font-weight="500" fill="#475569"><tspan font-family="'JetBrains Mono', monospace" font-weight="700">achievement_rules</tspan> defines thresholds (DepEd Order 36, s. 2016) evaluating grades into <tspan font-family="'JetBrains Mono', monospace" font-weight="700">achievements</tspan>.</tspan>
+                </text>
+                <text x="0" y="82" font-family="'Plus Jakarta Sans', sans-serif" font-size="9.5" font-weight="700" fill="#0f172a">
+                    5. Non-Repudiation Audit: <tspan font-weight="500" fill="#475569"><tspan font-family="'JetBrains Mono', monospace" font-weight="700">activity_logs</tspan> captures all polymorphic modifications with old and new JSON payloads for accountability.</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+
+    <!-- Footer Copyright Watermark -->
+    <text x="890" y="1562" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="600" fill="#94a3b8" text-anchor="middle">
+        Academic Performance Monitoring System with Analytics • Entity Relationship Diagram (ERD) • Database Design Specification
+    </text>
+</svg>

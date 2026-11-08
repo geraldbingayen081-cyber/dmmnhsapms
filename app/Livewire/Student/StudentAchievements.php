@@ -115,7 +115,7 @@ class StudentAchievements extends Component
                 // 2. Official registered achievements from database
                 $dbAchievements = $student->achievements;
                 foreach ($dbAchievements as $dba) {
-                    $dbaQuarter = !empty($dba->quarter) ? $dba->quarter : '1st Quarter';
+                    $dbaQuarter = !empty($dba->quarter) ? $dba->quarter : '1st Term';
                     $matchingQ = $quarters->first(fn($q) => stripos($q->name, $dbaQuarter) !== false || stripos($q->short_name, $dbaQuarter) !== false);
 
                     // Avoid duplicate if same title and quarter
@@ -151,11 +151,12 @@ class StudentAchievements extends Component
             'student' => $student,
             'activeSy' => $activeSy,
             'quarters' => $quarters,
+            'terms' => $quarters,
             'awardsList' => $filteredAwards,
             'totalAwardsCount' => count($allAwards),
         ])->layout('layouts.student', [
             'title' => 'My Awards and Achievements',
-            'subtitle' => 'Quarterly Academic Recognitions and Subject Excellence Awards',
+            'subtitle' => 'Term Academic Recognitions and Subject Excellence Awards',
         ]);
     }
 }

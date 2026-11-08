@@ -59,6 +59,18 @@ class StudentManagement extends Component
         $this->resetPage();
     }
 
+    public function updatedFilterYearLevelId()
+    {
+        $this->filterSectionId = 'all';
+        $this->resetPage();
+    }
+
+    public function updatedFilterSchoolYearId()
+    {
+        $this->filterSectionId = 'all';
+        $this->resetPage();
+    }
+
     public function openCreateModal()
     {
         $this->resetValidation();
@@ -271,13 +283,26 @@ class StudentManagement extends Component
             });
         }
 
+        $sectionsQuery = Section::query();
+        if ($this->filterYearLevelId !== 'all' || $this->filterSchoolYearId !== 'all') {
+            $sectionsQuery->whereHas('schoolYearSections', function ($q) {
+                if ($this->filterSchoolYearId !== 'all') {
+                    $q->where('school_year_id', $this->filterSchoolYearId);
+                }
+                if ($this->filterYearLevelId !== 'all') {
+                    $q->where('year_level_id', $this->filterYearLevelId);
+                }
+            });
+        }
+        $sections = $sectionsQuery->orderBy('name')->get();
+
         $availableSections = $activeSy ? SchoolYearSection::with(['section', 'yearLevel'])->where('school_year_id', $activeSy->id)->get() : collect();
 
         return view('livewire.admin.student-management', [
             'students' => $query->orderBy('created_at', 'desc')->paginate(10),
             'schoolYears' => SchoolYear::orderBy('school_year', 'desc')->get(),
             'yearLevels' => YearLevel::orderBy('sort_order')->get(),
-            'sections' => Section::all(),
+            'sections' => $sections,
             'availableSections' => $availableSections,
         ])->layout('layouts.admin', ['title' => 'Student Management', 'subtitle' => 'Manage student records and academic placement']);
     }

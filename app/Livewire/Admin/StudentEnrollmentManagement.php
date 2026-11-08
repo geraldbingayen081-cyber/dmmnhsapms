@@ -66,6 +66,18 @@ class StudentEnrollmentManagement extends Component
         $this->resetPage();
     }
 
+    public function updatedFilterYearLevelId()
+    {
+        $this->filterSectionId = 'all';
+        $this->resetPage();
+    }
+
+    public function updatedFilterSchoolYearId()
+    {
+        $this->filterSectionId = 'all';
+        $this->resetPage();
+    }
+
     public function openAutoEnrollModal()
     {
         $this->resetValidation();
@@ -474,7 +486,19 @@ class StudentEnrollmentManagement extends Component
     {
         $schoolYears = SchoolYear::orderBy('school_year', 'desc')->get();
         $yearLevels = YearLevel::orderBy('sort_order')->get();
-        $sections = Section::all();
+
+        $sectionsQuery = Section::query();
+        if ($this->filterYearLevelId !== 'all' || $this->filterSchoolYearId !== 'all') {
+            $sectionsQuery->whereHas('schoolYearSections', function ($q) {
+                if ($this->filterSchoolYearId !== 'all') {
+                    $q->where('school_year_id', $this->filterSchoolYearId);
+                }
+                if ($this->filterYearLevelId !== 'all') {
+                    $q->where('year_level_id', $this->filterYearLevelId);
+                }
+            });
+        }
+        $sections = $sectionsQuery->orderBy('name')->get();
 
         $query = StudentEnrollment::with([
             'student.user',

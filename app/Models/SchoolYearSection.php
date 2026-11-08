@@ -17,6 +17,25 @@ class SchoolYearSection extends Model
         'status',
     ];
 
+    protected static function booted(): void
+    {
+        static::created(function (SchoolYearSection $sys) {
+            $sys->loadMissing('section');
+            $sectionName = $sys->section ? $sys->section->name : null;
+
+            $subjects = Subject::all();
+            foreach ($subjects as $sub) {
+                if ($sub->subject_code === 'JOURN' && strtoupper(trim($sectionName ?? '')) !== 'SPJ') {
+                    continue;
+                }
+                SectionSubject::firstOrCreate([
+                    'school_year_section_id' => $sys->id,
+                    'subject_id' => $sub->id,
+                ]);
+            }
+        });
+    }
+
     public function schoolYear()
     {
         return $this->belongsTo(SchoolYear::class, 'school_year_id');

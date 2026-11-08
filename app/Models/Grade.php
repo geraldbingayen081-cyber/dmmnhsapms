@@ -39,6 +39,11 @@ class Grade extends Model
         return $this->belongsTo(Quarter::class, 'quarter_id');
     }
 
+    public function term()
+    {
+        return $this->belongsTo(Quarter::class, 'quarter_id');
+    }
+
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');

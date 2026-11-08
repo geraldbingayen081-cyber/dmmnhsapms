@@ -9,7 +9,7 @@
             <p class="text-xs text-zinc-500 mt-0.5">Assign faculty members to teach specific subjects per school year section instance.</p>
         </div>
 
-        <div class="flex flex-wrap items-center gap-2 self-start sm:self-auto">
+        <!--<div class="flex flex-wrap items-center gap-2 self-start sm:self-auto">
             <button wire:click="openAutoAssignModal" class="px-4 py-2.5 bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs rounded-xl shadow-sm transition flex items-center gap-2 cursor-pointer">
                 <i class="fas fa-wand-magic-sparkles"></i>
                 <span>Auto-Assign Subject Loads</span>
@@ -19,7 +19,7 @@
                 <i class="fas fa-plus"></i>
                 <span>Manual Assign Subject</span>
             </button>
-        </div>
+        </div>-->
     </div>
 
     <!-- Filters Toolbar -->
@@ -30,6 +30,16 @@
                 <select wire:model.live="selectedSchoolYearId" class="px-3.5 py-2 font-bold rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">
                     @foreach ($schoolYears as $sy)
                         <option value="{{ $sy->id }}">SY {{ $sy->school_year }} {{ $sy->status === 'active' ? '(Active)' : '' }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <label class="font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider">Year Level:</label>
+                <select wire:model.live="selectedYearLevelId" class="px-3.5 py-2 font-bold rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">
+                    <option value="all">All Year Levels</option>
+                    @foreach ($yearLevels as $yl)
+                        <option value="{{ $yl->id }}">{{ $yl->name }}</option>
                     @endforeach
                 </select>
             </div>

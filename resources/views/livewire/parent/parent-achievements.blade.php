@@ -27,15 +27,15 @@
                         {{ $selectedStudent->full_name }}'s Awards and Achievements
                     </h2>
                     <p class="text-xs text-zinc-500 mt-0.5">
-                        Quarterly DepEd academic honors and subject excellence recognitions.
+                        Term DepEd academic honors and subject excellence recognitions.
                     </p>
                 </div>
 
                 <div class="flex items-center gap-3">
                     <div class="flex items-center gap-2 text-xs">
-                        <span class="font-bold text-zinc-500">Quarter:</span>
+                        <span class="font-bold text-zinc-500">Term:</span>
                         <select wire:model.live="selectedQuarter" class="px-3 py-1.5 rounded-xl text-xs font-bold border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">
-                            <option value="all">All Quarters (Q1–Q3)</option>
+                            <option value="all">All Terms (T1–T3)</option>
                             @foreach ($quarters as $q)
                                 <option value="{{ $q->id }}">{{ $q->name }}</option>
                             @endforeach
@@ -105,8 +105,8 @@
             @empty
                 <div class="col-span-full bg-white dark:bg-zinc-900 rounded-2xl border border-dashed border-zinc-300 dark:border-zinc-700 p-12 text-center text-zinc-500 space-y-2">
                     <i class="fas fa-award text-3xl text-zinc-300 mb-1"></i>
-                    <p class="text-xs font-bold">No awards found for the selected quarter.</p>
-                    <p class="text-[11px] text-zinc-400">Awards and honors are updated whenever quarter grades are approved.</p>
+                    <p class="text-xs font-bold">No awards found for the selected term.</p>
+                    <p class="text-[11px] text-zinc-400">Awards and honors are updated whenever term grades are approved.</p>
                 </div>
             @endforelse
         </div>

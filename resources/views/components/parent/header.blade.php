@@ -18,7 +18,7 @@
     </div>
 
     <div class="flex items-center gap-3 sm:gap-4 text-xs font-medium">
-        <!-- Active School Year & Quarter Indicator (Q1 - Q3) -->
+        <!-- Active School Year & Term Indicator (T1 - T3) -->
         @php
             $activeSy = \App\Services\AcademicContextService::getActiveSchoolYear();
             $currentQuarter = $activeSy ? \App\Services\AcademicContextService::getCurrentQuarter($activeSy->id) : null;
@@ -41,14 +41,18 @@
         </div>
 
         <!-- Parent Profile Pill -->
-        <div class="flex items-center gap-3 border-l border-zinc-200 dark:border-zinc-800 pl-3 sm:pl-4">
+        <a href="{{ route('parent.profile') }}" class="flex items-center gap-3 border-l border-zinc-200 dark:border-zinc-800 pl-3 sm:pl-4 hover:opacity-80 transition">
             <div class="text-end hidden md:block">
                 <span class="block font-bold text-zinc-900 dark:text-zinc-100 text-xs">{{ auth()->user()->name }}</span>
                 <span class="block text-[10px] text-[#166534] dark:text-emerald-400 font-mono font-bold uppercase">{{ auth()->user()->login_id }}</span>
             </div>
-            <div class="size-9 rounded-xl bg-[#166534] text-white flex items-center justify-center font-bold text-xs shadow-sm">
-                {{ auth()->user()->initials() }}
-            </div>
-        </div>
+            @if (auth()->user()->profile_photo_path)
+                <img src="{{ auth()->user()->profilePhotoUrl() }}" alt="Avatar" class="size-9 rounded-xl object-cover shadow-sm border border-emerald-600">
+            @else
+                <div class="size-9 rounded-xl bg-[#166534] text-white flex items-center justify-center font-bold text-xs shadow-sm">
+                    {{ auth()->user()->initials() }}
+                </div>
+            @endif
+        </a>
     </div>
 </header>

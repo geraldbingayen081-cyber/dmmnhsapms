@@ -80,15 +80,15 @@ class QuarterManagement extends Component
 
             ActivityLog::create([
                 'user_id' => auth()->id(),
-                'action' => 'Created Quarter',
+                'action' => 'Created Term',
                 'subject_type' => Quarter::class,
                 'subject_id' => $q->id,
-                'description' => "Created Quarter {$q->name} ({$q->short_name}) for selected school year.",
+                'description' => "Created Term {$q->name} ({$q->short_name}) for selected school year.",
             ]);
         });
 
         $this->showCreateModal = false;
-        session()->flash('message', "Quarter successfully created!");
+        session()->flash('message', "Term successfully created!");
     }
 
     public function openEditModal($id)
@@ -135,15 +135,15 @@ class QuarterManagement extends Component
 
             ActivityLog::create([
                 'user_id' => auth()->id(),
-                'action' => 'Updated Quarter',
+                'action' => 'Updated Term',
                 'subject_type' => Quarter::class,
                 'subject_id' => $q->id,
-                'description' => "Updated Quarter {$q->name} details.",
+                'description' => "Updated Term {$q->name} details.",
             ]);
         });
 
         $this->showEditModal = false;
-        session()->flash('message', "Quarter updated successfully!");
+        session()->flash('message', "Term updated successfully!");
     }
 
     public function activateQuarter($id)
@@ -156,14 +156,14 @@ class QuarterManagement extends Component
 
             ActivityLog::create([
                 'user_id' => auth()->id(),
-                'action' => 'Activated Quarter',
+                'action' => 'Activated Term',
                 'subject_type' => Quarter::class,
                 'subject_id' => $q->id,
-                'description' => "Set Quarter {$q->name} to Active.",
+                'description' => "Set Term {$q->name} to Active.",
             ]);
         });
 
-        session()->flash('message', "Quarter activated successfully!");
+        session()->flash('message', "Term activated successfully!");
     }
 
     public function completeQuarter($id)
@@ -173,13 +173,13 @@ class QuarterManagement extends Component
 
         ActivityLog::create([
             'user_id' => auth()->id(),
-            'action' => 'Completed Quarter',
+            'action' => 'Completed Term',
             'subject_type' => Quarter::class,
             'subject_id' => $q->id,
-            'description' => "Set Quarter {$q->name} status to Completed.",
+            'description' => "Set Term {$q->name} status to Completed.",
         ]);
 
-        session()->flash('message', "Quarter marked as Completed.");
+        session()->flash('message', "Term marked as Completed.");
     }
 
     public function render()
@@ -190,6 +190,6 @@ class QuarterManagement extends Component
         return view('livewire.admin.quarter-management', [
             'schoolYears' => $schoolYears,
             'quarters' => $quarters,
-        ])->layout('layouts.admin', ['title' => 'Quarter Management', 'subtitle' => 'Manage academic quarters and active grading periods']);
+        ])->layout('layouts.admin', ['title' => 'Term Management', 'subtitle' => 'Manage academic terms and active grading periods']);
     }
 }

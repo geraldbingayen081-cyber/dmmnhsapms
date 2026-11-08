@@ -42,7 +42,7 @@ class DashboardAnalytics extends Component
         $quarterlyChart = AcademicAnalyticsService::getQuarterlyTrend($this->selectedYearId);
         $subjectChart = AcademicAnalyticsService::getSubjectPerformance($this->selectedYearId, $this->selectedQuarterId);
         $achievementChart = AcademicAnalyticsService::getAchievementDistribution($this->selectedYearId, $this->selectedQuarterId);
-
+        $achievementsAreaChart = AcademicAnalyticsService::getAchievementsAndAwardsAreaChart($this->selectedYearId, $this->selectedQuarterId);
 
         $recentActivities = ActivityLog::with('user')->orderBy('created_at', 'desc')->take(6)->get();
 
@@ -54,6 +54,7 @@ class DashboardAnalytics extends Component
             'quarterlyChart' => $quarterlyChart,
             'subjectChart' => $subjectChart,
             'achievementChart' => $achievementChart,
+            'achievementsAreaChart' => $achievementsAreaChart,
             'recentActivities' => $recentActivities,
         ])->layout('layouts.admin', ['title' => 'Admin Dashboard', 'subtitle' => 'Academic Performance Monitoring System']);
     }

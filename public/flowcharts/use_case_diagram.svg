@@ -1,0 +1,323 @@
+<svg width="1200" height="1500" viewBox="0 0 1200 1500" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <!-- Marker for standard arrows -->
+        <marker id="uc-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 8 5 L 0 9 z" fill="#475569" />
+        </marker>
+        <!-- Open Arrowhead for UML <<include>> and <<extend>> dependency -->
+        <marker id="uml-dep-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M 1 1 L 8 5 L 1 9" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+        <marker id="uml-ext-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M 1 1 L 8 5 L 1 9" fill="none" stroke="#d97706" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+        <filter id="uc-shadow" x="-5%" y="-5%" width="110%" height="110%" filterUnits="userSpaceOnUse">
+            <feDropShadow dx="1" dy="2" stdDeviation="2.5" flood-color="#0f172a" flood-opacity="0.10"/>
+        </filter>
+    </defs>
+
+    <!-- Background -->
+    <rect width="1200" height="1500" fill="#ffffff"/>
+
+    <!-- Document Header -->
+    <text x="600" y="38" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="18" font-weight="800" fill="#0f172a" text-anchor="middle" letter-spacing="0.5">UML USE CASE DIAGRAM</text>
+    <text x="600" y="58" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" fill="#64748b" text-anchor="middle">Academic Performance Monitoring System with Analytics • System Architecture</text>
+
+    <!-- ========================================================
+         SYSTEM BOUNDARY (Box)
+         ======================================================== -->
+    <rect x="230" y="80" width="740" height="1380" rx="12" ry="12" fill="#f8fafc" stroke="#3b82f6" stroke-width="2.5" stroke-dasharray="none"/>
+    <rect x="230" y="80" width="740" height="42" rx="12" ry="12" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+    <rect x="230" y="110" width="740" height="15" fill="#eff6ff"/>
+    <text x="600" y="106" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" font-weight="800" fill="#1e40af" text-anchor="middle" letter-spacing="0.5">SYSTEM BOUNDARY: Academic Performance Monitoring System with Analytics</text>
+
+    <!-- ========================================================
+         ACTORS (Left & Right margins)
+         ======================================================== -->
+
+    <!-- ACTOR 1: ADMINISTRATOR (Left Top) -->
+    <g transform="translate(100, 220)">
+        <!-- Head -->
+        <circle cx="0" cy="-35" r="14" fill="#dbeafe" stroke="#1e40af" stroke-width="2.5"/>
+        <!-- Body -->
+        <line x1="0" y1="-21" x2="0" y2="15" stroke="#1e40af" stroke-width="2.5"/>
+        <!-- Arms -->
+        <line x1="-22" y1="-6" x2="22" y2="-6" stroke="#1e40af" stroke-width="2.5"/>
+        <!-- Legs -->
+        <line x1="0" y1="15" x2="-18" y2="45" stroke="#1e40af" stroke-width="2.5"/>
+        <line x1="0" y1="15" x2="18" y2="45" stroke="#1e40af" stroke-width="2.5"/>
+        <!-- Text -->
+        <text x="0" y="65" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="800" fill="#1e3a8a" text-anchor="middle">&lt;&lt;Actor&gt;&gt;</text>
+        <text x="0" y="80" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" font-weight="800" fill="#0f172a" text-anchor="middle">Administrator</text>
+        <text x="0" y="94" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" font-weight="600" fill="#64748b" text-anchor="middle">(System Admin)</text>
+    </g>
+
+    <!-- ACTOR 2: TEACHER (Left Middle-Bottom) -->
+    <g transform="translate(100, 720)">
+        <!-- Head -->
+        <circle cx="0" cy="-35" r="14" fill="#dbeafe" stroke="#0369a1" stroke-width="2.5"/>
+        <!-- Body -->
+        <line x1="0" y1="-21" x2="0" y2="15" stroke="#0369a1" stroke-width="2.5"/>
+        <!-- Arms -->
+        <line x1="-22" y1="-6" x2="22" y2="-6" stroke="#0369a1" stroke-width="2.5"/>
+        <!-- Legs -->
+        <line x1="0" y1="15" x2="-18" y2="45" stroke="#0369a1" stroke-width="2.5"/>
+        <line x1="0" y1="15" x2="18" y2="45" stroke="#0369a1" stroke-width="2.5"/>
+        <!-- Text -->
+        <text x="0" y="65" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="800" fill="#075985" text-anchor="middle">&lt;&lt;Actor&gt;&gt;</text>
+        <text x="0" y="80" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" font-weight="800" fill="#0f172a" text-anchor="middle">Teacher</text>
+        <text x="0" y="94" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" font-weight="600" fill="#64748b" text-anchor="middle">(Faculty &amp; Adviser)</text>
+    </g>
+
+    <!-- ACTOR 3: STUDENT (Right Top-Middle) -->
+    <g transform="translate(1100, 480)">
+        <!-- Head -->
+        <circle cx="0" cy="-35" r="14" fill="#dcfce7" stroke="#15803d" stroke-width="2.5"/>
+        <!-- Body -->
+        <line x1="0" y1="-21" x2="0" y2="15" stroke="#15803d" stroke-width="2.5"/>
+        <!-- Arms -->
+        <line x1="-22" y1="-6" x2="22" y2="-6" stroke="#15803d" stroke-width="2.5"/>
+        <!-- Legs -->
+        <line x1="0" y1="15" x2="-18" y2="45" stroke="#15803d" stroke-width="2.5"/>
+        <line x1="0" y1="15" x2="18" y2="45" stroke="#15803d" stroke-width="2.5"/>
+        <!-- Text -->
+        <text x="0" y="65" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="800" fill="#166534" text-anchor="middle">&lt;&lt;Actor&gt;&gt;</text>
+        <text x="0" y="80" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" font-weight="800" fill="#0f172a" text-anchor="middle">Student</text>
+        <text x="0" y="94" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" font-weight="600" fill="#64748b" text-anchor="middle">(Learner / Enrollee)</text>
+    </g>
+
+    <!-- ACTOR 4: PARENT / GUARDIAN (Right Bottom) -->
+    <g transform="translate(1100, 1020)">
+        <!-- Head -->
+        <circle cx="0" cy="-35" r="14" fill="#fef3c7" stroke="#b45309" stroke-width="2.5"/>
+        <!-- Body -->
+        <line x1="0" y1="-21" x2="0" y2="15" stroke="#b45309" stroke-width="2.5"/>
+        <!-- Arms -->
+        <line x1="-22" y1="-6" x2="22" y2="-6" stroke="#b45309" stroke-width="2.5"/>
+        <!-- Legs -->
+        <line x1="0" y1="15" x2="-18" y2="45" stroke="#b45309" stroke-width="2.5"/>
+        <line x1="0" y1="15" x2="18" y2="45" stroke="#b45309" stroke-width="2.5"/>
+        <!-- Text -->
+        <text x="0" y="65" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="800" fill="#92400e" text-anchor="middle">&lt;&lt;Actor&gt;&gt;</text>
+        <text x="0" y="80" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" font-weight="800" fill="#0f172a" text-anchor="middle">Parent / Guardian</text>
+        <text x="0" y="94" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" font-weight="600" fill="#64748b" text-anchor="middle">(Child Monitoring)</text>
+    </g>
+
+
+    <!-- ========================================================
+         USE CASES (OVALS / ELLIPSES INSIDE SYSTEM BOUNDARY)
+         ======================================================== -->
+
+    <!-- UC1: Authenticate / Login (Central Base Use Case) -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="600" cy="160" rx="140" ry="26" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+        <text x="600" y="164" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#0369a1" text-anchor="middle">UC1: Authenticate &amp; Login</text>
+    </g>
+
+    <!-- UC2: Manage Academic Structure -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="430" cy="235" rx="150" ry="26" fill="#ffffff" stroke="#334155" stroke-width="1.8"/>
+        <text x="430" y="239" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1e293b" text-anchor="middle">UC2: Manage Academic Structure (SY/Q/Sec/Sub)</text>
+    </g>
+
+    <!-- UC3: Manage Users & Load Assignment -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="430" cy="305" rx="150" ry="26" fill="#ffffff" stroke="#334155" stroke-width="1.8"/>
+        <text x="430" y="309" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1e293b" text-anchor="middle">UC3: Manage User Accounts &amp; Load Assignments</text>
+    </g>
+
+    <!-- UC4: Student Enrollment & Sectioning -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="430" cy="375" rx="145" ry="26" fill="#ffffff" stroke="#334155" stroke-width="1.8"/>
+        <text x="430" y="379" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1e293b" text-anchor="middle">UC4: Manage Enrollment &amp; Sectioning</text>
+    </g>
+
+    <!-- UC5: Grade Monitoring & Period Lock/Unlock -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="430" cy="445" rx="145" ry="26" fill="#ffffff" stroke="#334155" stroke-width="1.8"/>
+        <text x="430" y="449" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1e293b" text-anchor="middle">UC5: Monitor Submissions &amp; Lock Grading</text>
+    </g>
+
+    <!-- UC6: Encode Quarterly Grades -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="440" cy="550" rx="150" ry="26" fill="#ffffff" stroke="#334155" stroke-width="1.8"/>
+        <text x="440" y="554" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">UC6: Encode &amp; Submit Class Grades</text>
+    </g>
+
+    <!-- UC6.1 <<include>> Compute Transmuted Scores & GPA -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="780" cy="550" rx="140" ry="24" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <text x="780" y="554" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="700" fill="#1d4ed8" text-anchor="middle">UC6.1: Calculate Transmutation &amp; GPA</text>
+    </g>
+
+    <!-- UC6.2 <<extend>> Save Grade Draft -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="440" cy="635" rx="130" ry="22" fill="#fef3c7" stroke="#d97706" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <text x="440" y="639" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" font-weight="700" fill="#92400e" text-anchor="middle">UC6.2: Save Intermediate Draft</text>
+    </g>
+
+    <!-- UC7: Supervise Advisory Class & Generate SF9 -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="440" cy="720" rx="150" ry="26" fill="#ffffff" stroke="#334155" stroke-width="1.8"/>
+        <text x="440" y="724" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1e293b" text-anchor="middle">UC7: Supervise Advisory &amp; Issue SF9</text>
+    </g>
+
+    <!-- UC7.1 <<extend>> Flag At-Risk Students -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="780" cy="720" rx="135" ry="24" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <text x="780" y="724" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="700" fill="#991b1b" text-anchor="middle">UC7.1: Flag At-Risk Intervention</text>
+    </g>
+
+    <!-- UC8: View Academic Grades & Progress -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="600" cy="830" rx="150" ry="26" fill="#ffffff" stroke="#334155" stroke-width="1.8"/>
+        <text x="600" y="834" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#1e293b" text-anchor="middle">UC8: View Academic Grades &amp; Progress</text>
+    </g>
+
+    <!-- UC8.1 <<extend>> Download Electronic Report Card / SF9 -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="420" cy="915" rx="135" ry="24" fill="#f1f5f9" stroke="#475569" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <text x="420" y="919" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" font-weight="700" fill="#334155" text-anchor="middle">UC8.1: Download Electronic SF9 PDF</text>
+    </g>
+
+    <!-- UC8.2 <<extend>> Early Warning & Teacher Consultation Notice -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="780" cy="915" rx="140" ry="24" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <text x="780" y="919" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9.5" font-weight="700" fill="#991b1b" text-anchor="middle">UC8.2: Trigger Low-Grade Warning Alert</text>
+    </g>
+
+    <!-- UC9: Track Academic Honors & Recognition -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="600" cy="1010" rx="150" ry="26" fill="#ffffff" stroke="#334155" stroke-width="1.8"/>
+        <text x="600" y="1014" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1e293b" text-anchor="middle">UC9: Track Honors &amp; Achievements</text>
+    </g>
+
+    <!-- UC9.1 <<include>> DepEd Honors Ranking Engine -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="600" cy="1090" rx="145" ry="24" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4,2"/>
+        <text x="600" y="1094" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="700" fill="#1d4ed8" text-anchor="middle">UC9.1: Evaluate DepEd Honor Criteria</text>
+    </g>
+
+    <!-- UC10: Switch Linked Child / Ward Context -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="760" cy="1175" rx="145" ry="26" fill="#ffffff" stroke="#334155" stroke-width="1.8"/>
+        <text x="760" y="1179" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1e293b" text-anchor="middle">UC10: Switch Linked Child Context</text>
+    </g>
+
+    <!-- UC11: Generate Institutional Analytics & DepEd Records -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="430" cy="1255" rx="155" ry="26" fill="#ffffff" stroke="#334155" stroke-width="1.8"/>
+        <text x="430" y="1259" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="700" fill="#1e293b" text-anchor="middle">UC11: Generate DepEd SF10 &amp; Master Sheets</text>
+    </g>
+
+    <!-- UC12: View Faculty & Parent Directory Directory -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="760" cy="1255" rx="140" ry="26" fill="#ffffff" stroke="#334155" stroke-width="1.8"/>
+        <text x="760" y="1259" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10" font-weight="700" fill="#1e293b" text-anchor="middle">UC12: Query Directory &amp; Contacts</text>
+    </g>
+
+    <!-- UC13: Manage Profile & Security Settings -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="600" cy="1350" rx="140" ry="25" fill="#ffffff" stroke="#334155" stroke-width="1.8"/>
+        <text x="600" y="1354" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#1e293b" text-anchor="middle">UC13: Manage Profile &amp; Password</text>
+    </g>
+
+    <!-- UC14: Terminate Session / Logout -->
+    <g filter="url(#uc-shadow)">
+        <ellipse cx="600" cy="1425" rx="130" ry="23" fill="#ffe4e6" stroke="#e11d48" stroke-width="1.8"/>
+        <text x="600" y="1429" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" fill="#9f1239" text-anchor="middle">UC14: Terminate Session / Logout</text>
+    </g>
+
+
+    <!-- ========================================================
+         ASSOCIATION LINES (SOLID LINES: ACTOR -> USE CASE)
+         ======================================================== -->
+
+    <!-- Admin Associations -->
+    <path d="M 125 210 L 460 160" stroke="#1e40af" stroke-width="1.6" fill="none"/>
+    <path d="M 125 220 L 280 235" stroke="#1e40af" stroke-width="1.6" fill="none"/>
+    <path d="M 125 230 L 280 305" stroke="#1e40af" stroke-width="1.6" fill="none"/>
+    <path d="M 125 240 L 285 375" stroke="#1e40af" stroke-width="1.6" fill="none"/>
+    <path d="M 125 250 L 285 445" stroke="#1e40af" stroke-width="1.6" fill="none"/>
+    <path d="M 125 260 L 450 1010" stroke="#1e40af" stroke-width="1.6" fill="none"/>
+    <path d="M 125 270 L 280 1255" stroke="#1e40af" stroke-width="1.6" fill="none"/>
+    <path d="M 125 280 L 460 1350" stroke="#1e40af" stroke-width="1.6" fill="none"/>
+    <path d="M 125 290 L 470 1425" stroke="#1e40af" stroke-width="1.6" fill="none"/>
+
+    <!-- Teacher Associations -->
+    <path d="M 125 700 L 460 160" stroke="#0369a1" stroke-width="1.6" fill="none"/>
+    <path d="M 125 710 L 290 550" stroke="#0369a1" stroke-width="1.6" fill="none"/>
+    <path d="M 125 720 L 290 720" stroke="#0369a1" stroke-width="1.6" fill="none"/>
+    <path d="M 125 730 L 450 830" stroke="#0369a1" stroke-width="1.6" fill="none"/>
+    <path d="M 125 740 L 450 1010" stroke="#0369a1" stroke-width="1.6" fill="none"/>
+    <path d="M 125 750 L 620 1255" stroke="#0369a1" stroke-width="1.6" fill="none"/>
+    <path d="M 125 760 L 460 1350" stroke="#0369a1" stroke-width="1.6" fill="none"/>
+    <path d="M 125 770 L 470 1425" stroke="#0369a1" stroke-width="1.6" fill="none"/>
+
+    <!-- Student Associations -->
+    <path d="M 1075 460 L 740 160" stroke="#15803d" stroke-width="1.6" fill="none"/>
+    <path d="M 1075 480 L 750 830" stroke="#15803d" stroke-width="1.6" fill="none"/>
+    <path d="M 1075 490 L 750 1010" stroke="#15803d" stroke-width="1.6" fill="none"/>
+    <path d="M 1075 500 L 900 1255" stroke="#15803d" stroke-width="1.6" fill="none"/>
+    <path d="M 1075 510 L 740 1350" stroke="#15803d" stroke-width="1.6" fill="none"/>
+    <path d="M 1075 520 L 730 1425" stroke="#15803d" stroke-width="1.6" fill="none"/>
+
+    <!-- Parent Associations -->
+    <path d="M 1075 1000 L 740 160" stroke="#b45309" stroke-width="1.6" fill="none"/>
+    <path d="M 1075 1010 L 750 830" stroke="#b45309" stroke-width="1.6" fill="none"/>
+    <path d="M 1075 1020 L 750 1010" stroke="#b45309" stroke-width="1.6" fill="none"/>
+    <path d="M 1075 1030 L 905 1175" stroke="#b45309" stroke-width="1.6" fill="none"/>
+    <path d="M 1075 1040 L 900 1255" stroke="#b45309" stroke-width="1.6" fill="none"/>
+    <path d="M 1075 1050 L 740 1350" stroke="#b45309" stroke-width="1.6" fill="none"/>
+    <path d="M 1075 1060 L 730 1425" stroke="#b45309" stroke-width="1.6" fill="none"/>
+
+
+    <!-- ========================================================
+         UML STEREOTYPE RELATIONSHIPS: <<include>> & <<extend>>
+         ======================================================== -->
+
+    <!-- UC6 -> UC6.1 <<include>> -->
+    <path d="M 590 550 L 635 550" stroke="#2563eb" stroke-width="1.8" stroke-dasharray="4,3" marker-end="url(#uml-dep-arrow)" fill="none"/>
+    <text x="612" y="542" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" font-weight="700" fill="#2563eb" text-anchor="middle">&lt;&lt;include&gt;&gt;</text>
+
+    <!-- UC6.2 -> UC6 <<extend>> -->
+    <path d="M 440 613 L 440 580" stroke="#d97706" stroke-width="1.8" stroke-dasharray="4,3" marker-end="url(#uml-ext-arrow)" fill="none"/>
+    <text x="480" y="602" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" font-weight="700" fill="#d97706" text-anchor="middle">&lt;&lt;extend&gt;&gt;</text>
+
+    <!-- UC7.1 -> UC7 <<extend>> -->
+    <path d="M 645 720 L 595 720" stroke="#d97706" stroke-width="1.8" stroke-dasharray="4,3" marker-end="url(#uml-ext-arrow)" fill="none"/>
+    <text x="620" y="712" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" font-weight="700" fill="#d97706" text-anchor="middle">&lt;&lt;extend&gt;&gt;</text>
+
+    <!-- UC8.1 -> UC8 <<extend>> -->
+    <path d="M 480 895 L 535 855" stroke="#d97706" stroke-width="1.8" stroke-dasharray="4,3" marker-end="url(#uml-ext-arrow)" fill="none"/>
+    <text x="490" y="870" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" font-weight="700" fill="#d97706" text-anchor="middle">&lt;&lt;extend&gt;&gt;</text>
+
+    <!-- UC8.2 -> UC8 <<extend>> -->
+    <path d="M 720 895 L 665 855" stroke="#d97706" stroke-width="1.8" stroke-dasharray="4,3" marker-end="url(#uml-ext-arrow)" fill="none"/>
+    <text x="710" y="870" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" font-weight="700" fill="#d97706" text-anchor="middle">&lt;&lt;extend&gt;&gt;</text>
+
+    <!-- UC9 -> UC9.1 <<include>> -->
+    <path d="M 600 1036 L 600 1062" stroke="#2563eb" stroke-width="1.8" stroke-dasharray="4,3" marker-end="url(#uml-dep-arrow)" fill="none"/>
+    <text x="640" y="1053" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" font-weight="700" fill="#2563eb" text-anchor="middle">&lt;&lt;include&gt;&gt;</text>
+
+
+    <!-- ========================================================
+         LEGEND BOX (Bottom Center-Left)
+         ======================================================== -->
+    <g transform="translate(40, 1410)">
+        <rect x="0" y="0" width="180" height="75" rx="6" ry="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+        <text x="12" y="16" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" font-weight="800" fill="#0f172a">UML NOTATION LEGEND</text>
+        
+        <!-- Association line -->
+        <line x1="12" y1="28" x2="45" y2="28" stroke="#334155" stroke-width="1.5"/>
+        <text x="52" y="31" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8.5" font-weight="600" fill="#334155">Actor Association</text>
+
+        <!-- Include line -->
+        <line x1="12" y1="44" x2="45" y2="44" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <text x="52" y="47" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8.5" font-weight="700" fill="#2563eb">&lt;&lt;include&gt;&gt; Dependency</text>
+
+        <!-- Extend line -->
+        <line x1="12" y1="60" x2="45" y2="60" stroke="#d97706" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <text x="52" y="63" font-family="'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="8.5" font-weight="700" fill="#d97706">&lt;&lt;extend&gt;&gt; Extension</text>
+    </g>
+</svg>

@@ -6,7 +6,7 @@
                 <i class="fas fa-file-lines text-[#166534]"></i>
                 <span>Grade Monitoring & Review</span>
             </h2>
-            <p class="text-xs text-zinc-500 mt-0.5">Monitor, review, edit, and approve quarterly subject grades across Junior High School sections.</p>
+            <p class="text-xs text-zinc-500 mt-0.5">Monitor, review, edit, and approve term subject grades across Junior High School sections.</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
@@ -38,7 +38,7 @@
 
             <div>
                 <select wire:model.live="filterQuarterId" class="w-full px-2.5 py-1.5 text-xs font-bold rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">
-                    <option value="all">All Quarters</option>
+                    <option value="all">All Terms</option>
                     @foreach ($quarters as $q)
                         <option value="{{ $q->id }}">{{ $q->name }}</option>
                     @endforeach
@@ -101,7 +101,7 @@
                         <th class="py-3 px-4 text-start">Section</th>
                         <th class="py-3 px-4 text-start">Subject</th>
                         <th class="py-3 px-4 text-start">Teacher</th>
-                        <th class="py-3 px-4 text-center">Quarter</th>
+                        <th class="py-3 px-4 text-center">Term</th>
                         <th class="py-3 px-4 text-center">Grade Rating</th>
                         <th class="py-3 px-4 text-center">Status</th>
                         <th class="py-3 px-4 text-end">Actions</th>
@@ -190,11 +190,11 @@
                     <div class="p-3 bg-zinc-50 dark:bg-zinc-800/60 rounded-xl border border-zinc-200 dark:border-zinc-700/60 space-y-1">
                         <div class="font-bold text-zinc-900 dark:text-zinc-100 text-xs">{{ $editStudentName }}</div>
                         <div class="text-[11px] text-zinc-500 font-mono">{{ $editStudentNumber }} • Subject: <span class="font-bold text-blue-600">{{ $editSubjectCode }} ({{ $editSubjectName }})</span></div>
-                        <div class="text-[11px] text-zinc-500 font-medium">Evaluation Quarter: <span class="font-bold text-zinc-700 dark:text-zinc-300">{{ $editQuarterName }}</span></div>
+                        <div class="text-[11px] text-zinc-500 font-medium">Evaluation Term: <span class="font-bold text-zinc-700 dark:text-zinc-300">{{ $editQuarterName }}</span></div>
                     </div>
 
                     <div>
-                        <label class="block font-bold text-zinc-700 dark:text-zinc-300 mb-1">Quarter Grade Rating (60.00 - 99.00) *</label>
+                        <label class="block font-bold text-zinc-700 dark:text-zinc-300 mb-1">Term Grade Rating (60.00 - 99.00) *</label>
                         <input type="number" step="0.01" min="60" max="99" wire:model.live.debounce.150ms="editGradeValue" required class="w-full px-3 py-2 text-xs font-mono font-bold rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-amber-500">
                         @error('editGradeValue') <span class="text-rose-600 text-[11px] font-bold block mt-1">{{ $message }}</span> @enderror
                     </div>

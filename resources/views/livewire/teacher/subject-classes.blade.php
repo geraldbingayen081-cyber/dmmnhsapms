@@ -71,7 +71,7 @@
                         </div>
                     </div>
 
-                    <!-- Quarter Grade Submission Status Badges -->
+                    <!-- Term Grade Submission Status Badges -->
                     <div class="space-y-1.5 pt-1">
                         <span class="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">Grading Progress</span>
                         <div class="grid grid-cols-3 sm:grid-cols-4 gap-1.5 text-[10px] font-bold">

@@ -105,7 +105,7 @@ class GradeEncoding extends Component
     public function saveGrades(): void
     {
         if (!$this->selectedClassId || !$this->selectedQuarterId) {
-            session()->flash('error', 'Please select a valid subject class and quarter period.');
+            session()->flash('error', 'Please select a valid subject class and term period.');
             return;
         }
 
@@ -117,7 +117,7 @@ class GradeEncoding extends Component
                 'error',
                 "Grade Encoding is LOCKED: {$quarter->name} is marked as "
                 . strtoupper($quarter->status)
-                . " by the administration. You may only encode grades for the currently active quarter."
+                . " by the administration. You may only encode grades for the currently active term."
             );
             return;
         }
@@ -308,7 +308,9 @@ class GradeEncoding extends Component
         return view('livewire.teacher.grade-encoding', [
             'myClasses'        => $myClasses,
             'quarters'         => $quarters,
+            'terms'            => $quarters,
             'selectedQuarter'  => $selectedQuarter,
+            'selectedTerm'     => $selectedQuarter,
             'isEncodingActive' => $isEncodingActive,
             'studentsList'     => $studentsList,
             'gradeMatrix'      => $gradeMatrix,
@@ -316,7 +318,7 @@ class GradeEncoding extends Component
             'activeSy'         => $activeSy,
         ])->layout('layouts.teacher', [
             'title'    => 'Grade Encoding Sheet',
-            'subtitle' => 'View existing grades from Q1–Q3 and encode marks for the active quarter',
+            'subtitle' => 'View existing grades from T1–T3 and encode marks for the active term',
         ]);
     }
 }

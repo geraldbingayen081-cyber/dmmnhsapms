@@ -18,6 +18,7 @@ class SubjectSeeder extends Seeder
             ['subject_code' => 'ESP', 'subject_name' => 'Edukasyon sa Pagpapakatao'],
             ['subject_code' => 'MAPEH', 'subject_name' => 'MAPEH'],
             ['subject_code' => 'TLE', 'subject_name' => 'Technology and Livelihood Education'],
+            ['subject_code' => 'JOURN', 'subject_name' => 'Journalism'],
         ];
 
         foreach ($subjects as $s) {

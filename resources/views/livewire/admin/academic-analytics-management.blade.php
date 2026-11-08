@@ -28,9 +28,9 @@
         </div>
 
         <div>
-            <label class="block font-bold text-zinc-500 text-[10px] uppercase mb-1">Quarter</label>
+            <label class="block font-bold text-zinc-500 text-[10px] uppercase mb-1">Term</label>
             <select wire:model.live="selectedQuarterId" class="w-full px-3 py-2 font-bold rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">
-                <option value="all">All Quarters</option>
+                <option value="all">All Terms</option>
                 @foreach ($quarters as $q)
                     <option value="{{ $q->id }}">{{ $q->name }}</option>
                 @endforeach
@@ -124,11 +124,11 @@
             <div id="chart-analytics-year-level" class="h-64"></div>
         </div>
 
-        <!-- Quarterly Trend Line Chart -->
+        <!-- Term Trend Line Chart -->
         <div class="bg-white dark:bg-zinc-900 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-sm space-y-4">
             <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
                 <i class="fas fa-chart-line text-blue-600"></i>
-                <span>Quarterly Performance Trend (Q1 - Q4)</span>
+                <span>Term Performance Trend (T1 - T3)</span>
             </h3>
             <div id="chart-analytics-quarter-trend" class="h-64"></div>
         </div>
@@ -297,13 +297,13 @@
                 window.academicChartInstances['#chart-analytics-year-level'] = chartYL;
             }
 
-            // Quarter Trend Chart
+            // Term Trend Chart
             destroyChart('#chart-analytics-quarter-trend');
             if (document.querySelector("#chart-analytics-quarter-trend")) {
                 var chartQT = new ApexCharts(document.querySelector("#chart-analytics-quarter-trend"), {
                     chart: { type: 'area', height: 250, toolbar: { show: false }, background: 'transparent' },
                     theme: { mode: themeMode },
-                    series: [{ name: 'Quarterly Average', data: @json($quarterTrendChart['series'] ?? []) }],
+                    series: [{ name: 'Term Average', data: @json($quarterTrendChart['series'] ?? []) }],
                     colors: ['#2563eb'],
                     stroke: { curve: 'smooth', width: 3 },
                     fill: {

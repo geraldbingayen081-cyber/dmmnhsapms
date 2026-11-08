@@ -34,7 +34,7 @@
                         <th class="py-3 px-4 text-start">School Year</th>
                         <th class="py-3 px-4 text-start">Duration Period</th>
                         <th class="py-3 px-4 text-center">Sections</th>
-                        <th class="py-3 px-4 text-center">Quarters</th>
+                        <th class="py-3 px-4 text-center">Terms</th>
                         <th class="py-3 px-4 text-center">Status</th>
                         <th class="py-3 px-4 text-end">Actions</th>
                     </tr>
@@ -55,7 +55,7 @@
                             </td>
                             <td class="py-3.5 px-4 text-center">
                                 <span class="px-2.5 py-1 rounded font-bold text-[11px] bg-[#DBEAFE] text-blue-800 border border-blue-200">
-                                    {{ $sy->quarters_count }} Quarters
+                                    {{ $sy->quarters_count }} Terms
                                 </span>
                             </td>
                             <td class="py-3.5 px-4 text-center">
@@ -78,7 +78,7 @@
                                 @endif
                             </td>
                             <td class="py-3.5 px-4 text-end space-x-1">
-                                <a href="{{ route('admin.school-years.configure', $sy->id) }}" title="Configure Quarters & Sections" class="p-1.5 text-zinc-600 hover:text-[#166534] hover:bg-zinc-100 rounded-md transition inline-block">
+                                <a href="{{ route('admin.school-years.configure', $sy->id) }}" title="Configure Terms & Sections" class="p-1.5 text-zinc-600 hover:text-[#166534] hover:bg-zinc-100 rounded-md transition inline-block">
                                     <i class="fas fa-sliders text-xs"></i>
                                 </a>
                                 <button wire:click="openEditModal({{ $sy->id }})" title="Edit Details" class="p-1.5 text-zinc-600 hover:text-blue-600 hover:bg-zinc-100 rounded-md transition">
@@ -125,9 +125,29 @@
                 </div>
 
                 <form wire:submit.prevent="createSchoolYear" class="space-y-4">
+                    @if ($isInitial)
+                        <div class="p-3 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/40 rounded-xl flex items-start gap-2 text-emerald-800 dark:text-emerald-300">
+                            <i class="fas fa-flag-checkered mt-0.5 text-xs text-[#166534] dark:text-emerald-400"></i>
+                            <div class="text-[11px] leading-relaxed">
+                                <strong class="font-bold">Initial Academic Year:</strong>
+                                Establish the first academic cycle for the school. Consecutive calendar years (e.g. 2026-2027) are required. All future cycles will follow this chronological sequence.
+                            </div>
+                        </div>
+                    @else
+                        
+                    @endif
+
                     <div>
-                        <label class="block font-bold text-zinc-700 dark:text-zinc-300 mb-1">School Year (YYYY-YYYY) *</label>
-                        <input type="text" wire:model.defer="school_year" required placeholder="e.g. 2026-2027" class="w-full px-3 py-2 text-xs rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-[#166534]">
+                        <div class="flex items-center justify-between mb-1">
+                            <label class="block font-bold text-zinc-700 dark:text-zinc-300">School Year (YYYY-YYYY) *</label>
+                            @if (!$isInitial)
+                                <span class="text-[10px] font-bold text-[#166534] dark:text-emerald-400 bg-emerald-100/70 dark:bg-emerald-900/40 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
+                                    Next Available: {{ $nextSuggestedSchoolYear }}
+                                </span>
+                            @endif
+                        </div>
+                        <input type="text" wire:model.defer="school_year" required placeholder="e.g. 2026-2027" class="w-full px-3 py-2 text-xs rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-[#166534] font-mono">
+                        <p class="text-[10px] text-zinc-400 mt-1">Must start and end in consecutive calendar years.</p>
                         @error('school_year') <span class="text-rose-600 text-[11px] font-bold block mt-1">{{ $message }}</span> @enderror
                     </div>
 
@@ -157,7 +177,7 @@
 
                     <div class="p-3 bg-zinc-50 dark:bg-zinc-800/60 rounded-xl border border-zinc-200 dark:border-zinc-700 text-[11px] text-zinc-500">
                         <i class="fas fa-info-circle text-[#166534] mr-1"></i>
-                        Creating a school year automatically initializes 3 Quarters (1st Quarter to 3rd Quarter).
+                        Creating a school year automatically initializes 3 Terms (1st Term to 3rd Term).
                     </div>
 
                     <div class="flex justify-end gap-2 pt-2 border-t border-zinc-100 dark:border-zinc-800">

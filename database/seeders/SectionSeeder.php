@@ -10,16 +10,18 @@ class SectionSeeder extends Seeder
     public function run(): void
     {
         $sections = [
-            'Rizal',
-            'Mabini',
-            'Bonifacio',
-            'Luna',
-            'Aguinaldo',
-            'Del Pilar',
+            // Grade 7
+            'SPJ', 'Hermes', 'Zues', 'Apollo',
+            // Grade 8
+            'SPJ', 'Diamond', 'Saphire', 'Amethyst', 'Jade',
+            // Grade 9
+            'SPJ', 'Poinsettia', 'Chrysanthmem', 'Adenium',
+            // Grade 10
+            'SPJ', 'Cranberry', 'Strawberry', 'Blueberry',
         ];
 
         foreach ($sections as $name) {
-            Section::updateOrCreate(['name' => $name]);
+            Section::firstOrCreate(['name' => $name]);
         }
     }
 }

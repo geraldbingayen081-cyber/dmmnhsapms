@@ -94,12 +94,12 @@
                     <span class="text-2xl font-black {{ ($kpi['gwa'] ?? 0) >= 90 ? 'text-amber-600 dark:text-amber-400' : (($kpi['gwa'] ?? 0) >= 75 ? 'text-[#166534] dark:text-emerald-400' : 'text-rose-600') }} block">
                         {{ number_format($kpi['gwa'], 2) }}
                     </span>
-                    <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold block">Final GWA (Q1–Q3)</span>
+                    <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold block">Final GWA (T1–T3)</span>
                 @else
                     <span class="text-2xl font-black text-zinc-400 dark:text-zinc-500 block">
                         —
                     </span>
-                    <span class="text-[10px] text-amber-600 dark:text-amber-400 font-bold block">Pending Q1–Q3 Complete</span>
+                    <span class="text-[10px] text-amber-600 dark:text-amber-400 font-bold block">Pending T1–T3 Complete</span>
                 @endif
             </div>
 
@@ -156,13 +156,13 @@
 
         <!-- 4. Visual Analytics Section (2 ApexCharts) -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <!-- Chart 1: Quarterly Grade Progression vs Class Average -->
+            <!-- Chart 1: Term Grade Progression vs Class Average -->
             <div class="bg-white dark:bg-zinc-900 p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm space-y-4 flex flex-col justify-between">
                 <div class="border-b border-zinc-100 dark:border-zinc-800 pb-3 flex items-center justify-between">
                     <div>
                         <h3 class="text-xs font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider flex items-center gap-2">
                             <i class="fas fa-arrow-trend-up text-[#166534] dark:text-emerald-400"></i>
-                            <span>Child Quarterly Performance Trend (Q1–Q3)</span>
+                            <span>Child Term Performance Trend (T1–T3)</span>
                         </h3>
                         <p class="text-[11px] text-zinc-500">
                             Comparison of your child's general average against the section class average
@@ -234,7 +234,7 @@
                 @else
                     <div class="h-64 flex flex-col items-center justify-center text-center p-6 text-zinc-400 bg-zinc-50 dark:bg-zinc-800/40 rounded-xl border border-dashed border-zinc-200 dark:border-zinc-700">
                         <i class="fas fa-chart-line text-2xl mb-2 text-zinc-300"></i>
-                        <span class="text-xs font-medium">Quarterly progression data will appear once grades are posted.</span>
+                        <span class="text-xs font-medium">Term progression data will appear once grades are posted.</span>
                     </div>
                 @endif
             </div>
@@ -254,7 +254,7 @@
                     
                     <div class="flex items-center gap-2">
                         <select wire:model.live="filterQuarter" class="px-2.5 py-1 text-xs font-bold rounded-lg border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">
-                            <option value="all">Q1–Q3 Average</option>
+                            <option value="all">T1–T3 Average</option>
                             @foreach ($quarters as $q)
                                 <option value="{{ $q->id }}">{{ $q->short_name }}</option>
                             @endforeach
@@ -328,16 +328,16 @@
             </div>
         </div>
 
-        <!-- 5. Official Quarterly Subject Grade Sheet (Q1 to Q3) -->
+        <!-- 5. Official Term Subject Grade Sheet (T1 to T3) -->
         <div class="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm overflow-hidden space-y-4 p-6">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-zinc-100 dark:border-zinc-800 pb-4">
                 <div>
                     <h3 class="text-sm font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
                         <i class="fas fa-book text-[#166534] dark:text-emerald-400"></i>
-                        <span>Official Quarterly Subject Grade Sheet</span>
+                        <span>Official Term Subject Grade Sheet</span>
                     </h3>
                     <p class="text-xs text-zinc-500">
-                        Consolidated subject marks for {{ $selectedStudent->first_name }} (1st Quarter to 3rd Quarter)
+                        Consolidated subject marks for {{ $selectedStudent->first_name }} (1st Term to 3rd Term)
                     </p>
                 </div>
 
@@ -398,7 +398,7 @@
                                             {{ number_format($row['final_avg'], 2) }}
                                         </span>
                                     @else
-                                        <span class="text-zinc-400 dark:text-zinc-500 font-bold" title="Pending complete grades from 1st to 3rd quarter">—</span>
+                                        <span class="text-zinc-400 dark:text-zinc-500 font-bold" title="Pending complete grades from 1st to 3rd term">—</span>
                                     @endif
                                 </td>
                                 <td class="py-3 px-3 text-center whitespace-nowrap">
@@ -411,7 +411,7 @@
                                             FAILED
                                         </span>
                                     @else
-                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-zinc-100 dark:bg-zinc-800 text-zinc-400" title="Complete grades from 1st to 3rd quarter required">
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-zinc-100 dark:bg-zinc-800 text-zinc-400" title="Complete grades from 1st to 3rd term required">
                                             PENDING
                                         </span>
                                     @endif
@@ -449,7 +449,7 @@
                             <span>{{ $selectedStudent->first_name }}'s Awards and Achievements</span>
                         </h3>
                         <p class="text-xs text-zinc-500">
-                            Quarterly honors and subject excellence awards earned in SY {{ $activeSy?->school_year }}
+                            Term honors and subject excellence awards earned in SY {{ $activeSy?->school_year }}
                         </p>
                     </div>
                     <span class="text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">

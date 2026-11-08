@@ -18,7 +18,13 @@ class User extends Authenticatable
         'password',
         'role',
         'status',
+        'profile_photo_path',
     ];
+
+    public function profilePhotoUrl(): ?string
+    {
+        return $this->profile_photo_path ? \Illuminate\Support\Facades\Storage::url($this->profile_photo_path) : null;
+    }
 
     protected $hidden = [
         'password',

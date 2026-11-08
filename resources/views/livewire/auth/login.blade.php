@@ -12,14 +12,14 @@
         <!-- 1. TOP VERTICAL HEADER: SCHOOL BRANDING & LOGO SPACE -->
         <div class="space-y-3">
             <!-- Dedicated Space for School Logo -->
-            <div class="inline-block relative group">
-                <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-[#064e3b] via-[#166534] to-emerald-400 blur-sm opacity-70 group-hover:opacity-100 transition duration-300"></div>
+            <div onclick="toggleSecretDarkMode()" class="inline-block relative group cursor-pointer select-none" title="DMMNHS APMS">
+                <div class="absolute -inset-1 rounded-full bg-gradient-to-r from-[#064e3b] via-[#166534] to-emerald-400 blur-sm opacity-70 group-hover:opacity-100 transition duration-300"></div>
                 @if ($schoolLogoUrl)
-                    <div class="relative rounded-3xl bg-white border-2 border-white/40 shadow-2xl p-2 mx-auto flex items-center justify-center overflow-hidden shrink-0" style="width: 104px; height: 104px; max-width: 104px; max-height: 104px;">
-                        <img src="{{ $schoolLogoUrl }}" alt="{{ $schoolName }} Logo" class="max-w-full max-h-full w-auto h-auto object-contain block" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    <div class="relative rounded-full bg-white border-2 border-white/40 shadow-2xl p-2 mx-auto flex items-center justify-center overflow-hidden shrink-0" style="width: 104px; height: 104px; max-width: 104px; max-height: 104px;">
+                        <img src="{{ $schoolLogoUrl }}" alt="{{ $schoolName }} Logo" class="max-w-full max-h-full w-auto h-auto object-contain block rounded-full" style="max-width: 100%; max-height: 100%; object-fit: contain;">
                     </div>
                 @else
-                    <div class="relative rounded-3xl bg-gradient-to-br from-[#064e3b] via-[#166534] to-[#0f5127] border-2 border-white/20 flex flex-col items-center justify-center text-white shadow-2xl p-2 mx-auto shrink-0" style="width: 104px; height: 104px; max-width: 104px; max-height: 104px;">
+                    <div class="relative rounded-full bg-gradient-to-br from-[#064e3b] via-[#166534] to-[#0f5127] border-2 border-white/20 flex flex-col items-center justify-center text-white shadow-2xl p-2 mx-auto shrink-0" style="width: 104px; height: 104px; max-width: 104px; max-height: 104px;">
                         <!-- School Logo Crest / Image Slot -->
                         <i class="fas fa-graduation-cap text-3xl sm:text-4xl text-amber-400 mb-1 drop-shadow-md"></i>
                         <span class="text-[9px] font-black uppercase tracking-widest text-emerald-100 font-mono">DMMNHS</span>

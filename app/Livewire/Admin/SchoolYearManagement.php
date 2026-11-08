@@ -5,6 +5,8 @@ namespace App\Livewire\Admin;
 use App\Models\ActivityLog;
 use App\Models\Quarter;
 use App\Models\SchoolYear;
+use App\Rules\SequentialSchoolYear;
+use App\Services\SchoolYearService;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -21,10 +23,22 @@ class SchoolYearManagement extends Component
     public $end_date = '';
     public $status = 'draft';
 
+    public $isInitial = false;
+    public $nextSuggestedSchoolYear = '';
+
     public function openCreateModal()
     {
         $this->resetValidation();
         $this->reset(['schoolYearId', 'school_year', 'start_date', 'end_date']);
+        
+        $this->isInitial = !SchoolYearService::hasSchoolYears();
+        $this->nextSuggestedSchoolYear = SchoolYearService::getNextAvailableSchoolYear();
+        $this->school_year = $this->nextSuggestedSchoolYear;
+
+        $suggestedDates = SchoolYearService::getSuggestedDates($this->school_year);
+        $this->start_date = $suggestedDates['start_date'];
+        $this->end_date = $suggestedDates['end_date'];
+
         $this->status = 'draft';
         $this->showCreateModal = true;
     }
@@ -32,12 +46,10 @@ class SchoolYearManagement extends Component
     public function createSchoolYear()
     {
         $this->validate([
-            'school_year' => 'required|string|unique:school_years,school_year|regex:/^\d{4}-\d{4}$/',
+            'school_year' => ['required', 'string', 'unique:school_years,school_year', new SequentialSchoolYear()],
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
             'status' => 'required|in:draft,active,completed,archived',
-        ], [
-            'school_year.regex' => 'School year format must be YYYY-YYYY (e.g., 2026-2027).',
         ]);
 
         DB::transaction(function () {
@@ -52,34 +64,20 @@ class SchoolYearManagement extends Component
                 'status' => $this->status,
             ]);
 
-            // Auto-generate 3 Quarters for Junior High School
-            $quarters = [
-                ['name' => '1st Quarter', 'short_name' => 'Q1', 'sort_order' => 1],
-                ['name' => '2nd Quarter', 'short_name' => 'Q2', 'sort_order' => 2],
-                ['name' => '3rd Quarter', 'short_name' => 'Q3', 'sort_order' => 3],
-            ];
-
-            foreach ($quarters as $q) {
-                Quarter::create([
-                    'school_year_id' => $sy->id,
-                    'name' => $q['name'],
-                    'short_name' => $q['short_name'],
-                    'sort_order' => $q['sort_order'],
-                    'status' => $q['sort_order'] === 1 ? 'active' : 'upcoming',
-                ]);
-            }
+            // Auto-generate Grade Levels, rotated Sections, Quarters, and Subject loads
+            \App\Services\SchoolYearRotationService::generateStructureForSchoolYear($sy);
 
             ActivityLog::create([
                 'user_id' => auth()->id(),
                 'action' => 'Created School Year',
                 'subject_type' => SchoolYear::class,
                 'subject_id' => $sy->id,
-                'description' => "Created School Year {$sy->school_year} ({$sy->status}) with 3 default quarters.",
+                'description' => "Created School Year {$sy->school_year} ({$sy->status}) with auto-generated grade levels, rotated sections, and 3 default terms.",
             ]);
         });
 
         $this->showCreateModal = false;
-        session()->flash('message', "School Year {$this->school_year} and 3 quarters successfully created!");
+        session()->flash('message', "School Year {$this->school_year}, grade levels, and rotated sections successfully created!");
     }
 
     public function openEditModal($id)
@@ -98,7 +96,17 @@ class SchoolYearManagement extends Component
     public function updateSchoolYear()
     {
         $this->validate([
-            'school_year' => 'required|string|regex:/^\d{4}-\d{4}$/|unique:school_years,school_year,' . $this->schoolYearId,
+            'school_year' => [
+                'required',
+                'string',
+                'unique:school_years,school_year,' . $this->schoolYearId,
+                function ($attribute, $value, $fail) {
+                    $error = SchoolYearService::validateConsecutiveYears((string) $value);
+                    if ($error) {
+                        $fail($error);
+                    }
+                },
+            ],
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
             'status' => 'required|in:draft,active,completed,archived',

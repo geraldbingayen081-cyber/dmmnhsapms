@@ -19,22 +19,11 @@ use App\Models\YearLevel;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Schema;
 
 class TestDataSeeder extends Seeder
 {
     public function run(): void
     {
-        // Clean test data using DELETE safely
-        Schema::disableForeignKeyConstraints();
-        if (Schema::hasTable('grades')) Grade::query()->delete();
-        if (Schema::hasTable('parent_student')) DB::table('parent_student')->delete();
-        if (Schema::hasTable('parents')) ParentModel::query()->delete();
-        if (Schema::hasTable('student_enrollments')) StudentEnrollment::query()->delete();
-        if (Schema::hasTable('students')) Student::query()->delete();
-        if (Schema::hasTable('users')) User::whereIn('role', ['parent', 'student'])->delete();
-        Schema::enableForeignKeyConstraints();
-
         DB::transaction(function () {
             $now = now();
             $hashedPassword = Hash::make('password');
@@ -46,7 +35,7 @@ class TestDataSeeder extends Seeder
             $y10 = YearLevel::firstOrCreate(['code' => 'G10'], ['name' => 'Grade 10', 'sort_order' => 4]);
             $ylModels = ['G7' => $y7, 'G8' => $y8, 'G9' => $y9, 'G10' => $y10];
 
-            // ─── 2. Subjects (8 Core JHS Areas) ──────────────────────────────────────
+            // ─── 2. Subjects (Core JHS Areas + Journalism) ──────────────────────────
             $subjectDefs = [
                 ['subject_code' => 'FIL',   'subject_name' => 'Filipino'],
                 ['subject_code' => 'ENG',   'subject_name' => 'English'],
@@ -56,28 +45,38 @@ class TestDataSeeder extends Seeder
                 ['subject_code' => 'ESP',   'subject_name' => 'Edukasyon sa Pagpapakatao'],
                 ['subject_code' => 'MAPEH', 'subject_name' => 'MAPEH'],
                 ['subject_code' => 'TLE',   'subject_name' => 'Technology and Livelihood Education'],
+                ['subject_code' => 'JOURN', 'subject_name' => 'Journalism'],
             ];
             $subjectsArr = [];
             foreach ($subjectDefs as $s) {
                 $subjectsArr[] = Subject::firstOrCreate(['subject_code' => $s['subject_code']], $s);
             }
 
-            // ─── 3. School Year & Quarters ────────────────────────────────────────────
+            // ─── 3. School Year & Terms ───────────────────────────────────────────────
             $sy = SchoolYear::updateOrCreate(
                 ['school_year' => '2026-2027'],
                 ['start_date' => '2026-08-01', 'end_date' => '2027-05-31', 'status' => 'active']
             );
-            $q1 = Quarter::updateOrCreate(['school_year_id' => $sy->id, 'short_name' => 'Q1'], ['name' => '1st Quarter', 'sort_order' => 1, 'status' => 'completed']);
-            $q2 = Quarter::updateOrCreate(['school_year_id' => $sy->id, 'short_name' => 'Q2'], ['name' => '2nd Quarter', 'sort_order' => 2, 'status' => 'completed']);
-            $q3 = Quarter::updateOrCreate(['school_year_id' => $sy->id, 'short_name' => 'Q3'], ['name' => '3rd Quarter', 'sort_order' => 3, 'status' => 'active']);
+            $q1 = Quarter::updateOrCreate(
+                ['school_year_id' => $sy->id, 'sort_order' => 1],
+                ['name' => '1st Term', 'short_name' => 'T1', 'start_date' => '2026-08-03', 'end_date' => '2026-10-30', 'status' => 'completed']
+            );
+            $q2 = Quarter::updateOrCreate(
+                ['school_year_id' => $sy->id, 'sort_order' => 2],
+                ['name' => '2nd Term', 'short_name' => 'T2', 'start_date' => '2026-11-03', 'end_date' => '2027-02-12', 'status' => 'completed']
+            );
+            $q3 = Quarter::updateOrCreate(
+                ['school_year_id' => $sy->id, 'sort_order' => 3],
+                ['name' => '3rd Term', 'short_name' => 'T3', 'start_date' => '2027-02-15', 'end_date' => '2027-05-28', 'status' => 'active']
+            );
             $quarters = [$q1, $q2, $q3];
 
-            // ─── 4. Section Names (8 sections per year level) ─────────────────────────
+            // ─── 4. Section Names per year level ───────────────────────────────────────
             $sectionThemes = [
-                'G7'  => ['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'],
-                'G8'  => ['Pacific', 'Atlantic', 'Indian', 'Arctic', 'Southern', 'Caribbean', 'Coral', 'Bering'],
-                'G9'  => ['Apo',    'Pulag', 'Halcon', 'Dulang', 'Kalatungan', 'Tabayoc', 'Mayon', 'Pinatubo'],
-                'G10' => ['Philippines', 'Japan', 'Singapore', 'Malaysia', 'Thailand', 'Indonesia', 'Vietnam', 'Cambodia'],
+                'G7'  => ['SPJ', 'Hermes', 'Zues', 'Apollo'],
+                'G8'  => ['SPJ', 'Diamond', 'Saphire', 'Amethyst', 'Jade'],
+                'G9'  => ['SPJ', 'Poinsettia', 'Chrysanthmem', 'Adenium'],
+                'G10' => ['SPJ', 'Cranberry', 'Strawberry', 'Blueberry'],
             ];
             $sectionsByYL = [];
             foreach ($sectionThemes as $ylCode => $names) {
@@ -127,7 +126,7 @@ class TestDataSeeder extends Seeder
                     ['emp' => 'EMP-0029',  'fn' => 'Felicitas','mn' => 'D', 'ln' => 'Valdez',     'contact' => '+639171110029'],
                     ['emp' => 'EMP-0030',  'fn' => 'Isidro',   'mn' => 'E', 'ln' => 'Peralta',    'contact' => '+639171110030'],
                     ['emp' => 'EMP-0031',  'fn' => 'Remedios', 'mn' => 'F', 'ln' => 'Diaz',       'contact' => '+639171110031'],
-                    ['emp' => 'EMP-0032',  'fn' => 'Herminio',  'mn' => 'G', 'ln' => 'Salazar',   'contact' => '+639171110032'],
+                    ['emp' => 'EMP-0032',  'fn' => 'Herminio', 'mn' => 'G', 'ln' => 'Salazar',    'contact' => '+639171110032'],
                 ],
             ];
 
@@ -155,12 +154,20 @@ class TestDataSeeder extends Seeder
                         'contact_number'  => $td['contact'],
                     ]);
                     $teachersByYL[$ylCode][] = $teacher;
+                }
 
+                foreach ($sections as $sIdx => $secModel) {
+                    $adviser = $teachersByYL[$ylCode][$sIdx % count($teachersByYL[$ylCode])];
                     $sys = SchoolYearSection::updateOrCreate(
-                        ['school_year_id' => $sy->id, 'year_level_id' => $yl->id, 'section_id' => $sections[$idx]->id],
-                        ['adviser_id' => $teacher->id, 'status' => 'active']
+                        ['school_year_id' => $sy->id, 'year_level_id' => $yl->id, 'section_id' => $secModel->id],
+                        ['adviser_id' => $adviser->id, 'status' => 'active']
                     );
-                    $allSys[] = $sys;
+                    $allSys[] = [
+                        'model' => $sys,
+                        'ylCode' => $ylCode,
+                        'sectionOrder' => $sIdx,
+                        'sectionName' => $secModel->name,
+                    ];
                 }
             }
 
@@ -169,44 +176,55 @@ class TestDataSeeder extends Seeder
             foreach (['G7', 'G8', 'G9', 'G10'] as $ylCode) {
                 $yl        = $ylModels[$ylCode];
                 $tGroup    = $teachersByYL[$ylCode];
-                $ylSysList = SchoolYearSection::where('school_year_id', $sy->id)
+                $ylSysList = SchoolYearSection::with('section')
+                    ->where('school_year_id', $sy->id)
                     ->where('year_level_id', $yl->id)
                     ->get();
 
                 foreach ($ylSysList as $sys) {
                     $sectionSubjectMap[$sys->id] = [];
+                    $secName = $sys->section?->name;
+
                     foreach ($subjectsArr as $sIdx => $subject) {
-                        $assignedTeacher = $tGroup[$sIdx];
+                        if ($subject->subject_code === 'JOURN' && strtoupper(trim($secName ?? '')) !== 'SPJ') {
+                            continue;
+                        }
+
+                        $assignedTeacher = $tGroup[$sIdx % count($tGroup)];
                         $ss = SectionSubject::updateOrCreate(
                             ['school_year_section_id' => $sys->id, 'subject_id' => $subject->id],
                             ['teacher_id' => $assignedTeacher->id]
                         );
-                        $sectionSubjectMap[$sys->id][] = $ss;
+                        $sectionSubjectMap[$sys->id][] = [
+                            'model' => $ss,
+                            'code'  => $subject->subject_code,
+                        ];
                     }
                 }
             }
 
-            // ─── 7. Students & Dynamic Performance Distribution ───────────────────────
-            // Unique profiles per year level so analytics and averages are distinct:
-            // 0=Highest Honors (98-99), 1=High Honors (95-97), 2=Honors (90-94), 3=Average (81-88), 4=Fair (76-79)
-            $ylProfiles = [
-                'G7' => [
-                    // High performing intake: 8 achievers/section (~64 achievers, ~88.8% GWA)
-                    'slots' => [0, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4],
-                ],
-                'G8' => [
-                    // Transition challenges: 3 achievers/section (~24 achievers, ~83.9% GWA)
-                    'slots' => [1, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4],
-                ],
-                'G9' => [
-                    // Balanced intermediate: 5 achievers/section (~40 achievers, ~86.5% GWA)
-                    'slots' => [0, 1, 1, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4],
-                ],
-                'G10' => [
-                    // Graduating completers push: 9 achievers/section (~72 achievers, ~90.4% GWA)
-                    'slots' => [0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 4],
-                ],
-            ];
+            // ─── 7. Students & High-Contrast Visual Analytics Distribution ────────────
+            // Designed specifically so that charts comparing Year Levels, Sections,
+            // Subjects, Terms (T1-T3), and Honor/Mastery Tiers display clear, realistic
+            // contrast instead of flat averages:
+            //
+            // • Year Level Contrast:
+            //   - Grade 10: Highest performing cohort (~89.5 avg, senior mastery, Highest/High Honors)
+            //   - Grade 9 : Strong upper-year cohort (~86.2 avg, High Honors & Honors)
+            //   - Grade 7 : Solid freshman cohort (~83.4 avg, enthusiastic transition)
+            //   - Grade 8 : Challenging sophomore dip (~78.6 avg, 5 sections incl. Jade intervention)
+            //
+            // • Section-to-Section Contrast within each Year Level:
+            //   - Section 0 (SPJ)              : Premier Journalism / Star Section (~91.5 - 94.5 avg)
+            //   - Section 1 (Hermes/Diamond/..): High-Achieving Regular Section (~86.5 - 89.0 avg)
+            //   - Section 2 (Zues/Saphire/...) : Mid-Performing Section (~82.0 - 85.0 avg)
+            //   - Section 3 (Apollo/Amethyst/.): Developing Section (~77.5 - 80.5 avg)
+            //   - Section 4 (Jade in G8)       : Intensive Intervention Section (~74.8 - 76.5 avg)
+            //
+            // • Subject Mastery Contrast:
+            //   - High Mastery  : Journalism (~93), MAPEH (~89), EsP (~88), TLE (~86)
+            //   - Moderate      : Filipino (~85), Araling Panlipunan (~83), English (~81)
+            //   - Challenging   : Science (~79), Mathematics (~77)
 
             $firstNames = [
                 'Juan','Maria','Angela','Gabriel','Carlos',
@@ -218,6 +236,12 @@ class TestDataSeeder extends Seeder
                 'Joshua','Althea','Justin','Danielle','Christian',
                 'Kaye','Dominic','Nicole','Francis','Angelica',
             ];
+            $middleNames = [
+                'Cruz','Reyes','Santos','Garcia','Mendoza',
+                'Bautista','Ramos','Aquino','Castro','Torres',
+                'Flores','Navarro','Villanueva','Soriano','Mercado',
+                'Pascual','Valdez','Diaz','Salazar','Morales',
+            ];
             $lastNames = [
                 'Dela Cruz','Santos','Reyes','Gonzales','Bautista',
                 'Villanueva','Ramos','Mendoza','Castro','Aquino',
@@ -228,75 +252,86 @@ class TestDataSeeder extends Seeder
                 'Villamor','Alvarez','Castillo','Bernardo','Vergara',
             ];
 
+            $birthYearByYL = [
+                'G7'  => 2014,
+                'G8'  => 2013,
+                'G9'  => 2012,
+                'G10' => 2011,
+            ];
+
             $adminUser = User::where('role', 'admin')->first();
             $adminId   = $adminUser?->id ?? 1;
 
             $allCreatedStudents = [];
-            $allCreatedEnrollments = [];
-            $gradeRowsToInsert = [];
+            $gradeRowsToUpsert = [];
             $studentCounter = 1;
 
-            foreach ($allSys as $sys) {
-                // Find year level code for this section
-                $yl = YearLevel::find($sys->year_level_id);
-                $ylCode = $yl?->code ?? 'G7';
-                $slotsPattern = $ylProfiles[$ylCode]['slots'] ?? $ylProfiles['G7']['slots'];
+            foreach ($allSys as $sIdx => $sysInfo) {
+                $sys          = $sysInfo['model'];
+                $ylCode       = $sysInfo['ylCode'];
+                $sectionOrder = $sysInfo['sectionOrder'];
+                $secSubjs     = $sectionSubjectMap[$sys->id] ?? [];
+                $totalSubjects = count($secSubjs);
+                $birthYear    = $birthYearByYL[$ylCode] ?? 2012;
 
                 for ($slot = 0; $slot < 15; $slot++) {
                     $stId = sprintf('2026-%04d', $studentCounter);
                     $fn   = $firstNames[($studentCounter - 1) % count($firstNames)];
-                    $ln   = $lastNames[($studentCounter - 1)  % count($lastNames)];
+                    $mn   = $middleNames[($studentCounter + $sIdx) % count($middleNames)];
+                    $ln   = $lastNames[($studentCounter - 1) % count($lastNames)];
+                    $bMonth = (($studentCounter % 12) + 1);
+                    $bDay   = (($studentCounter % 27) + 1);
+                    $bDate  = sprintf('%04d-%02d-%02d', $birthYear, $bMonth, $bDay);
 
-                    $stUser = User::create([
-                        'login_id' => $stId,
-                        'name'     => "{$fn} {$ln}",
-                        'email'    => strtolower($stId) . '@student.dmmnhs.edu.ph',
-                        'password' => $hashedPassword,
-                        'role'     => 'student',
-                        'status'   => 'active',
-                        'created_at' => $now,
-                        'updated_at' => $now,
+                    $stUser = User::updateOrCreate(['login_id' => $stId], [
+                        'name'       => "{$fn} {$ln}",
+                        'email'      => strtolower($stId) . '@student.dmmnhs.edu.ph',
+                        'password'   => $hashedPassword,
+                        'role'       => 'student',
+                        'status'     => 'active',
                     ]);
 
-                    $student = Student::create([
-                        'user_id'        => $stUser->id,
+                    $student = Student::updateOrCreate(['user_id' => $stUser->id], [
                         'student_number' => $stId,
                         'first_name'     => $fn,
+                        'middle_name'    => $mn,
                         'last_name'      => $ln,
                         'gender'         => ($studentCounter % 2 === 0) ? 'Female' : 'Male',
-                        'birthdate'      => '2011-06-15',
+                        'birthdate'      => $bDate,
                         'contact_number' => sprintf('+63917%07d', $studentCounter),
-                        'created_at'     => $now,
-                        'updated_at'     => $now,
                     ]);
                     $allCreatedStudents[] = $student;
 
-                    $enrollment = StudentEnrollment::create([
+                    $enrollment = StudentEnrollment::updateOrCreate([
                         'student_id'             => $student->id,
                         'school_year_section_id' => $sys->id,
+                    ], [
                         'enrollment_date'        => '2026-08-01',
                         'status'                 => 'enrolled',
-                        'created_at'             => $now,
-                        'updated_at'             => $now,
                     ]);
-                    $allCreatedEnrollments[$student->id] = $enrollment;
 
-                    // Tier for this student
-                    $tier = $slotsPattern[$slot];
-                    $secSubjs = $sectionSubjectMap[$sys->id] ?? [];
+                    foreach ($secSubjs as $subIdx => $ssInfo) {
+                        $ss      = $ssInfo['model'];
+                        $subCode = $ssInfo['code'];
 
-                    // Generate distinct grades across Q1, Q2, Q3 (never identical)
-                    foreach ($secSubjs as $ss) {
-                        $qMarks = $this->generateDistinctQuarterMarks($tier);
+                        $tMarks = $this->generateDynamicTermMarks(
+                            $ylCode,
+                            $sectionOrder,
+                            $slot,
+                            $subCode,
+                            $subIdx,
+                            $totalSubjects,
+                            $sIdx
+                        );
 
                         foreach ($quarters as $qIdx => $quarter) {
-                            $gradeVal = $qMarks[$qIdx];
-                            $gradeRowsToInsert[] = [
+                            $gradeVal = $tMarks[$qIdx];
+                            $gradeRowsToUpsert[] = [
                                 'student_enrollment_id' => $enrollment->id,
                                 'section_subject_id'    => $ss->id,
                                 'quarter_id'            => $quarter->id,
                                 'grade'                 => $gradeVal,
-                                'remarks'               => $gradeVal >= 75 ? 'PASSED' : 'FAILED',
+                                'remarks'               => $gradeVal >= 75.00 ? 'PASSED' : 'FAILED',
                                 'status'                => 'approved',
                                 'created_by'            => $adminId,
                                 'created_at'            => $now,
@@ -309,9 +344,13 @@ class TestDataSeeder extends Seeder
                 }
             }
 
-            // Bulk insert all grades in efficient chunks of 1000
-            foreach (array_chunk($gradeRowsToInsert, 1000) as $chunk) {
-                Grade::insert($chunk);
+            // Bulk upsert all grades in chunks of 500
+            foreach (array_chunk($gradeRowsToUpsert, 500) as $chunk) {
+                Grade::upsert(
+                    $chunk,
+                    ['student_enrollment_id', 'section_subject_id', 'quarter_id'],
+                    ['grade', 'remarks', 'status', 'created_by', 'updated_at']
+                );
             }
 
             // ─── 8. Parents (Strictly 1 or 2 Children Linked Each) ────────────────────
@@ -325,46 +364,41 @@ class TestDataSeeder extends Seeder
                 'Arturo','Alfredo','Rodolfo','Rolando','Rogelio','Jaime','Benjamin','Alberto','Romeo','Roberto',
             ];
 
-            $totalStudents = count($allCreatedStudents); // 480
+            $totalStudents = count($allCreatedStudents);
             $sIdx = 0;
             $parentCounter = 1;
 
             while ($sIdx < $totalStudents) {
-                // Determine children count: strictly 1 or 2
                 $remaining = $totalStudents - $sIdx;
-                $numChildren = ($remaining === 1) ? 1 : rand(1, 2);
+                $numChildren = ($remaining === 1) ? 1 : (($parentCounter % 3 === 0) ? 2 : 1);
 
                 $pid = sprintf('PARENT-%04d', $parentCounter);
                 $fn  = $parentFirstNames[($parentCounter - 1) % count($parentFirstNames)];
                 $primaryStudent = $allCreatedStudents[$sIdx];
-                $ln  = $primaryStudent->last_name; // Family continuity
+                $ln  = $primaryStudent->last_name;
 
-                $pUser = User::create([
-                    'login_id'   => $pid,
+                $pUser = User::updateOrCreate(['login_id' => $pid], [
                     'name'       => "{$fn} {$ln}",
                     'email'      => strtolower(str_replace('-', '', $pid)) . '@parent.dmmnhs.edu.ph',
                     'password'   => $hashedPassword,
                     'role'       => 'parent',
                     'status'     => 'active',
-                    'created_at' => $now,
-                    'updated_at' => $now,
                 ]);
 
-                $parent = ParentModel::create([
-                    'user_id'        => $pUser->id,
+                $parent = ParentModel::updateOrCreate(['user_id' => $pUser->id], [
                     'first_name'     => $fn,
                     'last_name'      => $ln,
                     'contact_number' => sprintf('+63917%07d', 8000000 + $parentCounter),
-                    'created_at'     => $now,
-                    'updated_at'     => $now,
                 ]);
 
                 for ($c = 0; $c < $numChildren; $c++) {
                     $st = $allCreatedStudents[$sIdx + $c];
-                    $parent->students()->attach($st->id, [
-                        'relationship' => 'Parent',
-                        'created_at'   => $now,
-                        'updated_at'   => $now,
+                    $parent->students()->syncWithoutDetaching([
+                        $st->id => [
+                            'relationship' => 'Parent',
+                            'created_at'   => $now,
+                            'updated_at'   => $now,
+                        ],
                     ]);
                 }
 
@@ -378,52 +412,182 @@ class TestDataSeeder extends Seeder
                 'action'       => 'Seeded Test Data',
                 'subject_type' => TestDataSeeder::class,
                 'subject_id'   => null,
-                'description'  => "SY 2026-2027 | 32 teachers | 32 sections | {$totalStudents} students (15/section) | "
-                    . ($parentCounter - 1) . " parents (1-2 children each) | Distinct Q1-Q3 grades (max 99) | "
-                    . "Differentiated cohort averages & achievers per year level.",
+                'description'  => "SY 2026-2027 | 32 teachers | 17 sections | {$totalStudents} students | High-contrast analytics across Year Levels, Sections, Subjects, and Terms.",
             ]);
         });
     }
 
     /**
-     * Generate 3 distinct quarterly grades for Q1, Q2, and Q3 (never all identical).
-     * Maximum allowed grade is strictly 99.00.
+     * Generate realistic, high-contrast term grades [T1, T2, T3] that create
+     * clear visual differentiation across:
+     *   1. Year Levels (G10 > G9 > G7 > G8)
+     *   2. Sections within a Year Level (SPJ > Sec 1 > Sec 2 > Sec 3 > Sec 4)
+     *   3. Subjects (JOURN/MAPEH/ESP > TLE/FIL/AP > ENG > SCI > MAT)
+     *   4. Terms (T1 -> T2 -> T3 with section-specific trajectory curves)
+     *   5. Honor Tiers (Highest Honors >=98, High Honors 95-97, Honors 90-94)
      */
-    private function generateDistinctQuarterMarks(int $tier): array
-    {
-        // 0=Highest (98-99), 1=High (95-97), 2=Honors (90-94), 3=Average (81-88), 4=Fair (76-79)
-        $ranges = [
-            0 => [98, 99],
-            1 => [95, 97],
-            2 => [90, 94],
-            3 => [81, 88],
-            4 => [76, 79],
+    private function generateDynamicTermMarks(
+        string $ylCode,
+        int $sectionOrder,
+        int $slot,
+        string $subCode,
+        int $subIdx,
+        int $totalSubjects,
+        int $globalSectionIndex
+    ): array {
+        // 1. Year-Level Academic Offset (creates clear contrast in Year Level Bar Chart)
+        $ylOffsetMap = [
+            'G10' => +3.6, // Senior mastery (~89-90 overall)
+            'G9'  => +1.6, // Strong upper-year (~86-87 overall)
+            'G7'  => -0.4, // Freshman baseline (~83-84 overall)
+            'G8'  => -3.4, // Sophomore curriculum dip (~78-79 overall)
         ];
+        $ylOffset = $ylOffsetMap[$ylCode] ?? 0.0;
 
-        [$min, $max] = $ranges[$tier];
+        // 2. Section Archetype Offset (creates strong contrast when comparing sections)
+        //    0 = SPJ (Star Section), 1 = High-Performing, 2 = Mid-Tier, 3 = Developing, 4 = Intervention
+        $sectionOffsetMap = [
+            0 => +6.5, // SPJ Star Section (~91 - 94 avg)
+            1 => +2.8, // High-Performing Regular Section (~86 - 89 avg)
+            2 => -0.5, // Mid-Performing Section (~82 - 85 avg)
+            3 => -4.2, // Developing Section (~77 - 80 avg)
+            4 => -6.8, // Intensive Intervention Section (G8 Jade ~75 - 76 avg)
+        ];
+        $secOffset = $sectionOffsetMap[$sectionOrder] ?? 0.0;
 
-        if ($tier === 0) {
-            // Alternating pattern ensuring no identical adjacent quarters, capped strictly at 99
-            return (rand(0, 1) === 1) ? [98.00, 99.00, 98.00] : [99.00, 98.00, 99.00];
+        // 3. Subject Difficulty / Mastery Offset (creates clear steps in Subject Performance Chart)
+        $subjectOffsetMap = [
+            'JOURN' => +3.2,
+            'MAPEH' => +3.4,
+            'ESP'   => +2.6,
+            'TLE'   => +1.5,
+            'FIL'   => +0.6,
+            'AP'    => -0.4,
+            'ENG'   => -1.4,
+            'SCI'   => -2.8,
+            'MAT'   => -4.2,
+        ];
+        $subOffset = $subjectOffsetMap[$subCode] ?? 0.0;
+
+        // 4. Special Top-Achiever Slots (Guarantees varied Highest Honors, High Honors, and Honors counts per Year Level)
+        //    - G10 SPJ has 2 With Highest Honors (Slots 0, 1) and 3 With High Honors (Slots 2, 3, 4)
+        //    - G9 SPJ has 1 With Highest Honors (Slot 0) and 2 With High Honors (Slots 1, 2)
+        //    - G7 SPJ has 2 With High Honors (Slots 0, 1)
+        //    - G8 SPJ has 1 With High Honors (Slot 0)
+        if ($sectionOrder === 0) {
+            if ($ylCode === 'G10' && ($slot === 0 || $slot === 1)) {
+                // With Highest Honors (GWA 98.2 - 99.0, all grades >= 97)
+                $b = 98.0 + (($subIdx + $slot) % 2);
+                return [max(97.0, $b - 1.0), $b, min(99.0, $b + 1.0)];
+            }
+            if ($ylCode === 'G9' && $slot === 0) {
+                // With Highest Honors (GWA ~98.3)
+                $b = 98.0 + ($subIdx % 2);
+                return [97.0, $b, min(99.0, $b + 1.0)];
+            }
+            if (
+                ($ylCode === 'G10' && in_array($slot, [2, 3, 4])) ||
+                ($ylCode === 'G9' && in_array($slot, [1, 2])) ||
+                ($ylCode === 'G7' && in_array($slot, [0, 1])) ||
+                ($ylCode === 'G8' && $slot === 0)
+            ) {
+                // With High Honors (GWA 95.3 - 96.8, all grades >= 92)
+                $b = 95.0 + (($subIdx + $slot) % 3);
+                return [max(93.0, $b - 1.0), $b, min(98.0, $b + 1.0)];
+            }
         }
 
-        $q1 = rand($min, $max);
-
-        // Q2 differs from Q1
-        $candidatesQ2 = array_values(array_filter(range($min, $max), fn($v) => $v !== $q1));
-        $q2 = !empty($candidatesQ2) ? $candidatesQ2[array_rand($candidatesQ2)] : (($q1 >= $max) ? $q1 - 1 : $q1 + 1);
-
-        // Q3 differs from Q2
-        $candidatesQ3 = array_values(array_filter(range($min, $max), fn($v) => $v !== $q2 && $v !== $q1));
-        if (empty($candidatesQ3)) {
-            $candidatesQ3 = array_values(array_filter(range($min, $max), fn($v) => $v !== $q2));
+        // Also place 1 With High Honors in Section 1 of G10 and G9
+        if ($sectionOrder === 1 && (($ylCode === 'G10' && $slot === 0) || ($ylCode === 'G9' && $slot === 0))) {
+            $b = 95.0 + ($subIdx % 2);
+            return [94.0, $b, min(97.0, $b + 1.0)];
         }
-        $q3 = !empty($candidatesQ3) ? $candidatesQ3[array_rand($candidatesQ3)] : (($q2 >= $max) ? $q2 - 1 : $q2 + 1);
 
-        return [
-            min(99.00, max(60.00, (float)$q1)),
-            min(99.00, max(60.00, (float)$q2)),
-            min(99.00, max(60.00, (float)$q3)),
+        // 5. Base Student Slot Profile within the Section (Slots 0..14)
+        //    Produces a natural bell-curve spread inside each section
+        $slotBaseMap = [
+            0  => 91.5, // Top of class (With Honors in regular sections)
+            1  => 90.2, // Second in class (With Honors in high/mid sections)
+            2  => 88.0, // Strong performer
+            3  => 86.8,
+            4  => 85.6,
+            5  => 84.4,
+            6  => 83.5,
+            7  => 82.6, // Median student
+            8  => 81.8,
+            9  => 80.8,
+            10 => 79.6,
+            11 => 78.5,
+            12 => 77.2, // Borderline passing
+            13 => 75.5, // Struggling / Single-subject at-risk in lower sections
+            14 => 73.5, // Multi-subject at-risk in lower sections
         ];
+        $slotBase = $slotBaseMap[$slot] ?? 82.0;
+
+        // Combine offsets with a dampened weight so grades stay within realistic DepEd bounds (68 - 98)
+        $rawTarget = $slotBase + ($ylOffset * 0.65) + ($secOffset * 0.70) + ($subOffset * 0.65);
+
+        // Add deterministic individual variation per student-subject so rows aren't robotic
+        $deterministicJitter = ((($slot * 5 + $subIdx * 3 + $globalSectionIndex) % 5) - 2) * 0.4;
+        $base = round($rawTarget + $deterministicJitter, 0);
+
+        // Enforce struggling / failing behavior only in non-SPJ sections for slots 13 & 14
+        if ($sectionOrder >= 2 && $slot === 13) {
+            $failSubj = ($globalSectionIndex * 3 + 2) % $totalSubjects;
+            if ($subIdx === $failSubj) {
+                return [70.0, 72.0, 71.0];
+            }
+        }
+        if ($sectionOrder >= 2 && $slot === 14) {
+            $failSubj1 = ($globalSectionIndex * 2 + 1) % $totalSubjects;
+            $failSubj2 = ($globalSectionIndex * 2 + 3) % $totalSubjects;
+            if ($subIdx === $failSubj1) {
+                return [68.0, 70.0, 69.0];
+            }
+            if ($subIdx === $failSubj2 && $sectionOrder >= 3) {
+                return [71.0, 69.0, 72.0];
+            }
+        }
+
+        // Keep SPJ students strictly passing (>= 83)
+        if ($sectionOrder === 0) {
+            $base = max(85.0, min(94.0, $base));
+        } else {
+            $base = max(73.0, min(94.0, $base));
+        }
+
+        // 6. Section-Specific Term Trajectory (T1 -> T2 -> T3)
+        //    Ensures multi-section line charts show distinct, non-parallel curves
+        switch ($sectionOrder) {
+            case 0: // SPJ: Steady high climb (+1.5 per term)
+                $t1 = $base - 1.0;
+                $t2 = $base + 0.5;
+                $t3 = $base + 2.0;
+                break;
+            case 1: // Section 1: Strong T2-T3 surge
+                $t1 = $base - 2.0;
+                $t2 = $base + 0.5;
+                $t3 = $base + 2.5;
+                break;
+            case 2: // Section 2: Mid-year dip in T2 then strong T3 recovery
+                $t1 = $base;
+                $t2 = $base - 1.5;
+                $t3 = $base + 2.0;
+                break;
+            case 3: // Section 3: Gradual improvement from low T1 start
+                $t1 = $base - 2.5;
+                $t2 = $base - 0.5;
+                $t3 = $base + 1.5;
+                break;
+            default: // Section 4 (Jade): Early struggle then modest recovery
+                $t1 = $base - 2.0;
+                $t2 = $base - 1.0;
+                $t3 = $base + 1.0;
+                break;
+        }
+
+        $clamp = fn(float $v) => round(max(67.0, min(99.0, $v)), 0);
+
+        return [$clamp($t1), $clamp($t2), $clamp($t3)];
     }
 }
